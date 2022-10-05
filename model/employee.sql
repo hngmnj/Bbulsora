@@ -11,7 +11,7 @@ create table employee(
 	deptmt varchar(10) not null,
 	position varchar(10) not null,
 	start_date datetime not null,
-	end_date datetime not null
+	end_date datetime
 )
 
 select * from employee;
