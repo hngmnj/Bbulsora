@@ -15,11 +15,6 @@ public class EmployeeDAO {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	public EmployeeDAO() {}
-
-//	public void setSqlSession(SqlSession sqlSession) {
-//		this.sqlSession = sqlSession;
-//	}
 
 	//전체조회
 	public List<EmployeeVO> selectAll() throws SQLException{
@@ -30,9 +25,9 @@ public class EmployeeDAO {
 	}
 
 	//조건조회
-	public EmployeeVO selectOne(int empNo) throws SQLException {
+	public EmployeeVO selectOne(String empNo) throws SQLException {
 		EmployeeVO member = null;
-		member = (EmployeeVO)sqlSession.selectOne("mapper.employee.selectMemberByEmpNo", empNo);
+		member = (EmployeeVO)sqlSession.selectOne("mapper.employee.selectMemberByEmpNo", Integer.parseInt(empNo));
 
 
 		return member;
@@ -60,9 +55,9 @@ public class EmployeeDAO {
 	}
 	
 	//사원정보 삭제
-	public boolean deleteOne(int empNo) throws SQLException {
+	public boolean deleteOne(String empNo) throws SQLException {
 		boolean flag = false;
-		int affectedCount = sqlSession.delete("mapper.employee.deleteEmployee", empNo);
+		int affectedCount = sqlSession.delete("mapper.employee.deleteEmployee", Integer.parseInt(empNo));
 		if(affectedCount > 0) {
 			flag = true;
 		}

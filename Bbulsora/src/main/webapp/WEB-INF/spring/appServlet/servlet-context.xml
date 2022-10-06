@@ -38,6 +38,4 @@
 	
 	<context:component-scan base-package="gntp.bbulsora.project" />
 	
-	
-	
 </beans:beans>

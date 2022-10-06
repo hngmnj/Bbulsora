@@ -1,25 +1,26 @@
 package gntp.bbulsora.project.vo;
 
-import java.sql.Timestamp;
+import org.springframework.stereotype.Component;
 
+@Component("employeeVO")
 public class EmployeeVO {
 	private int empNo;
 	private String name;
-	private Timestamp birthDate;
+	private String birthDate;
 	private String phoneNum;
 	private String email;
-	private char gender;
+	private String gender;
 	private String address;
 	private String postNum;
 	private String regiNum;
 	private String deptmt;
 	private String position;
-	private Timestamp startDate;
-	private Timestamp endDate;
+	private String startDate;
+	private String endDate;
 	
 	public EmployeeVO() {}
-	public EmployeeVO(int empNo, String name, Timestamp birthDate, String phoneNum, String email, char gender,
-			String address, String postNum, String regiNum, String deptmt, String position, Timestamp startDate, Timestamp endDate) {
+	public EmployeeVO(int empNo, String name, String birthDate, String phoneNum, String email, String gender,
+			String address, String postNum, String regiNum, String deptmt, String position, String startDate, String endDate) {
 		this.empNo = empNo;
 		this.name = name;
 		this.birthDate = birthDate;
@@ -46,10 +47,10 @@ public class EmployeeVO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Timestamp getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(Timestamp birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 	public String getPhoneNum() {
@@ -64,10 +65,10 @@ public class EmployeeVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public String getAddress() {
@@ -100,26 +101,17 @@ public class EmployeeVO {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	public Timestamp getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public Timestamp getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Timestamp endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
-	}
-	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "empNo: "+ empNo + " name: " + name + " birthdate: " + birthDate + " phoneNum: " + phoneNum
-				+ " email: " + email + " gender: " + gender + " address: " + address + " postNum: " + postNum
-				+ " regiNum: " + regiNum + " deptmt: " + deptmt + " position: " + position + " startdate: " + startDate
-				+ " endDate: " + endDate ;
 	}
 	
 }

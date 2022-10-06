@@ -27,7 +27,7 @@
       ]]>
 	</select>
 	
-	<select id="selectMemberByEmpNo" resultMap="empResult"  parameterType="int" >
+	<select id="selectMemberByEmpNo" resultMap="empResult" resultType="employeeVO"  parameterType="int" >
       <![CDATA[
          select * from employee
          where
@@ -41,7 +41,7 @@
 		post_num, regi_num, deptmt, position, start_date)
 		values
 		(#{empNo}, #{name}, #{birthDate}, #{phoneNum}, #{email}, #{gender}, #{address}, 
-		#{postNum}, #{regiNum}, #{deptmt}, #{position}, #{startDate});  
+		#{postNum}, #{regiNum}, #{deptmt}, #{position}, #{startDate} );  
 		]]>      
 	</insert>
 	
@@ -49,13 +49,13 @@
      <![CDATA[
 	     update employee
 	     set
-	     name=#{name}, phone_num=#{phoneNum}, birth_date=#{birthDate}, email=#{email}, gender=#{gender}, address=#{address}, 
-		 post_num=#{postNum}, regi_num=#{regiNum}, deptmt=#{deptmt}, position=#{position} 
+	     name=#{name}, birth_date=#{birthDate}, phone_num=#{phoneNum}, email=#{email}, gender=#{gender}, address=#{address}, 
+		 post_num=#{postNum}, regi_num=#{regiNum}, deptmt=#{deptmt}, position=#{position}, start_date=#{startDate} 
 	     where
 	     emp_no=#{empNo}
       ]]>      
    </update> 
-     
+
    <delete id="deleteEmployee"  parameterType="int">
 	<![CDATA[
 	   delete from  employee

@@ -28,7 +28,7 @@
     </h1>
 	 --%>
 	<h1>
-		<a href="${contextPath}/member/list.do"  class="no-underline">회원관리</a><br>
+		<a href="${contextPath}/employee/list.do"  class="no-underline">회원관리</a><br>
 		<a href="${contextPath}/board/list.do"  class="no-underline">게시판관리</a><br>
 		<a href="${contextPath}/guestbook/list.do"  class="no-underline">방명록관리</a><br>
 	</h1>
