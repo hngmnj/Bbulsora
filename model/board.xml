@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board">
+	<resultMap id="brdResult" type="boardVO">
+		<result property="brdSeq" column="brd_seq" />
+        <result property="brdWriter" column="brd_writer" />
+        <result property="category" column="category" />
+        <result property="title" column="title" />
+        <result property="brdContent" column="brd_content" />
+        <result property="filepath" column="filepath" />
+	</resultMap> 
+	
+
+	<select id="selectAllBoardList" resultMap="brdResult">
+      <![CDATA[
+         select * from board 	
+      ]]>
+	</select>
+	
+	<select id="selectBoardByBrdSeq" resultMap="brdResult" resultType="boardVO"  parameterType="int" >
+      <![CDATA[
+         select * from board
+         where
+         brd_seq=#{brdSeq}			
+      ]]>
+	 </select>	
+
+    <insert id="insertBoard"  parameterType="boardVO">
+		<![CDATA[
+		insert into board(brd_seq, brd_writer, category, title, brd_content, brd_date, filepath)
+		values
+		(#{brdSeq}, #{brdWriter}, #{category}, #{title}, #{brdContent}, #{brdDate}, #{filepath} );  
+		]]>      
+	</insert>
+	
+	<update id="updateBoard"  parameterType="boardVO">
+     <![CDATA[
+	     update board
+	     set
+	     title=#{title}, brd_content=#{brdContent} 
+	     where
+	     brd_seq=#{brdSeq}
+      ]]>      
+   </update> 
+
+   <delete id="deleteBoard"  parameterType="int">
+	<![CDATA[
+	   delete from board
+	   where
+	   brd_seq=#{brdSeq}
+	]]>      
+  </delete>
+</mapper>
