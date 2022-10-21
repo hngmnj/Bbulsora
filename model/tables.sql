@@ -62,7 +62,7 @@ create table delivery(
 	dlvry_seq integer auto_increment primary key,
     dlvry_cd varchar(20) not null, 
     dlvry_qtt integer not null,
-    request_date varchar(20) not null,
+    req_date varchar(20) not null,
     dlvry_date varchar(20) not null,
     comp_cd varchar(20) not null,
     foreign key (comp_cd) references company(comp_cd),
@@ -86,7 +86,7 @@ create table stock(
 create table board(
 	brd_seq integer auto_increment primary key,
     brd_writer varchar(20) not null,
-	category varchar(20) not null,
+	ctgry varchar(20) not null,
     title varchar(40) not null,
     brd_content varchar(400) not null,
     brd_date varchar(20) default (curdate()) not null,
