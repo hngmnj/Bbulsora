@@ -39,7 +39,7 @@
 	<update id="updateCompany" parameterType="companyVO">
      <![CDATA[
 	     update company
-	     set comp_name=#{compName}, eng_name=#{eng_name}, rep_name=#{repName}, address=#{address}, comp_call=#{compCall}, sort=#{sort}
+	     set comp_name=#{compName}, eng_name=#{engame}, rep_name=#{repName}, address=#{address}, comp_call=#{compCall}, sort=#{sort}
 	     where
 	     comp_cd=#{compCd}
       ]]>
