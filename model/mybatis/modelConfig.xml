@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="gntp.bbulsora.project.vo.EmployeeVO"  alias="employeeVO" />
+		<typeAlias type="gntp.bbulsora.project.vo.BoardVO"  alias="boardVO" />		
+		<typeAlias type="gntp.bbulsora.project.vo.CommentVO"  alias="commentVO" />	
+		<typeAlias type="gntp.bbulsora.project.vo.CompanyVO"  alias="companyVO" />
+		<typeAlias type="gntp.bbulsora.project.vo.MemberVO"  alias="memberVO" />
+		<typeAlias type="gntp.bbulsora.project.vo.ItemVO"  alias="itemVO" />
+		<typeAlias type="gntp.bbulsora.project.vo.OrderVO"  alias="orderVO" />
+		
+	</typeAliases>
+</configuration>
