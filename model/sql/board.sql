@@ -5,5 +5,6 @@ create table board(
     title varchar(40) not null,
     brd_content varchar(400) not null,
     brd_date varchar(20) default (curdate()) not null,
-    filepath varchar(50)
+	filename varchar(40),
+	filepath varchar(50)
 );
