@@ -11,6 +11,7 @@
 		<result property="title" column="title" />
 		<result property="brdContent" column="brd_content" />
 		<result property="filepath" column="filepath" />
+		<collection property="commentList" javaType="java.util.List" resultMap="comResult" />
 	</resultMap>
 
 	<resultMap id="comResult" type="commentVO">
