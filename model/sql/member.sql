@@ -7,3 +7,8 @@ create table member(
     comp_cd varchar(20) not null,
     foreign key (comp_cd) references company(comp_cd) on delete cascade
 );
+select * from member;
+
+insert into member
+values('admin', '1234', '관리자', '01000000000', 'admin@a.com', 'admin');
+
