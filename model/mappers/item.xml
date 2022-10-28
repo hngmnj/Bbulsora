@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.item">
+	<resultMap id="itemResult" type="itemVO">
+		<id property="itemCd" column="item_cd" />
+		<result property="itemName" column="item_name" />
+		<result property="major" column="major" />
+		<result property="middle" column="middle" />
+		<result property="minor" column="minor" />
+		<result property="standard" column="standard" />
+		<result property="unit" column="unit" />
+		<result property="img" column="img" />
+		<result property="compCd" column="comp_cd" />
+	</resultMap>
+
+	<select id="selectAllItemList" resultMap="itemResult">
+      <![CDATA[
+         select * from item
+      ]]>
+	</select>
+
+	<select id="selectItemBySupply" resultMap="itemResult">
+      <![CDATA[
+         select * from item
+         where
+         comp_cd like 'SUP%'	
+      ]]>
+	</select>
+
+	<select id="selectItemByItemName" resultMap="itemResult"
+		parameterType="String">
+	  <![CDATA[
+         select * from item
+         where
+         item_name like concat ('%', #{itemName}, '%')
+      ]]>
+	</select>
+
+	<!-- 대중소 분류 조회 아직 X -->
+
+	<select id="selectItemByItemCd" resultMap="itemResult"
+		parameterType="String">
+      <![CDATA[
+         select * from item
+         where
+         item_cd=#{itemCd}			
+      ]]>
+	</select>
+
+	<insert id="insertItem" parameterType="itemVO">
+		<![CDATA[
+		 insert into item(item_cd, item_name, major, middle, minor, unit, comp_cd)
+		 values(#{itemCd}, #{itemName}, #{major}, #{middle}, #{minor}, #{unit}, #{compCd})
+		]]>
+	</insert>
+
+	<update id="updateItem" parameterType="itemVO">
+     <![CDATA[
+	     update item
+	     set item_name=#{itemName}, major=#{major}, middle=#{middle}, minor=#{minor}, unit=#{unit}
+	     where
+	     item_cd=#{itemCd}
+      ]]>
+	</update>
+
+	<delete id="deleteItem" parameterType="String">
+	<![CDATA[
+	   delete from item
+	   where
+	   item_cd=#{itemCd}	
+	]]>
+	</delete>
+
+
+</mapper>
