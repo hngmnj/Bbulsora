@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board">
+	<resultMap id="brdResult" type="boardVO">
+		<id property="brdSeq" column="brd_seq" />
+        <result property="brdWriter" column="brd_writer" />
+        <result property="category" column="category" />
+        <result property="title" column="title" />
+        <result property="brdContent" column="brd_content" />
+        <result property="brdDate" column="brd_date" />
+        <result property="filename" column="filename" />
+        <result property="filepath" column="filepath" />
+        <collection property="commentList" javaType="java.util.List" resultMap="comResult" />
+	</resultMap> 
+	
+	<resultMap id="comResult" type="commentVO">
+		<id property="cmntSeq" column="cmnt_seq" />
+		<result property="cmntWriter" column="cmnt_writer" />
+		<result property="cmntContent" column="cmnt_content" />
+		<result property="cmntDate" column="cmnt_date" />
+		<result property="brdSeq" column="brd_seq" />
+	</resultMap>
+
+	<select id="selectAllBoardList" resultMap="brdResult" parameterType="Map">
+      <![CDATA[
+         select * from board
+      ]]>
+      
+      <if test=" searchText != null and searchText != ''">
+      	<where>
+    	<choose>
+			<when test=" searchOption == 'category' ">
+         		category like concat('%',#{searchText},'%')
+			</when> 
+			<when test=" searchOption == 'brdWriter' ">
+				brd_writer like concat('%',#{searchText},'%')
+			</when>
+			<otherwise>
+         		title like concat('%',#{searchText},'%')
+			</otherwise>
+		</choose>
+		</where>
+		</if>
+		order by brd_date desc
+		limit 10 offset #{offsetNum}
+	</select>
+	
+	<select id="selectTotalCnt" resultType="Integer" parameterType="Map">
+      <![CDATA[
+         select count(*) from board
+      ]]>
+      
+      <if test=" searchText != null and searchText != ''">
+      	<where>
+    	<choose>
+			<when test=" searchOption == 'category' ">
+         		category like concat('%',#{searchText},'%')
+			</when> 
+			<when test=" searchOption == 'brdWriter' ">
+				brd_writer like concat('%',#{searchText},'%')
+			</when>
+			<otherwise>
+         		title like concat('%',#{searchText},'%')
+			</otherwise>
+		</choose>
+		</where>
+		</if>
+	</select>
+	
+	<select id="selectByPage" parameterType="int" resultMap="brdResult">
+      <![CDATA[
+         select * from board 
+         order by brd_date desc
+         limit 10 offset #{offsetNum}
+      ]]>
+	</select>
+	
+	<select id="selectBoardByBrdSeq" resultMap="brdResult" parameterType="int">
+      <![CDATA[
+        select b.brd_seq, b.brd_writer, b.category, b.title, b.brd_content, b.filepath, b.filename,
+               c.cmnt_seq, c.cmnt_writer, c.cmnt_content, c.cmnt_date, c.brd_seq
+        from board b left join comment c  
+        on b.brd_seq = c.brd_seq where b.brd_seq = #{brdSeq}
+      ]]>
+	</select>
+	 
+	 <select id="selectBoardByBrdWriter" resultMap="brdResult" parameterType="Map">
+		<![CDATA[
+			select * from board
+			where
+			brd_writer like CONCAT('%',#{searchText},'%')
+			order by brd_date desc
+         	limit 10 offset #{offsetNum}
+		]]>
+	</select>
+	 
+	 <select id="selectBoardByCategory" resultMap="brdResult" parameterType="Map">
+		<![CDATA[
+			select * from board
+			where
+			category like CONCAT('%',#{searchText},'%')
+			order by brd_date desc
+         	limit 10 offset #{offsetNum}
+		]]>
+	</select>
+
+	<select id="selectBoardByTitle" resultMap="brdResult" parameterType="Map">
+      <![CDATA[
+         select * from board
+         where
+         title like CONCAT('%',#{searchText},'%')
+         order by brd_date desc
+         limit 10 offset #{offsetNum}		
+      ]]>
+	</select>
+	
+	<select id="selectTotalNumber" resultType="int">
+      <![CDATA[
+         select count(*) from board	
+      ]]>
+	</select>
+
+    <insert id="insertBoard"  parameterType="boardVO">
+		<![CDATA[
+		insert into board(brd_writer, category, title, brd_content, filename, filepath)
+		values
+		(#{brdWriter}, #{category}, #{title}, #{brdContent}, #{filename}, #{filepath});  
+		]]>      
+	</insert>
+	
+	<update id="updateBoard"  parameterType="boardVO">
+     <![CDATA[
+	     update board
+	     set
+	     title=#{title}, brd_content=#{brdContent} 
+	     where
+	     brd_seq=#{brdSeq}
+      ]]>      
+   </update>
+   
+   <update id="updateComment"  parameterType="commentVO">
+     <![CDATA[
+	     update comment
+	     set
+	     cmnt_content=#{cmntContent}
+	     where
+	     cmnt_seq=#{cmntSeq}
+      ]]>      
+   </update>  
+
+   <delete id="deleteBoard"  parameterType="int">
+	<![CDATA[
+	   delete from board
+	   where
+	   brd_seq=#{brdSeq}
+	]]>      
+  </delete>
+  
+  <insert id="insertComment" parameterType="commentVO">
+		<![CDATA[
+		insert into comment(cmnt_writer, cmnt_content, brd_seq)
+		values(#{cmntWriter}, #{cmntContent}, #{brdSeq});
+		]]>
+	</insert>
+
+	<delete id="deleteComment" parameterType="int">
+	<![CDATA[
+	   delete from comment
+	   where
+	   cmnt_seq=#{cmntSeq}
+	]]>
+	</delete>
+</mapper>

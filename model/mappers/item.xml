@@ -14,7 +14,49 @@
 		<result property="unit" column="unit" />
 		<result property="img" column="img" />
 		<result property="compCd" column="comp_cd" />
+		<result property="compName" column="comp_name" />
 	</resultMap>
+
+	<select id="selectSearchItem" resultMap="itemResult" parameterType="Map">
+      <![CDATA[
+         select i.*,c.comp_name from item i left join company c 
+         on i.comp_cd = c.comp_cd
+         where
+      ]]>
+      <if test=" major != null and major != ''">
+      major=#{major} and
+      </if>
+      <if test=" middle != null and middle != ''">
+      middle=#{middle} and
+      </if>
+      <if test=" minor != null and minor != ''">
+      minor=#{minor} and
+      </if>
+      item_name like concat('%',#{searchText},'%')
+      order by item_name
+	</select>
+
+	<select id="selectMinorByMiddle" resultMap="itemResult" parameterType="String">
+      <![CDATA[
+         select minor from item 
+         where middle=#{middle}
+         group by minor
+      ]]>
+	</select>
+
+	<select id="selectMiddleByMajor" resultMap="itemResult" parameterType="String">
+      <![CDATA[
+         select middle from item 
+         where major=#{major}
+         group by middle
+      ]]>
+	</select>
+
+	<select id="selectAllMajor" resultMap="itemResult">
+      <![CDATA[
+         select major from item group by major
+      ]]>
+	</select>
 
 	<select id="selectAllItemList" resultMap="itemResult">
       <![CDATA[
@@ -44,7 +86,8 @@
 	<select id="selectItemByItemCd" resultMap="itemResult"
 		parameterType="String">
       <![CDATA[
-         select * from item
+         select i.*,c.comp_name from item i left join company c
+         on i.comp_cd = c.comp_cd
          where
          item_cd=#{itemCd}			
       ]]>
