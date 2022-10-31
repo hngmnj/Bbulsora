@@ -19,6 +19,14 @@ public class OrderDAO {
 	public OrderDAO() {}
 
 
+	//고객사용
+	public List<OrderVO> selectAllByCompCd(String compCd) throws SQLException{
+		List<OrderVO> list = null;
+		list = sqlSession.selectList("mapper.order.selectOrderByCompCd",compCd);
+		return list;
+	}
+	
+	//관리자용
 	public List<OrderVO> selectAll() throws SQLException{
 		List<OrderVO> list = null;
 		list = sqlSession.selectList("mapper.order.selectAllOrderList");
