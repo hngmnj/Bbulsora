@@ -9,8 +9,6 @@ public class OrderVO {
 	private int orderQtt;
 	private String submitDate;
 	private String orderDate;
-	private String fromDate;
-	private String toDate;
 	private String compCd;
 	private String itemCd;
 	private String stateCd;
@@ -77,21 +75,5 @@ public class OrderVO {
 		this.stateCd = stateCd;
 	}
 
-	public String getFromDate() {
-		return fromDate;
-	}
 
-	public void setFromDate(String fromDate) {
-		this.fromDate = fromDate;
-	}
-
-	public String getToDate() {
-		return toDate;
-	}
-
-	public void setToDate(String toDate) {
-		this.toDate = toDate;
-	}	
-
-	
 }

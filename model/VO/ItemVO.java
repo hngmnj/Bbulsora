@@ -13,6 +13,7 @@ public class ItemVO {
 	private String unit;
 	private String img;
 	private String compCd;
+	private String compName;
 
 	public ItemVO() {}
 
@@ -100,6 +101,19 @@ public class ItemVO {
 		this.compCd = compCd;
 	}
 
+	@Override
+	public String toString() {
+		return "ItemVO [itemCd=" + itemCd + ", itemName=" + itemName + ", major=" + major + ", middle=" + middle
+				+ ", minor=" + minor + ", standard=" + standard + ", unit=" + unit + ", img=" + img + ", compCd="
+				+ compCd + "]";
+	}
 
+	public String getCompName() {
+		return compName;
+	}
+
+	public void setCompName(String compName) {
+		this.compName = compName;
+	}
 
 }
