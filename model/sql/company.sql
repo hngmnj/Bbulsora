@@ -7,8 +7,3 @@ create table company(
     comp_call varchar(20) not null,
     sort varchar(20) not null
 );
-
-select * from company;
-
-insert into company 
-values('admin', '뿔소라', 'Bbulsora', '관리자', '창원 경남테크노파크 502호', '01000000000', 'admin');
