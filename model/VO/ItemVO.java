@@ -1,8 +1,9 @@
 package gntp.bbulsora.project.vo;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-@Component("ItemVO")
+@Component("itemVO")
 public class ItemVO {
 	private String itemCd;
 	private String itemName;
@@ -14,11 +15,12 @@ public class ItemVO {
 	private String img;
 	private String compCd;
 	private String compName;
+	private MultipartFile uploadImage;
 
 	public ItemVO() {}
 
 	public ItemVO(String itemCd, String itemName, String major, String middle, String minor, String standard,
-			String unit, String compCd) {
+			String unit, String img, String compCd, String compName, MultipartFile uploadImage) {
 		this.itemCd = itemCd;
 		this.itemName = itemName;
 		this.major = major;
@@ -26,7 +28,10 @@ public class ItemVO {
 		this.minor = minor;
 		this.standard = standard;
 		this.unit = unit;
+		this.img = img;
 		this.compCd = compCd;
+		this.uploadImage = uploadImage;
+		this.compName = compName;
 	}
 
 	public String getItemCd() {
@@ -100,6 +105,14 @@ public class ItemVO {
 	public void setCompCd(String compCd) {
 		this.compCd = compCd;
 	}
+	
+	public MultipartFile getuploadImage() {
+		return uploadImage;
+	}
+
+	public void setuploadImage(MultipartFile uploadImage) {
+		this.uploadImage = uploadImage;
+	}
 
 	@Override
 	public String toString() {
@@ -115,5 +128,5 @@ public class ItemVO {
 	public void setCompName(String compName) {
 		this.compName = compName;
 	}
-
+	
 }
