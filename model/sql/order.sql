@@ -10,6 +10,6 @@ create table order_t(
     foreign key (comp_cd) references company(comp_cd) on delete cascade,
     item_cd varchar(20) not null,
     foreign key (item_cd) references item(item_cd) on delete cascade,
-    state_cd varchar(20) not null,
+    state_cd varchar(20) not null default 'O001',
     foreign key (state_cd) references state(state_cd) on delete cascade
 );
