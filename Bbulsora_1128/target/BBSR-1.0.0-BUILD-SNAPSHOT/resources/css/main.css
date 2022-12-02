@@ -1,0 +1,45 @@
+@charset "UTF-8";
+.main input[type=text],[type=password] {
+	border: 3px solid rgb(102,102,255);
+	border-radius: 5px;
+	padding:10px;
+	width: 300px;
+	margin:10px;
+}
+
+.main input[type=text]:hover,[type=password]:hover {
+	border: 4px solid rgb(51,51,255);
+	background-color: rgb(204,204,255);
+	padding:9px;
+}
+
+.main input[type=submit],[type=button] {
+	border: none;
+	color: white;
+	padding : 8px 25px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	background-color: rgb(102,102,255);
+	border-radius:16px;
+	font-size: 16px;
+	margin:10px;
+}
+
+.main input[type=submit]:hover,[type=button]:hover {
+	background-color: rgb(51,51,255);
+}
+
+.main div.fixed1 {
+	position: fixed;
+	width:100%;
+	top:40%;
+	text-align: center;
+}
+
+.main div.fixed2 {
+	position: fixed;
+	width:100%;
+	top:20%;
+	text-align: center;
+}

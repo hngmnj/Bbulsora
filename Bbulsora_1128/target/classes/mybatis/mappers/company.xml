@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.company">
+	<resultMap id="compResult" type="companyVO">
+		<id property="compCd" column="comp_cd" />
+		<result property="compName" column="comp_name" />
+		<result property="engName" column="eng_name" />
+		<result property="repName" column="rep_name" />
+		<result property="address" column="address" />
+		<result property="compCall" column="comp_call" />
+		<result property="sort" column="sort" />
+	</resultMap>
+
+	<select id="selectSupName" resultMap="compResult">
+      <![CDATA[
+         select comp_name from company
+		 where comp_cd like 'SUP%'
+      ]]>
+	</select>
+
+	<select id="selectAllForCreateItem" resultMap="compResult">
+      <![CDATA[
+         select comp_cd,comp_name from company
+         where comp_cd like 'SUP%'
+         order by comp_name
+      ]]>
+	</select>
+
+	<select id="selectAllCompanyList" resultMap="compResult">
+      <![CDATA[
+         select * from company where comp_cd != 'ADMIN'
+      ]]>
+	</select>
+
+	<select id="selectCompanyByCompCd" resultMap="compResult" parameterType="String">
+      <![CDATA[
+         select * from company
+         where
+         comp_cd=#{compCd}
+      ]]>
+	</select>
+
+	<insert id="insertCompany" parameterType="companyVO">
+		<![CDATA[
+		 insert into company(comp_cd, comp_name, eng_name, rep_name, address, comp_call, sort)
+		 values(#{compCd}, #{compName}, #{engName}, #{repName}, #{address}, #{compCall}, #{sort})
+		]]>
+	</insert>
+
+	<update id="updateCompany" parameterType="companyVO">
+     <![CDATA[
+	     update company
+	     set comp_name=#{compName}, eng_name=#{engName}, rep_name=#{repName}, address=#{address}, comp_call=#{compCall}, sort=#{sort}
+	     where
+	     comp_cd=#{compCd}
+      ]]>
+	</update>
+
+	<delete id="deleteCompany" parameterType="String">
+	<![CDATA[
+	   delete from company
+	   where
+	   comp_cd=#{compCd}
+	]]>
+	</delete>
+</mapper>

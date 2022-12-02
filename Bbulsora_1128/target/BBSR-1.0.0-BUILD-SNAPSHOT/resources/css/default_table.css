@@ -1,0 +1,24 @@
+@charset "UTF-8";
+table {
+	width:70%; 
+    margin-left:15%; 
+    margin-right:15%;
+}
+
+table, tr, th, td {
+	border: 1px solid white;
+	border-collapse: collapse;
+}
+
+th{
+	background-color: rgb(27,30,40);
+	color: white;
+}
+
+tr:nth-child(odd){
+	background-color: rgb(216,219,227);
+}
+
+tr:nth-child(even){
+	background-color: rgb(141,149,162);
+}
