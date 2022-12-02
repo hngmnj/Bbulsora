@@ -80,12 +80,6 @@
          ]]>
    </select>
    
-   <select id="testSelect" resultMap="stkResult">
-   	<![CDATA[
-   		select * from stock
-   	]]>
-   </select>
-   
    <select id="selectClient" resultMap="stkResult">
       <![CDATA[
          select distinct(c.comp_cd), c.comp_name from stock stk
