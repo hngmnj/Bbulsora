@@ -1,0 +1,52 @@
+@charset "UTF-8";
+.main_color {
+	background-color: rgb(102,102,255);
+	color: white;
+}
+.sub_color {
+	background-color: rgb(58,145,244);
+	color: white;
+}
+.err_color_tomato {
+	color: rgb(255,97,48);
+}
+.err_color_red {
+	color: rgb(254,62,60);
+}
+.success_color {
+	color: rgb(81,192,137);
+}
+.gray1 {
+	color: rgb(27,30,40);
+}
+.gray2 {
+	color: rgb(53,61,74);
+}
+.gray3 {
+	color: rgb(92,97,109);
+}
+.gray4 {
+	color: rgb(141,149,162);
+}
+.gray5 {
+	color: rgb(196,201,213);
+}
+.gray6 {
+	color: rgb(216,219,227);
+}
+.gray7 {
+	color: rgb(232,234,240);
+}
+.gray8 {		
+	color: rgb(244,246,250);
+}
+.dim1 {
+	background-color: rgb(92,96,102);
+	color: white;
+}
+.dim2 {
+	color: rgb(137,142,145);
+}
+.dim3 {
+	color: rgb(221,221,221);
+}

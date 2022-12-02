@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.delivery">
+	<resultMap id="delResult" type="deliveryVO">
+		<id property="dlvrySeq" column="dlvry_seq" />
+		<result property="dlvryCd" column="dlvry_cd" />
+		<result property="dlvryQtt" column="dlvry_qtt" />
+		<result property="reqDate" column="req_date" />
+		<result property="dlvryDate" column="dlvry_date" />
+		<result property="compCd" column="comp_cd" />
+		<result property="itemCd" column="item_cd" />
+		<result property="stateCd" column="state_cd" />
+		<result property="cnt" column="cnt" />
+		<result property="itemName" column="item_name" />
+		<result property="compName" column="comp_name" />
+	</resultMap>
+
+	<insert id="insertDeliveryReq" parameterType="deliveryVO">
+		<![CDATA[
+			insert into delivery(dlvry_cd, dlvry_qtt, req_date, comp_cd, item_cd, state_cd) 
+			values (#{dlvryCd}, #{dlvryQtt}, #{reqDate}, #{compCd}, #{itemCd}, #{stateCd})
+		]]>
+	</insert>
+
+
+
+</mapper>
