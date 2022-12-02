@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.stock">
+	<resultMap id="stkResult" type="stockVO">
+		<id property="stockSeq" column="stock_seq" />
+		<result property="stockQtt" column="stock_qtt" />
+		<result property="loc" column="loc" />
+		<result property="lot" column="lot" />
+		<result property="storeSeq" column="store_seq" />
+		<result property="stateContent" column="state_content" />
+		<result property="stockSum" column="stock_sum" />
+		<result property="stateCd" column="state_cd" />
+		<result property="itemCd" column="item_cd" />
+		<result property="itemName" column="item_name" />
+		<result property="compCd" column="comp_cd" />
+		<result property="compName" column="comp_name" />
+	</resultMap>
+
+	<select id="selectAllStockList" resultMap="stkResult">
+	    <![CDATA[
+			select i.item_cd, i.item_name, c.comp_name, sum(stk.stock_qtt) as stock_sum
+			from stock stk
+        	left join state sta
+        	on stk.state_cd = sta.state_cd
+        	left join store str
+        	on stk.store_seq = str.store_seq
+        	left join order_t o
+        	on str.order_seq = o.order_seq
+        	left join item i
+        	on o.item_cd = i.item_cd
+        	left join company c
+        	on o.comp_cd = c.comp_cd	   		
+			group by i.item_cd
+			order by stk.stock_seq desc, i.item_name asc
+			]]>
+	</select>
+	
+	<select id="selectAllStockListForCli" resultMap="stkResult" parameterType="Map">
+	    <![CDATA[
+			select i.item_cd, i.item_name, c.comp_name, sum(stk.stock_qtt) as stock_sum
+			from stock stk
+        	left join state sta
+        	on stk.state_cd = sta.state_cd
+        	left join store str
+        	on stk.store_seq = str.store_seq
+        	left join order_t o
+        	on str.order_seq = o.order_seq
+        	left join item i
+        	on o.item_cd = i.item_cd
+        	left join company c
+        	on o.comp_cd = c.comp_cd
+        	where c.comp_cd = #{compCd}
+			group by i.item_cd
+			order by submit_date desc , item_name asc
+			]]>
+	</select>
+	
+	<select id="selectStateContent" resultMap="stkResult">
+		<![CDATA[
+			select sta.state_content
+			from stock stk left join state sta
+			on stk.state_cd = sta.state_cd
+      	]]>
+	</select>
+
+	<select id="selectItemCd" resultMap="stkResult">
+		<![CDATA[
+			select distinct(i.item_name) from stock stk
+			left join store str
+			on stk.store_seq = str.store_seq
+			left join order_t o
+			on str.order_seq = o.order_seq
+			left join item i
+			on o.item_cd = i.item_cd
+      	]]>
+	</select>
+	
+	<select id="selectClient" resultMap="stkResult">
+		<![CDATA[
+			select distinct(c.comp_name) from stock stk
+			left join store str   
+			on stk.store_seq = str.store_seq
+			left join order_t o
+			on str.order_seq = o.order_seq
+        	left join company c
+        	on o.comp_cd = c.comp_cd;
+      	]]>
+	</select>
+	
+	<select id="selectSearchStock" resultMap="stkResult" parameterType="Map">
+		<![CDATA[
+			select i.item_cd, i.item_name, c.comp_name, sum(stk.stock_qtt) as stock_sum
+			from stock stk
+        	left join state sta
+        	on stk.state_cd = sta.state_cd
+        	left join store str
+        	on stk.store_seq = str.store_seq
+        	left join order_t o
+        	on str.order_seq = o.order_seq
+        	left join item i
+        	on o.item_cd = i.item_cd
+        	left join company c
+        	on o.comp_cd = c.comp_cd
+        	where 
+        ]]>
+		<if test=" item != null and item !=''">
+   	   		<![CDATA[item_name = #{item} and]]>
+		</if>
+		<if test=" client != null and client !=''">
+   	   		<![CDATA[comp_name = #{client} and]]>
+		</if>
+        	stk.stock_seq is NOT NULL	   		
+			group by i.item_cd
+			order by stk.stock_seq desc, i.item_name asc
+	</select>
+	
+	<select id="selectSearchStockByLot" resultMap="stkResult" parameterType="String">
+		<![CDATA[
+			select stk.lot, i.item_name, stk.stock_qtt, stk.loc, sta.state_content
+			from stock stk
+        	left join state sta
+        	on stk.state_cd = sta.state_cd
+        	left join store str
+        	on stk.store_seq = str.store_seq
+        	left join order_t o
+        	on str.order_seq = o.order_seq
+        	left join item i
+        	on o.item_cd = i.item_cd
+        	where i.item_cd = #{itemCd}
+			order by stk.lot desc, i.item_name asc
+		]]>
+	</select>
+	
+	<select id="selectForDelivery" resultMap="stkResult" parameterType="String">
+		<![CDATA[
+			select i.item_cd, i.item_name
+			from stock stk
+			left join store str
+			on stk.store_seq = str.store_seq
+			left join order_t o
+			on str.order_seq = o.order_seq
+			left join item i
+			on o.item_cd = i.item_cd
+			where i.item_cd = #{itemCd}
+		]]>
+	</select>
+
+	<insert id="insertStore" parameterType="Map">
+		insert store(store_qtt, store_date, state_cd, order_seq) values(#{orderQtt}, curdate(), 'I001', #{orderSeq})
+	</insert>
+
+	<delete id="deleteOrder" parameterType="String">
+	<![CDATA[
+	   delete from order_t
+	   where
+	   order_seq=#{orderSeq}	
+	]]>
+	</delete>
+
+</mapper>

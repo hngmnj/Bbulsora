@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.location">
+	<resultMap id="locResult" type="locationVO">
+		<id property="locArea" column="loc_area" />
+		<result property="locType" column="loc_type" />
+		<result property="locQtt" column="loc_qtt" />
+		<result property="maxQtt" column="max_qtt" />
+	</resultMap>
+	
+	<select id="selectAllLocationList" resultMap="locResult">
+	     <![CDATA[
+	        select l.loc_area, sum(s.stock_qtt) as loc_qtt, l.max_qtt
+	         from stock s
+	         right join location l
+	          on s.loc_area = l.loc_area
+	          where l.loc_area is NOT NULL
+	          or s.loc_area is NULL
+	          group by l.loc_area order by l.loc_area
+	     ]]>
+	</select>
+
+</mapper>

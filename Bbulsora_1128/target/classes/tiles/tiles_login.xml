@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+   <definition name="viewLogin"  template="/WEB-INF/views/login.jsp">
+   </definition>
+   <definition name="viewFindId"  template="/WEB-INF/views/findId.jsp">
+   </definition>
+   <definition name="viewFindPwd"  template="/WEB-INF/views/changePwd.jsp">
+   </definition>
+   <definition name="viewJoin"  template="/WEB-INF/views/join.jsp">
+   </definition>
+   <definition name="loginError"  template="/WEB-INF/views/loginError.jsp">
+   </definition>
+</tiles-definitions>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.order">
+	<resultMap id="ordResult" type="orderVO">
+		<id property="orderSeq" column="order_seq" />
+		<result property="orderCd" column="order_cd" />
+		<result property="orderQtt" column="order_qtt" />
+		<result property="submitDate" column="submit_date" />
+		<result property="orderDate" column="order_date" />
+		<result property="compCd" column="comp_cd" />
+		<result property="itemCd" column="item_cd" />
+		<result property="stateCd" column="state_cd" />
+		<result property="itemName" column="item_name" />
+		<result property="compName" column="comp_name" />
+		<result property="compNameCli" column="compNameCli" />
+		<result property="stateContent" column="state_content" />
+	</resultMap>
+
+	<select id="selectAllOrderList" resultMap="ordResult" parameterType="Map">
+	    <![CDATA[
+	       select o.order_cd,o.submit_date,count(*) as cnt,i.item_name,c.comp_name 
+	       FROM order_t o
+	       left join item i 
+	       on o.item_cd = i.item_cd
+	       left join company c 
+	       on o.comp_cd = c.comp_cd
+	    ]]>
+    <choose>
+		<when test=" fromDate != null and fromDate != '' and toDate != null and toDate != ''">
+	       <![CDATA[where submit_date >= #{fromDate} and submit_date <= #{toDate}]]>
+		</when> 
+		<when test=" fromDate != null and fromDate != '' and (toDate == null or toDate == '')">
+			<![CDATA[where submit_date >= #{fromDate}]]>
+		</when>
+		<when test=" (fromDate == null or fromDate == '') and toDate != null and toDate != ''">
+			<![CDATA[where submit_date <= #{toDate}]]>
+		</when>
+		<otherwise>
+		</otherwise>
+	</choose>
+		group by order_cd
+		order by submit_date desc , item_name asc
+	</select>
+
+	<select id="selectOrderByCompCdForCli" resultMap="ordResult" parameterType="Map">
+      <![CDATA[
+         select o.order_cd,o.submit_date,count(*) as cnt,
+         i.item_name 
+         FROM order_t o 
+         left join item i 
+         on o.item_cd = i.item_cd
+         where	
+      ]]>
+      <choose>
+		<when test=" fromDate != null and fromDate != '' and toDate != null and toDate != ''">
+	       <![CDATA[submit_date >= #{fromDate} and submit_date <= #{toDate} and]]>
+		</when> 
+		<when test=" fromDate != null and fromDate != '' and (toDate == null or toDate == '')">
+			<![CDATA[submit_date >= #{fromDate} and]]>
+		</when>
+		<when test=" (fromDate == null or fromDate == '') and toDate != null and toDate != ''">
+			<![CDATA[submit_date <= #{toDate} and]]>
+		</when>
+		<otherwise>
+		</otherwise>
+	</choose>
+      o.comp_cd=#{compCd}
+      group by order_cd
+      order by submit_date desc , item_name asc
+	</select>
+	
+	<select id="selectOrderByCompCdForSup" resultMap="ordResult" parameterType="Map">
+      <![CDATA[
+         select o.order_cd,o.submit_date,count(*) as cnt,
+         i.item_name
+         FROM order_t o 
+         left join item i
+         on o.item_cd = i.item_cd
+         join company c
+         on i.comp_cd = c.comp_cd
+         where	
+      ]]>
+      <choose>
+		<when test=" fromDate != null and fromDate != '' and toDate != null and toDate != ''">
+	       <![CDATA[submit_date >= #{fromDate} and submit_date <= #{toDate} and]]>
+		</when> 
+		<when test=" fromDate != null and fromDate != '' and (toDate == null or toDate == '')">
+			<![CDATA[submit_date >= #{fromDate} and]]>
+		</when>
+		<when test=" (fromDate == null or fromDate == '') and toDate != null and toDate != ''">
+			<![CDATA[submit_date <= #{toDate} and]]>
+		</when>
+		<otherwise>
+		</otherwise>
+	</choose>
+      c.comp_cd=#{compCd}
+      group by order_cd
+      order by submit_date desc , item_name asc
+	</select>
+
+	<select id="selectOrderByClient" resultMap="ordResult">
+      <![CDATA[
+         select * from order_t
+         where
+         comp_cd like 'CLI%'			
+      ]]>
+	</select>
+
+	<select id="selectOrderByItemCd" resultMap="ordResult"
+		parameterType="String">
+      <![CDATA[
+         select * from order_t
+         where
+         item_cd=#{itemCd}	
+      ]]>
+	</select>
+
+	<select id="selectOrderByStateCd" resultMap="ordResult"
+		parameterType="String">
+      <![CDATA[
+         select * from order_t
+         where
+         state_cd=#{stateCd}	
+      ]]>
+	</select>
+
+	<select id="selectOrderByOrderCd" resultMap="ordResult"
+		parameterType="String">
+      <![CDATA[
+         select o.*,i.item_name,i.unit,s.state_content,c.comp_name,c2.comp_name as compNameCli from order_t o
+         left join item i
+         on o.item_cd = i.item_cd
+         join company c
+         on i.comp_cd = c.comp_cd
+         left join state s
+         on o.state_cd = s.state_cd
+         left join company c2
+         on o.comp_cd = c2.comp_cd
+         where
+         order_cd=#{orderCd}
+         order by i.item_name asc		
+      ]]>
+	</select>
+	
+	<select id="selectOrderByOrderCdForSup" resultMap="ordResult"
+		parameterType="Map">
+      <![CDATA[
+         select o.*,i.item_name,i.unit,s.state_content,c2.comp_name as compNameCli from order_t o
+         left join item i
+         on o.item_cd = i.item_cd
+         join company c
+         on i.comp_cd = c.comp_cd
+         left join state s
+         on o.state_cd = s.state_cd
+         left join company c2
+         on o.comp_cd = c2.comp_cd
+         where
+         order_cd=#{orderCd} and c.comp_cd = #{compCd}
+         order by i.item_name asc		
+      ]]>
+	</select>
+
+	<insert id="insertOrder" parameterType="orderVO">
+		<![CDATA[
+		 insert into order_t(order_cd, order_qtt, comp_cd, item_cd)
+		 values(#{orderCd}, #{orderQtt}, #{compCd}, #{itemCd})
+		]]>
+	</insert>
+
+	<update id="updateOrderState" parameterType="Map">
+     <![CDATA[
+	     update order_t
+	     set state_cd=#{stateCd}
+	 ]]>
+	 <if test=" prevStateCd == 'O001' and prevStateCd != stateCd">
+	 	,order_date= (curdate())
+	 </if>
+	     where
+	     order_seq=#{orderSeq}
+      
+	</update>
+	
+	<insert id="insertStore" parameterType="Map">
+		insert store(store_qtt, store_date, state_cd, order_seq) values(#{storeQtt}, curdate(), 'I001', #{orderSeq})
+	</insert>
+
+	<delete id="deleteOrder" parameterType="String">
+	<![CDATA[
+	   delete from order_t
+	   where
+	   order_seq=#{orderSeq}	
+	]]>
+	</delete>
+
+</mapper>

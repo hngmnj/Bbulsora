@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<!-- 로그인 -->
+   <definition name="viewLogin"  template="/WEB-INF/views/login.jsp" />
+   <definition name="viewFindId"  template="/WEB-INF/views/findId.jsp" />
+   <definition name="viewFindPwd"  template="/WEB-INF/views/changePwd.jsp" />
+   <definition name="viewJoin"  template="/WEB-INF/views/join.jsp" />
+   <definition name="loginError"  template="/WEB-INF/views/loginError.jsp" />
+   <!-- 품목 -->
+   <definition name="/item/readTop"  template="/WEB-INF/views/item/readTop.jsp" />
+   <!-- 로케이션 -->
+   <definition name="/store/location"  template="/WEB-INF/views/store/location.jsp" />
+</tiles-definitions>

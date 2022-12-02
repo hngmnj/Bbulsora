@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.state">
+	<resultMap id="stateResult" type="stateVO">
+		<id property="stateCd" column="state_cd" />
+		<result property="stateContent" column="state_content" />
+	</resultMap>
+	
+	<select id="selectStatesForUpdateOrder" resultMap="stateResult"
+		parameterType="String">
+      <![CDATA[
+        select * from state where state_cd > #{orderState} and state_cd < 'O007';	
+      ]]>
+	</select>
+
+	<select id="selectAllStateList" resultMap="stateResult">
+      <![CDATA[
+         select * from state
+      ]]>
+	</select>
+	
+	<select id="selectStoreStateList" resultMap="stateResult">
+      <![CDATA[
+         select * from state where state_cd like "I%"
+      ]]>
+	</select>
+	
+	<insert id="insertState" parameterType="stateVO">
+		<![CDATA[
+         insert into state values (#{stateCd}, #{stateContent})
+      ]]>
+	</insert>
+	
+</mapper>

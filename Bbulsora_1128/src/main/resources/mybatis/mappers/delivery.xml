@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.delivery">
+	<resultMap id="delResult" type="deliveryVO">
+		<id property="dlvrySeq" column="dlvry_seq" />
+		<result property="dlvryCd" column="dlvry_cd" />
+		<result property="dlvryQtt" column="dlvry_qtt" />
+		<result property="reqDate" column="req_date" />
+		<result property="dlvryDate" column="dlvry_date" />
+		<result property="compCd" column="comp_cd" />
+		<result property="compName" column="comp_name" />
+		<result property="itemCd" column="item_cd" />
+		<result property="itemName" column="item_name" />
+		<result property="stateCd" column="state_cd" />
+		<result property="stateContent" column="state_content" />
+		<result property="locArea" column="loc_area" />
+		<result property="cnt" column="cnt" />
+	</resultMap>
+
+	<insert id="insertDeliveryReq" parameterType="deliveryVO">
+		<![CDATA[
+			insert into delivery(dlvry_cd, dlvry_qtt, req_date, comp_cd, item_cd, state_cd) 
+			values (#{dlvryCd}, #{dlvryQtt}, #{reqDate}, #{compCd}, #{itemCd}, 'D001')
+		]]>
+	</insert>
+
+	<select id="selectDeliveryAll" resultMap="delResult">
+		<![CDATA[
+			select d.dlvry_cd, d.req_date, c.comp_cd, c.comp_name, d.state_cd, s.state_content, i.item_name, count(d.dlvry_cd) as cnt
+				from delivery d
+				left join company c
+    			on d.comp_cd = c.comp_cd
+    			left join item i
+    			on d.item_cd = i.item_cd
+    			left join state s
+    			on d.state_cd = s.state_cd
+    			group by d.dlvry_cd;
+		]]>
+	</select>
+
+	<select id="selectSearchDelivery" resultMap="delResult" parameterType="Map">
+		<![CDATA[
+			select d.dlvry_cd, d.req_date, c.comp_cd, c.comp_name, d.state_cd, s.state_content, i.item_name, count(d.dlvry_cd) as cnt
+				from delivery d
+				left join company c
+    			on d.comp_cd = c.comp_cd
+    			left join item i
+    			on d.item_cd = i.item_cd
+    			left join state s
+    			on d.state_cd = s.state_cd
+    			where
+    	]]>
+    	<choose>
+			<when test=" fromDate != null and fromDate != '' and toDate != null and toDate != ''">
+	    		<![CDATA[req_date >= #{fromDate} and req_date <= #{toDate} and]]>
+			</when> 
+			<when test=" fromDate != null and fromDate != '' and (toDate == null or toDate == '')">
+				<![CDATA[req_date >= #{fromDate} and]]>
+			</when>
+			<when test=" (fromDate == null or fromDate == '') and toDate != null and toDate != ''">
+				<![CDATA[req_date <= #{toDate} and]]>
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+			<if test=" client != null and client !=''">
+   	   			<![CDATA[c.comp_name = #{client} and]]>
+			</if>		
+    			d.dlvry_cd is NOT NULL
+    			group by d.dlvry_cd;
+		
+	</select>
+	
+	<select id="searchReqInfoByCode" resultMap="delResult" parameterType="Map">
+		<![CDATA[
+			select d.dlvry_seq, i.item_name, d.dlvry_qtt, stk.loc_area, c2.comp_name, d.state_cd, s.state_content
+				from delivery d
+   				left join state s
+    			on d.state_cd = s.state_cd
+    			left join company c1
+    			on d.comp_cd = c1.comp_cd
+    			left join item i
+    			on d.item_cd = i.item_cd
+    			left join company c2
+    			on i.comp_cd = c2.comp_cd
+				left join order_t o
+    			on d.item_cd = o.item_cd
+    			left join store str
+    			on o.order_seq = str.order_seq
+    			left join stock stk
+    			on str.store_seq = stk.store_seq
+    			where d.dlvry_cd = #{dlvryCd}
+    			and o.comp_cd = #{compCd}
+                and stk.loc_area is NOT NULL;
+		]]>
+	</select>
+
+	<update id="updateAllDeliveryStatus" parameterType="Map">
+		<![CDATA[
+			update delivery set state_cd = #{stateCd}
+			where dlvry_cd = #{dlvryCd}		
+		]]>
+	</update>
+	
+	<update id="updateSepDeliveryStatus" parameterType="Map">
+		<![CDATA[
+			update delivery set state_cd = #{stateCd}
+			where dlvry_seq = #{dlvrySeq}
+		]]>
+	</update>
+</mapper>
