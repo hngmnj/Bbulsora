@@ -80,6 +80,10 @@
          ]]>
    </select>
    
+   <select id="emptySet" resultMap="stkResult">
+   
+   </select>
+   
    <select id="selectClient" resultMap="stkResult">
       <![CDATA[
          select distinct(c.comp_cd), c.comp_name from stock stk
