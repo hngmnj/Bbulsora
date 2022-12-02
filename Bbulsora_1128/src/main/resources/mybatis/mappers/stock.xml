@@ -81,7 +81,7 @@
    </select>
    
    <select id="emptySet" resultMap="stkResult">
-   
+   			select * from member
    </select>
    
    <select id="selectClient" resultMap="stkResult">
