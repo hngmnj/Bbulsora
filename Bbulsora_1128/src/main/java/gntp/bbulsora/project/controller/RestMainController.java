@@ -134,8 +134,8 @@ public class RestMainController {
 	
 	// 조건검색 결과 리턴(특정 품목 로트별 검색)
 	@RequestMapping(value="/searchStockByLot.do", method=RequestMethod.GET)
-	public List<StockVO> searchStockByLot(@RequestParam("itemCd") String itemCd, HttpServletRequest req){
-		return stockDAO.selectSearchStockByLot(itemCd);
+	public List<StockVO> searchStockByLot(@RequestParam Map<String, Object> data, HttpServletRequest req){	
+		return stockDAO.selectSearchStockByLot(data);
 	}
 	
 	// 출고요청 품목 추가

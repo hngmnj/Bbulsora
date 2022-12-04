@@ -29,13 +29,19 @@ function showStockInfoByLot(code) {
       type : "get",
       url : "${contextPath}/rest/searchStockByLot.do",
       dataType : "text",
-      data : {itemCd:code},
+      data : {itemCd:code, compCd:"${user.compCd}", client:$('#client').val()},
       success : function(data,status) {
          let jsonObj = JSON.parse(data);
          let result = "<table><tr><th>Lot No.</th><th>품목명</th><th>수량</th><th>로케이션</th><th>상태내용</th></tr>"
+         if("${user.compCd}"=="ADMIN") {
+        	 result = "<table><tr><th>Lot No.</th><th>품목명</th><th>고객사명</th><th>수량</th><th>로케이션</th><th>상태내용</th></tr>"
+         }
          for(let i=0;i<jsonObj.length;i++) {   
-            result += "<tr><td>"+jsonObj[i].lot+"</td><td>"+jsonObj[i].itemName+"</td><td>"+jsonObj[i].stockQtt
-            +"</td><td>"+jsonObj[i].locArea+"</td><td>"+jsonObj[i].stateContent+"</td></tr>"
+            result += "<tr><td>"+jsonObj[i].lot+"</td><td>"+jsonObj[i].itemName+"</td>"
+            if("${user.compCd}"=="ADMIN") {
+            	result += "<td>"+jsonObj[i].compName+"</td>"
+            }
+            result += "<td>"+jsonObj[i].stockQtt+"</td><td>"+jsonObj[i].locArea+"</td><td>"+jsonObj[i].stateContent+"</td></tr>"
          }
          result += "</table>";
          $('#search_stock_by_lot').html(result);
@@ -131,20 +137,24 @@ function checkDelivery() {
 }
 
 $(document).ready(function(){
-   $('#btn_srchStock').on('click',function(){
-      $.ajax({
-         type : "get",
-         url : "${contextPath}/rest/searchStock.do",
-         dataType : "text",
-         data : {item:$('#item').val(), client:$('#client').val()},
-         success : function(data,status){
-            let jsonObj = JSON.parse(data);
-            let result = "<table><tr><th>품목코드</th><th>품목명</th><th>고객사명</th><th>총 수량</th></tr>";
-            for(let i=0; i<jsonObj.length; i++){
-               result += "<tr><td><a href='#' target='_top' onclick='showItemInfo(\""+jsonObj[i].itemCd+"\")'>"+jsonObj[i].itemCd
-               +"</a></td><td><a href='#' target='_top' onclick='showStockInfoByLot(\""+jsonObj[i].itemCd+"\")'>"+jsonObj[i].itemName+"</a></td><td>"+jsonObj[i].compName+"</td>"
-               +"<td>"+jsonObj[i].stockSum+"</td></tr>"
-            }
+	$('#btn_srchStock').on('click',function(){
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/rest/searchStock.do",
+			dataType : "text",
+			data : {item:$('#item').val(), client:$('#client').val()},
+			success : function(data,status){
+				let jsonObj = JSON.parse(data);
+				let result = "<table><tr><th>품목코드</th><th>품목명</th><th>공급사명</th><th>총 수량</th></tr>";
+				for(let i=0; i<jsonObj.length; i++){
+					result += "<tr><td><a href='#' target='_top' onclick='showItemInfo(\""+jsonObj[i].itemCd+"\")'>"+jsonObj[i].itemCd
+					+"</a></td><td><a href='#' target='_top' onclick='showStockInfoByLot(\""+jsonObj[i].itemCd+"\")'>"+jsonObj[i].itemName+"</a></td><td>"+jsonObj[i].compName+"</td>"
+					if("${user.compCd}" != "ADMIN") {
+						result += "<td><a href='#' onclick='addItem(\""+jsonObj[i].itemCd+"\")'>"+jsonObj[i].stockSum+"</td></tr>"
+					} else {
+						result += "<td>"+jsonObj[i].stockSum+"</td>"
+					}
+				}
             result += "</table>";
             $('#search_stock').html(result);
          },
@@ -167,7 +177,7 @@ $(document).ready(function(){
 
 <div id="search_stock" style="overflow:auto; height: 200px">
 <table>
-<tr><th>품목코드</th><th>품목명</th><th>고객사명</th><th>총 수량</th></tr>
+<tr><th>품목코드</th><th>품목명</th><th>공급사명</th><th>총 수량</th></tr>
 <c:forEach var="stock" items="${list}">
 <tr>
    <td><a href='#' target='_top' onclick='showItemInfo("${stock.itemCd}")'>${stock.itemCd}</a></td>
@@ -181,10 +191,7 @@ $(document).ready(function(){
 </div>
 
 <div id="search_stock_by_lot" style="overflow:auto; height: 200px">
-<table>
-<tr><th>Lot No.</th><th>품목명</th><th>수량</th><th>로케이션</th><th>상태내용</th></tr>
 
-</table>
 </div>
 
 <c:if test="${fn:substring(user.compCd,0,3) eq 'CLI'}">

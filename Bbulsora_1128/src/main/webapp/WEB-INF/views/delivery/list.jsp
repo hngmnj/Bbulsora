@@ -64,8 +64,10 @@ function showReqInfoByCode(code, comp) {
          let stateObj = dlvryObj[i].stateList;
          let result = "<table><tr><th>순번</th><th>품목명</th><th>수량</th><th>로케이션</th><th>개별상태</th></tr>";
          for(let i=0;i<dlvryObj.length;i++) {
-            result += "<input type='hidden' id='dlvrySeq"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].dlvrySeq+">"
-            +"<tr><td>"+(i+1)+"</td><td>"+dlvryObj[i].itemName+"</td><td>"+dlvryObj[i].dlvryQtt
+        	if(dlvryObj.length != 0) {
+            	result += "<input type='hidden' id='dlvrySeq"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].dlvrySeq+">"
+        	}
+            result += "<tr><td>"+(i+1)+"</td><td>"+dlvryObj[i].itemName+"</td><td>"+dlvryObj[i].dlvryQtt
             +"</td><td>"+dlvryObj[i].locArea+"</td>"
             if("${compCd}" == 'ADMIN') {
                result += "<td><select id='stateCd"+dlvryObj[i].dlvrySeq+"'>"
@@ -97,10 +99,14 @@ $(document).ready(function(){
          success : function(data,status){
             let i = 0;
             let dlvryObj = JSON.parse(data);
-            let stateObj = dlvryObj[i].stateList;
-            let result = "<input type='hidden' id='compCd' value="+dlvryObj[i].compCd+">"
+            let stateObj = null;
+            let result = "";
+            if(dlvryObj.length != 0) {
+            	stateObj = dlvryObj[i].stateList;
+            	result = "<input type='hidden' id='compCd' value="+dlvryObj[i].compCd+">"
+            }
             if("${compCd}" == 'ADMIN') {
-               result = "<table><tr><th>출고코드</th><th>요청일</th><th>요청업체명</th><th>상태일괄변경</th></tr>";
+               result = "<table><tr><th>출고코드</th><th>납기요청일</th><th>요청업체명</th><th>상태일괄변경</th></tr>";
                for(let i=0; i<dlvryObj.length; i++){
                   result += "<tr><td><a href='#' target='_top' onclick='showReqInfoByCode(\""+dlvryObj[i].dlvryCd+"\",\""+dlvryObj[i].compCd+"\")'>"+dlvryObj[i].dlvryCd
                   +"</a></td><td>"+dlvryObj[i].reqDate+"</td><td>"+dlvryObj[i].compName+"</td>"
@@ -111,11 +117,14 @@ $(document).ready(function(){
                   result += "</select> <input type='button' value='변경' onclick='allDlvryStateUd(\""+dlvryObj[i].dlvryCd+"\")'></td></tr>"
                };
             } else {
-               result = "<table><tr><th>출고코드</th><th>요청일</th><th>품목</th><th>현재상태</th></tr>";
+               result = "<table><tr><th>출고코드</th><th>납기요청일</th><th>품목</th><th>현재상태</th></tr>";
                for(let i=0; i<dlvryObj.length; i++){
                   result += "<tr><td><a href='#' target='_top' onclick='showReqInfoByCode(\""+dlvryObj[i].dlvryCd+"\")'>"+dlvryObj[i].dlvryCd
-                  +"</a></td><td>"+dlvryObj[i].reqDate+"</td><td>"+dlvryObj[i].itemName+" 외 "+(dlvryObj[i].cnt-1)+" 건</td>"
-                  +"<td>"+dlvryObj[i].stateContent+"</td></tr>"
+                  +"</a></td><td>"+dlvryObj[i].reqDate+"</td><td>"+dlvryObj[i].itemName
+                  if(dlvryObj[i].cnt != 1) {
+                  	result += " 외 "+(dlvryObj[i].cnt-1)+" 건</td>"
+                  }
+                  result += "<td>"+dlvryObj[i].stateContent+"</td></tr>"
                }
             }
             result += "</table>";
@@ -142,7 +151,7 @@ $(document).ready(function(){
       <table>
          <tr>
             <th>출고코드</th>
-            <th>요청일</th>
+            <th>납기요청일</th>
             <c:if test="${user.compCd eq 'ADMIN'}"><th>요청업체명</th><th>상태일괄변경</th></c:if>
             <c:if test="${user.compCd ne 'ADMIN'}"><th>품목</th><th>현재상태</th></c:if>
          </tr>

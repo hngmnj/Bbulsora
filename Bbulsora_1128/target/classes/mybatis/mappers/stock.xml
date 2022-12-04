@@ -41,7 +41,7 @@
    
    <select id="selectAllStockListForCli" resultMap="stkResult" parameterType="Map">
        <![CDATA[
-         select i.item_cd, i.item_name, c.comp_name, sum(stk.stock_qtt) as stock_sum
+         select i.item_cd, i.item_name, c2.comp_name, sum(stk.stock_qtt) as stock_sum
          from stock stk
            left join store str
            on stk.store_seq = str.store_seq
@@ -51,9 +51,11 @@
            on str.order_seq = o.order_seq
            left join item i
            on o.item_cd = i.item_cd
-           left join company c
-           on o.comp_cd = c.comp_cd
-           where c.comp_cd = #{compCd}
+           left join company c1
+           on o.comp_cd = c1.comp_cd
+           left join company c2
+           on i.comp_cd = c2.comp_cd
+           where c1.comp_cd = #{compCd}
            and stk.loc_area is NOT NULL
          group by i.item_cd
          order by submit_date desc , item_name asc
@@ -94,7 +96,39 @@
    
    <select id="selectSearchStock" resultMap="stkResult" parameterType="Map">
       <![CDATA[
-         select i.item_cd, i.item_name, c.comp_name, sum(stk.stock_qtt) as stock_sum
+         select i.item_cd, i.item_name, c1.comp_name, sum(stk.stock_qtt) as stock_sum
+         from stock stk
+           left join store str
+           on stk.store_seq = str.store_seq
+           left join state sta
+           on str.state_cd = sta.state_cd
+           left join order_t o
+           on str.order_seq = o.order_seq
+           left join item i
+           on o.item_cd = i.item_cd
+           left join company c1
+		   on i.comp_cd = c1.comp_cd
+		   left join company c2
+		   on o.comp_cd = c2.comp_cd
+        ]]>
+           where      
+      <if test="compCd != 'ADMIN'">
+         <![CDATA[c2.comp_cd = #{compCd} and]]>
+      </if>
+      <if test=" item != null and item !=''">
+          <![CDATA[i.item_name = #{item} and]]>
+      </if>
+      <if test=" client != null and client !=''">
+          <![CDATA[c2.comp_name = #{client} and]]>
+      </if>
+           stk.loc_area is NOT NULL
+           group by i.item_cd
+           order by stk.stock_seq desc, i.item_name asc
+   </select>
+   
+   <select id="selectSearchStockByLot" resultMap="stkResult" parameterType="Map">
+      <![CDATA[
+         select stk.lot, i.item_name, stk.stock_qtt, stk.loc_area, sta.state_content, c.comp_name
          from stock stk
            left join store str
            on stk.store_seq = str.store_seq
@@ -105,43 +139,18 @@
            left join item i
            on o.item_cd = i.item_cd
            left join company c
-        ]]>
-        <if test="compCd == 'ADMIN'">
-           <![CDATA[on i.comp_cd = c.comp_cd]]>
-        </if>
-        <if test="compCd != 'ADMIN'">
-           <![CDATA[on o.comp_cd = c.comp_cd]]>
-        </if>
-           where 
-      <if test=" item != null and item !=''">
-               <![CDATA[i.item_name = #{item} and]]>
-      </if>
-      <if test=" client != null and client !=''">
-               <![CDATA[c.comp_name = #{client} and]]>
-      </if>
-      <if test="compCd != 'ADMIN'">
-         <![CDATA[c.comp_cd = #{compCd} and]]>
-      </if>
-           stk.loc_area is NOT NULL
-             group by i.item_cd
-         order by stk.stock_seq desc, i.item_name asc
-   </select>
-   
-   <select id="selectSearchStockByLot" resultMap="stkResult" parameterType="String">
-      <![CDATA[
-         select stk.lot, i.item_name, stk.stock_qtt, stk.loc_area, sta.state_content
-         from stock stk
-           left join store str
-           on stk.store_seq = str.store_seq
-           left join state sta
-           on str.state_cd = sta.state_cd
-           left join order_t o
-           on str.order_seq = o.order_seq
-           left join item i
-           on o.item_cd = i.item_cd
+           on o.comp_cd = c.comp_cd
            where i.item_cd = #{itemCd}
+      ]]>     
+      <if test="compCd != 'ADMIN'">
+           and o.comp_cd = #{compCd}
+      </if>
+      <if test="client != null and client != ''">
+      	   and c.comp_name = #{client}
+      </if>
+      <![CDATA[
            and stk.loc_area is NOT NULL
-         order by stk.lot desc, i.item_name asc
+           order by stk.lot asc, i.item_name asc
       ]]>
    </select>
    

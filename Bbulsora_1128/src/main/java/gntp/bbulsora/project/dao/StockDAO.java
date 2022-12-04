@@ -47,8 +47,8 @@ public class StockDAO {
 	}
 
 	// 품목 로트별 검색
-	public List<StockVO> selectSearchStockByLot(String itemCd) {
-		return sqlSession.selectList("mapper.stock.selectSearchStockByLot", itemCd);
+	public List<StockVO> selectSearchStockByLot(Map<String, Object> data) {
+		return sqlSession.selectList("mapper.stock.selectSearchStockByLot", data);
 	}
 	
 	public StockVO selectOne(String stockSeq) {

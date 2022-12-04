@@ -114,7 +114,7 @@
 					<td><a href="#" target="_top" onclick="showItemInfo('${order.itemCd}')">${order.itemName}</a></td>
 					<c:if test="${order.stateCd eq 'O004'}">
 						<td><input type="text" id="storeQtt${order.orderSeq}"
-							style="width: 30px;" value="0" min="0">&nbsp;/${order.orderQtt}</td>
+							style="width: 30px;" value="${order.orderQtt}" min="0" readonly="readonly">&nbsp;/${order.orderQtt}</td>
 					</c:if>
 					
 					<c:if test="${order.stateCd ne 'O004'}">
