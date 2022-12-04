@@ -127,7 +127,7 @@
          order by stk.stock_seq desc, i.item_name asc
    </select>
    
-   <select id="selectSearchStockByLot" resultMap="stkResult" parameterType="String">
+   <select id="selectSearchStockByLot" resultMap="stkResult" parameterType="Map">
       <![CDATA[
          select stk.lot, i.item_name, stk.stock_qtt, stk.loc_area, sta.state_content
          from stock stk
@@ -139,7 +139,14 @@
            on str.order_seq = o.order_seq
            left join item i
            on o.item_cd = i.item_cd
+           left join company c
+           on o.comp_cd = c.comp_cd
            where i.item_cd = #{itemCd}
+      ]]>     
+      <if test="compCd != 'ADMIN'">
+           and o.comp_cd = #{compCd}
+      </if>
+      <![CDATA[
            and stk.loc_area is NOT NULL
          order by stk.lot desc, i.item_name asc
       ]]>

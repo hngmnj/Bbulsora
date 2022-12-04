@@ -1,16 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Item List</title>
+<link rel="stylesheet" href="${contextPath}/resources/css/info_table.css" type="text/css">
 </head>
 <body>
-<h1>취급 품목 정보</h1>
-<a href="viewCreate.do"><button>신규 품목 추가</button></a>
-<a href="viewCsvCreate.do"><button>신규 품목 csv 품목 등록</button></a>
+<div style="text-align:center"><h1>취급 품목 정보</h1></div>
+<div style="overflow:auto; height: 400px">
 <table>
 	<tr><th>품목코드</th><th>품목명</th><th>대분류</th><th>중분류</th><th>소분류</th><th>단위</th><th>기업코드</th>
 <c:forEach var="item" items="${list}">
@@ -25,5 +26,9 @@
 	</tr>
 </c:forEach>
 </table>
+</div>
+<br/>
+<div style="text-align:center"><a href="viewCreate.do"><button>신규 품목 추가</button></a>
+<a href="viewCsvCreate.do"><button>신규 품목 csv 품목 등록</button></a></div>
 </body>
 </html>

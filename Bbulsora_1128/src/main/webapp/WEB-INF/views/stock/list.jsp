@@ -29,7 +29,7 @@ function showStockInfoByLot(code) {
       type : "get",
       url : "${contextPath}/rest/searchStockByLot.do",
       dataType : "text",
-      data : {itemCd:code},
+      data : {itemCd:code, compCd:"${user.compCd}"},
       success : function(data,status) {
          let jsonObj = JSON.parse(data);
          let result = "<table><tr><th>Lot No.</th><th>품목명</th><th>수량</th><th>로케이션</th><th>상태내용</th></tr>"
