@@ -18,7 +18,7 @@
 
 	<select id="selectStoreByOrderCd" resultMap="strResult" parameterType="String">
 	  <![CDATA[
-		select str.store_seq, str.store_qtt, str.store_date, sta.state_content, str.loc_area, o.item_cd, o.order_cd
+		select str.store_seq, str.store_qtt, str.store_date, sta.state_cd, sta.state_content, str.loc_area, o.item_cd, o.order_cd
 		from store str 
 		left join state sta
 		on str.state_cd = sta.state_cd

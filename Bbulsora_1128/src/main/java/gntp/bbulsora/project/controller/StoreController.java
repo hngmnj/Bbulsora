@@ -49,7 +49,6 @@ public class StoreController {
 		ModelAndView mav = new ModelAndView();
 		String viewName = this.getViewName(request);
 		List<StoreVO> list = storeDAO.selectStoreByOrderCd(orderCd);
-		mav.addObject("stateContentList", stateDAO.selectStoreState());
 		mav.addObject("list", list);
 		mav.setViewName(viewName);
 		return mav;

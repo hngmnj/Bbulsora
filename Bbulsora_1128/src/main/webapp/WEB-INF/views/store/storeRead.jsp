@@ -66,7 +66,7 @@ function showLocSetWindow(storeSeq) {
 							<select name="stateCd">
 								<option value="${store.stateCd}">선택해주세요</option>
 								
-									<c:forEach var="state" items="${stateContentList}">
+									<c:forEach var="state" items="${store.stateList}">
 										<option value="${state.stateCd}"> ${state.stateContent}</option>
 									</c:forEach>
 									

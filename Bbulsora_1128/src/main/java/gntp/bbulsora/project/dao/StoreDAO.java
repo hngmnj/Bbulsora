@@ -30,13 +30,8 @@ public class StoreDAO {
    }
    
    //입고상태 수정
-   public boolean updateOne(Map<String, String> store) {
-      boolean flag = false;
-      int affectedCount = sqlSession.update("mapper.store.updateStoreState", store);
-      if(affectedCount > 0) {
-         flag = true;
-      }
-      return flag;
+   public int updateOne(Map<String, String> store) {
+      return sqlSession.update("mapper.store.updateStoreState", store);
    }
    
    //검색결과 리턴
