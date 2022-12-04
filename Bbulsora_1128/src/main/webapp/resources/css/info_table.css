@@ -1,0 +1,45 @@
+@charset "UTF-8";
+table {
+   	width: 80%;
+   	margin-left: 10%;
+   	margin-right: 10%;
+    align-content: center;
+}
+
+table, tr, th, td {
+   border: 1px solid white;
+   border-collapse: collapse;
+}
+
+th, td {
+	width: 200px;
+}
+
+.code {
+	width: 150px;
+}
+
+.english {
+	width: 400px;
+}
+
+.address {
+	width: 600px;
+}
+
+.narrow {
+	width: 100px;
+}
+
+th {
+   background-color: rgb(27,30,40);
+   color: white;
+}
+
+tr:nth-child(odd) {
+   background-color: #F2F2F2;
+}
+
+tr:nth-child(even) {
+   background-color: rgb(242,242,242);
+}
