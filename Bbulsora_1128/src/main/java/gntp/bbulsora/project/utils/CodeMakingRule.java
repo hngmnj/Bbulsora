@@ -61,29 +61,27 @@ public class CodeMakingRule {
 
 	public static String LotNo(StoreVO store) {
 		String lot = null;
+		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyMMdd");
-		SimpleDateFormat sdfTime = new SimpleDateFormat("kkmmss");
-		String compCd = store.getItemCd().substring(0, 3).toUpperCase();
+		String compCd = store.getOrderCd().substring(0, 3).toUpperCase();
+		String supCd = store.getItemCd().substring(0, 3).toUpperCase();
 		String itemCd = store.getItemCd().substring(3, 6).toUpperCase();
 		String storeDate = sdfDate.format(new Date());
-		int hour = Integer.parseInt(sdfTime.format(new Date()).substring(0,2));
-		int minute = Integer.parseInt(sdfTime.format(new Date()).substring(2,4));
-		int second = Integer.parseInt(sdfTime.format(new Date()).substring(4,6));
-		DecimalFormat df = new DecimalFormat("00");
-		lot = itemCd+"-"+compCd+"-"+storeDate+"-"+df.format(hour)+df.format(minute)+df.format(second);
+		int time = 24*60*cal.get(Calendar.HOUR_OF_DAY) + 60*cal.get(Calendar.MINUTE) + cal.get(Calendar.SECOND);
+		DecimalFormat df = new DecimalFormat("00000");
+		lot = compCd+"-"+ itemCd+"-"+supCd+"-"+storeDate+"-"+df.format(time);
 		return lot;
 	}
 
 	public static String DeliveryCode(DeliveryVO delivery) {
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdfYear = new SimpleDateFormat("yy");
 		String compCd = delivery.getCompCd().substring(3, 6);
 		int cnt = delivery.getCnt()-1;
-		int year = Integer.parseInt(sdfYear.format(cal.get(Calendar.YEAR)));
+		int year = cal.get(Calendar.YEAR);
 		int day = cal.get(Calendar.DAY_OF_YEAR);
 		int second = cal.get(Calendar.MILLISECOND);
+		String yearCd = String.valueOf(year).substring(2, 4); 
 		DecimalFormat df = new DecimalFormat("000");
-		String yearCd = df.format(year);
 		String dayCd = Integer.toHexString(day).toUpperCase();
 		String secondCd = df.format(second);
 		if(day<16) {

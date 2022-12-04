@@ -150,6 +150,6 @@ public class DeliveryVO {
    @Override
    public String toString() {
       return "dlvryCd : "+dlvryCd+", dlvryQtt : "+dlvryQtt+", reqDate : "+reqDate+", compCd : "+compCd+", itemCd : "+itemCd+", stateCd : "+stateCd
-            +", locArea : "+locArea;
+            +", locArea : "+locArea + ", cnt : "+cnt;
    }
 }

@@ -16,16 +16,16 @@ public class DeliveryService {
 	
 	public void insertRequestData(List<DeliveryVO> list, String compCd) {
 		DeliveryVO sample = list.get(0);
-		sample.setCompCd(compCd);
 		int cnt = list.size();
+		sample.setCompCd(compCd);
+		sample.setCnt(cnt);
 		String dlvryCd = CodeMakingRule.DeliveryCode(sample);
 		sample.setCompCd(null);
 		for(int i=0;i<cnt;i++) {
 			list.get(i).setDlvryCd(dlvryCd);
 			list.get(i).setCompCd(compCd);
-			list.get(i).setStateCd("O001");
+			list.get(i).setStateCd("D001");
 			list.get(i).setCnt(cnt);
-			System.out.println(list.get(i));
 			deliveryDAO.insertOne(list.get(i));
 		}
 	}
