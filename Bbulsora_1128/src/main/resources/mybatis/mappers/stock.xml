@@ -169,12 +169,16 @@
       ]]>
    </select>
 
-   <delete id="deleteOrder" parameterType="String">
-   <![CDATA[
-      delete from order_t
-      where
-      order_seq=#{orderSeq}   
-   ]]>
-   </delete>
+   <update id="subtractingFIFO" parameterType="fifoVO">
+	  <![CDATA[
+	  	update stock_t set stock_qtt = #{remainQtt}
+	  ]]> 
+	  	<if test="remainQtt == 0">
+	  		lot_area set NULL
+	  	</if>
+	  <![CDATA[	
+	  	where lot = {lot}
+	  ]]>
+   </update>
 
 </mapper>

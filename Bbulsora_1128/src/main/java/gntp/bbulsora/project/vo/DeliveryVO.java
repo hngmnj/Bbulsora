@@ -18,7 +18,7 @@ public class DeliveryVO {
    private String stateCd;
    private String stateContent;
    private int cnt;
-   private String locArea;
+   private int totalQtt;
    private List<StateVO> stateList;
 
    public DeliveryVO() {}
@@ -138,18 +138,18 @@ public class DeliveryVO {
    public void setStateList(List<StateVO> stateList) {
       this.stateList = stateList;
    }
-
-   public String getLocArea() {
-      return locArea;
+   
+   public int getTotalQtt() {
+	   return totalQtt;
    }
 
-   public void setLocArea(String locArea) {
-      this.locArea = locArea;
-   }
+	public void setTotalQtt(int totalQtt) {
+		this.totalQtt = totalQtt;
+	}
 
-   @Override
+@Override
    public String toString() {
       return "dlvryCd : "+dlvryCd+", dlvryQtt : "+dlvryQtt+", reqDate : "+reqDate+", compCd : "+compCd+", itemCd : "+itemCd+", stateCd : "+stateCd
-            +", locArea : "+locArea + ", cnt : "+cnt;
+            +", totalQtt : "+totalQtt + ", cnt : "+cnt;
    }
 }

@@ -176,7 +176,7 @@
 	     set state_cd=#{stateCd}
 	 ]]>
 	 <if test=" prevStateCd == 'O001' and prevStateCd != stateCd">
-	 	,order_date= (curdate())
+	 	, order_date= (curdate())
 	 </if>
 	     where
 	     order_seq=#{orderSeq}

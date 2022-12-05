@@ -16,7 +16,7 @@
 		<result property="itemName" column="item_name" />
 		<result property="stateCd" column="state_cd" />
 		<result property="stateContent" column="state_content" />
-		<result property="locArea" column="loc_area" />
+		<result property="totalQtt" column="total_qtt" />
 		<result property="cnt" column="cnt" />
 	</resultMap>
 
@@ -29,7 +29,8 @@
 
 	<select id="selectDeliveryAll" resultMap="delResult">
 		<![CDATA[
-			select d.dlvry_cd, d.req_date, c.comp_cd, c.comp_name, d.state_cd, s.state_content, i.item_name, count(d.dlvry_cd) as cnt
+			select d.dlvry_cd, d.dlvry_qtt, d.req_date, c.comp_cd, c.comp_name,
+			d.state_cd, s.state_content, i.item_cd, i.item_name, count(d.dlvry_cd) as cnt
 				from delivery d
 				left join company c
     			on d.comp_cd = c.comp_cd
@@ -43,7 +44,8 @@
 
 	<select id="selectSearchDelivery" resultMap="delResult" parameterType="Map">
 		<![CDATA[
-			select d.dlvry_cd, d.req_date, c.comp_cd, c.comp_name, d.state_cd, s.state_content, i.item_name, count(d.dlvry_cd) as cnt
+			select d.dlvry_cd, d.dlvry_qtt, d.req_date, c.comp_cd, c.comp_name, 
+			d.state_cd, s.state_content, i.item_cd, i.item_name, count(d.dlvry_cd) as cnt
 				from delivery d
 				left join company c
     			on d.comp_cd = c.comp_cd
@@ -76,7 +78,8 @@
 	
 	<select id="searchReqInfoByCode" resultMap="delResult" parameterType="Map">
 		<![CDATA[
-			select d.dlvry_seq, i.item_name, d.dlvry_qtt, stk.loc_area, c2.comp_name, d.state_cd, s.state_content
+			select d.dlvry_seq, d.dlvry_cd, d.dlvry_qtt, d.req_date, c1.comp_cd, c1.comp_name, sum(stk.stock_qtt) as total_qtt,
+				d.state_cd, s.state_content, i.item_cd, i.item_name, count(d.dlvry_cd) as cnt
 				from delivery d
    				left join state s
     			on d.state_cd = s.state_cd
@@ -94,7 +97,8 @@
     			on str.store_seq = stk.store_seq
     			where d.dlvry_cd = #{dlvryCd}
     			and o.comp_cd = #{compCd}
-                and stk.loc_area is NOT NULL;
+                and stk.loc_area is NOT NULL
+                group by d.item_cd;
 		]]>
 	</select>
 

@@ -22,7 +22,7 @@ function allDlvryStateUd(code) {
          type : "get",
          url : "${contextPath}/delivery/updateAll.do",
          dataType : "text",
-         data : {dlvryCd: code, stateCd: $('#stateCd').val()},
+         data : {dlvryCd: code, stateCd: $('#stateCd'+code).val()},
          success : function(data, status) {
             alert("상태 변경 성공");
             location.replace("${contextPath}/delivery/list.do");
@@ -40,7 +40,8 @@ function sepDlvryStateUd(seq) {
       type : "get",
       url : "${contextPath}/delivery/updateSep.do",
       dataType : "text",
-      data : {dlvrySeq: $('#dlvrySeq'+seq).val(), stateCd: $('#stateCd'+seq).val()},
+      data : {dlvrySeq:$('#dlvrySeq'+seq).val(), stateCd:$('#stateCd'+seq).val(), dlvryCd:$('#dlvryCd'+seq).val(), dlvryQtt:$('#dlvryQtt'+seq).val(),
+    	  		itemCd:$('#itemCd'+seq).val(), compCd:$('#compCd'+seq).val()},
       success : function(data, status) {
          alert("상태 변경 성공");
          location.replace("${contextPath}/delivery/list.do");
@@ -62,13 +63,17 @@ function showReqInfoByCode(code, comp) {
          let i = 0;
          let dlvryObj = JSON.parse(data);
          let stateObj = dlvryObj[i].stateList;
-         let result = "<table><tr><th>순번</th><th>품목명</th><th>수량</th><th>로케이션</th><th>개별상태</th></tr>";
+         let result = "<table><tr><th>순번</th><th>품목명</th><th>수량</th><th>총 재고량</th><th>개별상태</th></tr>";
          for(let i=0;i<dlvryObj.length;i++) {
         	if(dlvryObj.length != 0) {
             	result += "<input type='hidden' id='dlvrySeq"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].dlvrySeq+">"
+            	+"<input type='hidden' id='dlvryCd"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].dlvryCd+">"
+            	+"<input type='hidden' id='itemCd"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].itemCd+">"
+            	+"<input type='hidden' id='compCd"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].compCd+">"
+            	+"<input type='hidden' id='dlvryQtt"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].dlvryQtt+">"
         	}
             result += "<tr><td>"+(i+1)+"</td><td>"+dlvryObj[i].itemName+"</td><td>"+dlvryObj[i].dlvryQtt
-            +"</td><td>"+dlvryObj[i].locArea+"</td>"
+            +"</td><td>"+dlvryObj[i].totalQtt+"</td>"
             if("${compCd}" == 'ADMIN') {
                result += "<td><select id='stateCd"+dlvryObj[i].dlvrySeq+"'>"
                +"<option value='"+dlvryObj[i].stateCd+"'>"+dlvryObj[i].stateContent+"</option>"
@@ -146,7 +151,6 @@ $(document).ready(function(){
          고객사명<input type="text" id="client"> 
          <input type="button" id="btn_srchDelivery" value="검색">
    </div>
-   
    <div id="search_result" style="overflow:auto; height: 250px">
       <table>
          <tr>
