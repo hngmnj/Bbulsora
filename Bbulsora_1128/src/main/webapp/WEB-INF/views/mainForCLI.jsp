@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Is it ok?</title>
+<title>Hello</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style type="text/css">
 .cal_top{
