@@ -25,88 +25,101 @@ import gntp.bbulsora.project.vo.MemberVO;
 @Controller
 @RequestMapping("/delivery")
 public class DeliveryController {
-   @Autowired
-   private DeliveryDAO deliveryDAO;
-   
-   @Autowired
-   private DeliveryService deliveryService;
-   
-   @Autowired
-   private StockDAO stockDAO;
-   
-   @RequestMapping(value="/basic.do", method=RequestMethod.POST)
-   public ModelAndView basic(HttpServletRequest request, HttpServletResponse response) throws Exception  {
-      ModelAndView mav = new ModelAndView();
-      String viewName = this.getViewName(request);
-      mav.setViewName(viewName);
-      return mav;
-   }
-   
-   @RequestMapping(value="/create.do", method=RequestMethod.POST)
-   public void create(@RequestBody List<DeliveryVO> deliver, HttpServletRequest request, HttpServletResponse response) {
-      MemberVO user = (MemberVO) request.getSession().getAttribute("user");
-      deliveryService.insertRequestData(deliver, user.getCompCd());
-   }
-   
-   @RequestMapping(value="/list.do", method=RequestMethod.GET)
-   public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception  {
-      ModelAndView mav = new ModelAndView();
-      String viewName = this.getViewName(request);
-      List<DeliveryVO> list = deliveryDAO.selectDeliveryAll();
-      mav.addObject("dlvryList", list);
-      mav.setViewName(viewName);
-      return mav;
-   }
-   
-   @RequestMapping(value="/updateAll.do", method=RequestMethod.GET)
-   public ModelAndView updateAll(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception  {
-      ModelAndView mav = new ModelAndView();
-      deliveryDAO.updateAllState(map);
-      mav.setViewName("redirect:./list.do");
-      return mav;
-   }
-   
-   @RequestMapping(value="/updateSep.do", method= {RequestMethod.GET, RequestMethod.POST})
-   public ModelAndView updateSep(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception  {
-      ModelAndView mav = new ModelAndView();
-      deliveryDAO.updateSepState(map);
-      List<FifoVO> fifo = deliveryDAO.selectForFIFO(map);
-      for(int i=0;i<fifo.size();i++) {
-    	  stockDAO.updateRelease(fifo.get(i));
-      }
-      mav.setViewName("redirect:./list.do");
-      return mav;
-   }
-   
-   private String getViewName(HttpServletRequest request) throws Exception {
-      String contextPath = request.getContextPath();
-      String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
-      if (uri == null || uri.trim().equals("")) {
-         uri = request.getRequestURI();
-      }
+	@Autowired
+	private DeliveryDAO deliveryDAO;
 
-      int begin = 0;
-      if (!((contextPath == null) || ("".equals(contextPath)))) {
-         begin = contextPath.length();
-      }
+	@Autowired
+	private DeliveryService deliveryService;
 
-      int end;
-      if (uri.indexOf(";") != -1) {
-         end = uri.indexOf(";");
-      } else if (uri.indexOf("?") != -1) {
-         end = uri.indexOf("?");
-      } else {
-         end = uri.length();
-      }
-      
-      String fileName = uri.substring(begin, end);
-      if (fileName.indexOf(".") != -1) {
-         fileName = fileName.substring(0, fileName.lastIndexOf(".")); 
-      }
-      if (fileName.lastIndexOf("/") != -1) {
-         fileName = fileName.substring(fileName.lastIndexOf("/"), fileName.length());
-      }
-      
-      return "/delivery"+fileName;
-   }
-}
+	@Autowired
+	private StockDAO stockDAO;
+
+	@RequestMapping(value="/basic.do", method=RequestMethod.POST)
+	public ModelAndView basic(HttpServletRequest request, HttpServletResponse response) throws Exception  {
+		ModelAndView mav = new ModelAndView();
+		String viewName = this.getViewName(request);
+		mav.setViewName(viewName);
+		return mav;
+	}
+
+	@RequestMapping(value="/create.do", method=RequestMethod.POST)
+	public void create(@RequestBody List<DeliveryVO> deliver, HttpServletRequest request, HttpServletResponse response) {
+		MemberVO user = (MemberVO) request.getSession().getAttribute("user");
+		deliveryService.insertRequestData(deliver, user.getCompCd());
+	}
+
+	@RequestMapping(value="/list.do", method=RequestMethod.GET)
+	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception  {
+		ModelAndView mav = new ModelAndView();
+		String viewName = this.getViewName(request);
+		List<DeliveryVO> list = deliveryDAO.selectDeliveryAll();
+		mav.addObject("dlvryList", list);
+		mav.setViewName(viewName);
+		return mav;
+	}
+
+	@RequestMapping(value="/updateAll.do", method=RequestMethod.GET)
+	public ModelAndView updateAll(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception  {
+		ModelAndView mav = new ModelAndView();
+		deliveryDAO.updateAllState(map);
+		String dlvryCd = (String) map.get("dlvryCd");
+		List<FifoVO> fifo = deliveryService.MultiFIFOData(dlvryCd);
+		String prevCd = (String) map.get("prevStateCd");
+		String stateCd = (String) map.get("stateCd");
+		if(stateCd.equals("D004") && !stateCd.equals(prevCd)) {
+			for(int i=0;i<fifo.size();i++) {
+				stockDAO.updateRelease(fifo.get(i));
+			}
+		}
+		mav.setViewName("redirect:./list.do");
+		return mav;
+	}
+
+	@RequestMapping(value="/updateSep.do", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView updateSep(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception  {
+		ModelAndView mav = new ModelAndView();
+		deliveryDAO.updateSepState(map);
+		List<FifoVO> fifo = deliveryDAO.selectForSingleFIFO(map);
+		String prevCd = (String) map.get("prevStateCd");
+		String stateCd = (String) map.get("stateCd");
+		if(stateCd.equals("D004") && !stateCd.equals(prevCd)) {
+			for(int i=0;i<fifo.size();i++) {
+				stockDAO.updateRelease(fifo.get(i));
+			}
+		}
+		mav.setViewName("redirect:./list.do");
+		return mav;
+	}
+
+		private String getViewName(HttpServletRequest request) throws Exception {
+			String contextPath = request.getContextPath();
+			String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
+			if (uri == null || uri.trim().equals("")) {
+				uri = request.getRequestURI();
+			}
+
+			int begin = 0;
+			if (!((contextPath == null) || ("".equals(contextPath)))) {
+				begin = contextPath.length();
+			}
+
+			int end;
+			if (uri.indexOf(";") != -1) {
+				end = uri.indexOf(";");
+			} else if (uri.indexOf("?") != -1) {
+				end = uri.indexOf("?");
+			} else {
+				end = uri.length();
+			}
+
+			String fileName = uri.substring(begin, end);
+			if (fileName.indexOf(".") != -1) {
+				fileName = fileName.substring(0, fileName.lastIndexOf(".")); 
+			}
+			if (fileName.lastIndexOf("/") != -1) {
+				fileName = fileName.substring(fileName.lastIndexOf("/"), fileName.length());
+			}
+
+			return "/delivery"+fileName;
+		}
+	}

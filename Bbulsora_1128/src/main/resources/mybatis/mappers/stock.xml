@@ -21,7 +21,7 @@
 
    <select id="selectAllStockList" resultMap="stkResult">
        <![CDATA[
-         select i.item_cd, i.item_name, c.comp_name, sum(stk.stock_qtt) as stock_sum
+         select stk.stock_seq, i.item_cd, i.item_name, c.comp_name, sum(stk.stock_qtt) as stock_sum
          from stock stk
            left join store str
            on stk.store_seq = str.store_seq
@@ -41,7 +41,7 @@
    
    <select id="selectAllStockListForCli" resultMap="stkResult" parameterType="Map">
        <![CDATA[
-         select i.item_cd, i.item_name, c2.comp_name, sum(stk.stock_qtt) as stock_sum
+         select stk.stock_seq, i.item_cd, i.item_name, c2.comp_name, sum(stk.stock_qtt) as stock_sum
          from stock stk
            left join store str
            on stk.store_seq = str.store_seq
@@ -96,7 +96,7 @@
    
    <select id="selectSearchStock" resultMap="stkResult" parameterType="Map">
       <![CDATA[
-         select i.item_cd, i.item_name, c1.comp_name, sum(stk.stock_qtt) as stock_sum
+         select stk.stock_seq, i.item_cd, i.item_name, c1.comp_name, sum(stk.stock_qtt) as stock_sum
          from stock stk
            left join store str
            on stk.store_seq = str.store_seq
@@ -128,7 +128,7 @@
    
    <select id="selectSearchStockByLot" resultMap="stkResult" parameterType="Map">
       <![CDATA[
-         select stk.lot, i.item_name, stk.stock_qtt, stk.loc_area, sta.state_content, c.comp_name
+         select stk.stock_seq, stk.lot, i.item_name, stk.stock_qtt, stk.loc_area, sta.state_content, c.comp_name
          from stock stk
            left join store str
            on stk.store_seq = str.store_seq

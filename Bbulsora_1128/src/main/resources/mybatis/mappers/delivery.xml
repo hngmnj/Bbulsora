@@ -127,7 +127,33 @@
 		]]>
 	</update>
 	
-	<select id="selectForFIFO" resultMap="fifoResult" parameterType="Map">
+	<select id="selectReqByDeliveryCode" resultMap="delResult" parameterType="Map">
+		<![CDATA[
+			select comp_cd, item_cd, dlvry_cd, dlvry_qtt from delivery
+			where dlvry_cd = #{dlvryCd}
+		]]>
+	</select>
+	
+	<select id="selectForMultiFIFO" resultMap="fifoResult" parameterType="deliveryVO">
+	  <![CDATA[
+	  with FIFO as (
+			select dlvry_cd as lot, dlvry_qtt from delivery where comp_cd = #{compCd} and item_cd = #{itemCd} and dlvry_cd = #{dlvryCd}
+				union
+			select stk.lot, stk.stock_qtt from stock stk
+				left join store str on stk.store_seq = str.store_seq
+				left join order_t o on str.order_seq = o.order_seq
+				left join company c on o.comp_cd = c.comp_cd
+				where o.item_cd = #{itemCd} and c.comp_cd = #{compCd} and stk.stock_qtt != 0
+			) select f.lot, case when (sum(g.dlvry_qtt)-#{dlvryQtt})<0 then 0 else (sum(g.dlvry_qtt)-#{dlvryQtt}) end remain_qtt
+					from FIFO f
+					left join FIFO g
+					on g.lot <= f.lot
+					group by f.lot, f.dlvry_qtt
+					having f.dlvry_qtt-sum(g.dlvry_qtt) > #{dlvryQtt}*(-1)
+      ]]>	
+	</select>
+	
+	<select id="selectForSingleFIFO" resultMap="fifoResult" parameterType="Map">
 	  <![CDATA[
 	  with FIFO as (
 			select dlvry_cd as lot, dlvry_qtt from delivery where comp_cd = #{compCd} and item_cd = #{itemCd} and dlvry_cd = #{dlvryCd}

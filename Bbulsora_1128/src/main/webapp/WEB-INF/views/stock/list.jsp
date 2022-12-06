@@ -13,6 +13,20 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/default_table.css" type="text/css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+// 총 재고수량 초과 불가
+function checkValue(qtt) {
+	let inputText = event.target.value;
+	let modText = inputText.replaceAll(/[^0-9]/g,"");
+	if(inputText != modText){
+		alert("숫자만 입력 가능합니다.");
+		event.target.value = modText;
+	}
+	if(inputText > qtt) {
+		alert("총 수량을 초과할 수 없습니다.");
+		event.target.value = "";
+	}
+}
+
 //아이템 상세
 function showItemInfo(itemCd) {
    let topMargin = event.screenY - event.clientY + 10;
@@ -60,7 +74,7 @@ let tableMap = new Map();
 const tableFooter = "</table><br/><input type='button' value='출하요청' onclick='checkDelivery()'>";
 
 //1. 리스트에 항목 추가
-function addItem(code) {
+function addItem(code, qtt) {
    $.ajax({
       type : "get",
       url : "${contextPath}/rest/selectForDelivery.do",
@@ -69,7 +83,7 @@ function addItem(code) {
       success : function(data,status){
          let jsonObj = JSON.parse(data);
          let result = "<tr><td><a href='#' target='_top' onclick='showItemInfo(\""+jsonObj.itemCd+"\")'>"+jsonObj.itemName+"</a></td>"
-         +"<td><input type='text' id='"+jsonObj.itemCd+"qtt'></td><td><input type='date' id='"+jsonObj.itemCd+"date'></td>"
+         +"<td><input type='text' oninput='checkValue("+qtt+")' id='"+jsonObj.itemCd+"qtt'></td><td><input type='date' id='"+jsonObj.itemCd+"date'></td>"
          +"<td><input type='button' value='삭제' onclick='deleteRequest(\""+jsonObj.itemCd+"\")'></td></tr>";
          tableMap.set(jsonObj.itemCd,result);
          changeDeliveryList();
@@ -150,7 +164,7 @@ $(document).ready(function(){
 					result += "<tr><td><a href='#' target='_top' onclick='showItemInfo(\""+jsonObj[i].itemCd+"\")'>"+jsonObj[i].itemCd
 					+"</a></td><td><a href='#' target='_top' onclick='showStockInfoByLot(\""+jsonObj[i].itemCd+"\")'>"+jsonObj[i].itemName+"</a></td><td>"+jsonObj[i].compName+"</td>"
 					if("${user.compCd}" != "ADMIN") {
-						result += "<td><a href='#' onclick='addItem(\""+jsonObj[i].itemCd+"\")'>"+jsonObj[i].stockSum+"</td></tr>"
+						result += "<td><a href='#' onclick='addItem(\""+jsonObj[i].itemCd+"\", "+jsonObj[i].stockSum+")'>"+jsonObj[i].stockSum+"</td></tr>"
 					} else {
 						result += "<td>"+jsonObj[i].stockSum+"</td>"
 					}
@@ -183,7 +197,7 @@ $(document).ready(function(){
    <td><a href='#' target='_top' onclick='showItemInfo("${stock.itemCd}")'>${stock.itemCd}</a></td>
    <td><a href="#" onclick='showStockInfoByLot("${stock.itemCd}")'>${stock.itemName}</a></td>
    <td>${stock.compName}</td>
-   <c:if test="${fn:substring(user.compCd,0,3) eq 'CLI'}"><td><a href="#" onclick='addItem("${stock.itemCd}")'>${stock.stockSum}</a></td></c:if>
+   <c:if test="${fn:substring(user.compCd,0,3) eq 'CLI'}"><td><a href="#" onclick='addItem("${stock.itemCd}", ${stock.stockSum})'>${stock.stockSum}</a></td></c:if>
    <c:if test="${fn:substring(user.compCd,0,3) ne 'CLI'}"><td>${stock.stockSum}</td></c:if>
 </tr>
 </c:forEach>

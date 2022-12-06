@@ -22,7 +22,7 @@ function allDlvryStateUd(code) {
          type : "get",
          url : "${contextPath}/delivery/updateAll.do",
          dataType : "text",
-         data : {dlvryCd: code, stateCd: $('#stateCd'+code).val()},
+         data : {dlvryCd: code, prevStateCd: $('#prevStateCd'+code).val(), stateCd: $('#stateCd'+code).val()},
          success : function(data, status) {
             alert("상태 변경 성공");
             location.replace("${contextPath}/delivery/list.do");
@@ -40,7 +40,7 @@ function sepDlvryStateUd(seq) {
       type : "get",
       url : "${contextPath}/delivery/updateSep.do",
       dataType : "text",
-      data : {dlvrySeq:$('#dlvrySeq'+seq).val(), stateCd:$('#stateCd'+seq).val(), dlvryCd:$('#dlvryCd'+seq).val(), dlvryQtt:$('#dlvryQtt'+seq).val(),
+      data : {dlvrySeq:$('#dlvrySeq'+seq).val(), prevStateCd:$('#prevStateCd'+seq).val(), stateCd:$('#stateCd'+seq).val(), dlvryCd:$('#dlvryCd'+seq).val(), dlvryQtt:$('#dlvryQtt'+seq).val(),
     	  		itemCd:$('#itemCd'+seq).val(), compCd:$('#compCd'+seq).val()},
       success : function(data, status) {
          alert("상태 변경 성공");
@@ -62,15 +62,17 @@ function showReqInfoByCode(code, comp) {
       success : function(data,status) {
          let i = 0;
          let dlvryObj = JSON.parse(data);
-         let stateObj = dlvryObj[i].stateList;
+         let stateObj = null;
          let result = "<table><tr><th>순번</th><th>품목명</th><th>수량</th><th>총 재고량</th><th>개별상태</th></tr>";
          for(let i=0;i<dlvryObj.length;i++) {
         	if(dlvryObj.length != 0) {
+        		stateObj = dlvryObj[i].stateList;
             	result += "<input type='hidden' id='dlvrySeq"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].dlvrySeq+">"
             	+"<input type='hidden' id='dlvryCd"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].dlvryCd+">"
             	+"<input type='hidden' id='itemCd"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].itemCd+">"
             	+"<input type='hidden' id='compCd"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].compCd+">"
             	+"<input type='hidden' id='dlvryQtt"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].dlvryQtt+">"
+            	+"<input type='hidden' id='prevStateCd"+dlvryObj[i].dlvrySeq+"' value="+dlvryObj[i].stateCd+">"
         	}
             result += "<tr><td>"+(i+1)+"</td><td>"+dlvryObj[i].itemName+"</td><td>"+dlvryObj[i].dlvryQtt
             +"</td><td>"+dlvryObj[i].totalQtt+"</td>"
@@ -108,14 +110,15 @@ $(document).ready(function(){
             let result = "";
             if(dlvryObj.length != 0) {
             	stateObj = dlvryObj[i].stateList;
-            	result = "<input type='hidden' id='compCd' value="+dlvryObj[i].compCd+">"
+            	result = "<input type='hidden' id='compCd"+dlvryObj[i].dlvryCd+"' value="+dlvryObj[i].compCd+">"
+            	+"<input type='hidden' id='prevStateCd"+dlvryObj[i].dlvryCd+"' value="+dlvryObj[i].stateCd+">"
             }
             if("${compCd}" == 'ADMIN') {
                result = "<table><tr><th>출고코드</th><th>납기요청일</th><th>요청업체명</th><th>상태일괄변경</th></tr>";
                for(let i=0; i<dlvryObj.length; i++){
                   result += "<tr><td><a href='#' target='_top' onclick='showReqInfoByCode(\""+dlvryObj[i].dlvryCd+"\",\""+dlvryObj[i].compCd+"\")'>"+dlvryObj[i].dlvryCd
                   +"</a></td><td>"+dlvryObj[i].reqDate+"</td><td>"+dlvryObj[i].compName+"</td>"
-                  +"<td><select id='stateCd'"+dlvryObj[i].dlvryCd+"><option value="+dlvryObj[i].stateCd+">선택안함</option>";
+                  +"<td><select id='stateCd'"+dlvryObj[i].dlvryCd+"><option value="+dlvryObj[i].stateCd+">"+dlvryObj[i].stateContent+"</option>";
                   for(let j=0; j<stateObj.length; j++) {
                      result += "<option value="+stateObj[j].stateCd+">"+stateObj[j].stateContent+"</option>"
                   }
@@ -160,6 +163,7 @@ $(document).ready(function(){
             <c:if test="${user.compCd ne 'ADMIN'}"><th>품목</th><th>현재상태</th></c:if>
          </tr>
          <c:forEach var="dlvryList" items="${dlvryList}">
+         <input type="hidden" id="prevStateCd${dlvryList.dlvryCd}" value="${dlvryList.stateCd}">
             <tr>
                <td><a href='#' target='_top' onclick='showReqInfoByCode("${dlvryList.dlvryCd}", "${dlvryList.compCd}")'>${dlvryList.dlvryCd}</a></td>
                <td>${dlvryList.reqDate}</td>
@@ -171,7 +175,7 @@ $(document).ready(function(){
                </c:if>
                <c:if test="${user.compCd eq 'ADMIN'}">
                <td><select id="stateCd${dlvryList.dlvryCd}">
-                     <option value="${dlvryList.stateCd}">선택안함</option>
+                     <option value="${dlvryList.stateCd}">${dlvryList.stateContent}</option>
                         <c:forEach var="state" items="${dlvryList.stateList}">
                                <option value="${state.stateCd}">${state.stateContent}</option>
                         </c:forEach>
