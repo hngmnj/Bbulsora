@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import gntp.bbulsora.project.vo.FifoVO;
 import gntp.bbulsora.project.vo.StockVO;
 
 @Repository("stockDAO")
@@ -61,5 +62,9 @@ public class StockDAO {
 
 	public StockVO selectForDelivery(String itemCd) {
 		return sqlSession.selectOne("mapper.stock.selectForDelivery", itemCd);
+	}
+
+	public int updateRelease(FifoVO fifo) {
+		return sqlSession.update("mapper.stock.subtractingFIFO", fifo);
 	}
 }

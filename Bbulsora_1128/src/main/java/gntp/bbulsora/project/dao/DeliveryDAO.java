@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import gntp.bbulsora.project.vo.DeliveryVO;
+import gntp.bbulsora.project.vo.FifoVO;
 import gntp.bbulsora.project.vo.StateVO;
 import gntp.bbulsora.project.vo.StockVO;
 
@@ -58,4 +59,7 @@ public class DeliveryDAO {
       return list;
    }
 
+	public List<FifoVO> selectForFIFO(Map<String, Object> data) {
+		return sqlSession.selectList("mapper.delivery.selectForFIFO", data);
+	}
 }

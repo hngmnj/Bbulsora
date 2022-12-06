@@ -13,9 +13,9 @@ public class FifoVO {
 	private String dlvryCd;
 	
 	public FifoVO() {}
-	public FifoVO(String dlvryCd, int remainQtt) {
+	public FifoVO(String dlvryCd, int dlvryQtt) {
 		this.dlvryCd = dlvryCd;
-		this.remainQtt = remainQtt;
+		this.dlvryQtt = dlvryQtt;
 	}
 	
 	public int getDlvryQtt() {
@@ -77,6 +77,6 @@ public class FifoVO {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "FifoVO [lot = "+ lot + ", qtt = " + dlvryQtt + "]";
+		return "FifoVO [lot = "+ lot + ", qtt = " + remainQtt + "]";
 	}
 }

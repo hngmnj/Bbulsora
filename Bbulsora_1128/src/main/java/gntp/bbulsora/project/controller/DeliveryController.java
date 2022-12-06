@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import gntp.bbulsora.project.dao.DeliveryDAO;
 import gntp.bbulsora.project.dao.FifoDAO;
+import gntp.bbulsora.project.dao.StockDAO;
 import gntp.bbulsora.project.service.DeliveryService;
 import gntp.bbulsora.project.vo.DeliveryVO;
 import gntp.bbulsora.project.vo.FifoVO;
@@ -31,7 +32,7 @@ public class DeliveryController {
    private DeliveryService deliveryService;
    
    @Autowired
-   private FifoDAO fifoDAO;
+   private StockDAO stockDAO;
    
    @RequestMapping(value="/basic.do", method=RequestMethod.POST)
    public ModelAndView basic(HttpServletRequest request, HttpServletResponse response) throws Exception  {
@@ -65,18 +66,13 @@ public class DeliveryController {
       return mav;
    }
    
-   @RequestMapping(value="/updateSep.do", method=RequestMethod.GET)
+   @RequestMapping(value="/updateSep.do", method= {RequestMethod.GET, RequestMethod.POST})
    public ModelAndView updateSep(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) throws Exception  {
       ModelAndView mav = new ModelAndView();
       deliveryDAO.updateSepState(map);
-      String state = (String) map.get("stateCd");
-      System.out.println(state);
-      System.out.println(map);
-      if(state.equals("D004")) {
-    	  List<FifoVO> fifo = fifoDAO.selectForFIFO(map);
-    	  for(int i=0;i<fifo.size();i++) {
-    		  System.out.println(fifo.get(i));
-    	  }
+      List<FifoVO> fifo = deliveryDAO.selectForFIFO(map);
+      for(int i=0;i<fifo.size();i++) {
+    	  stockDAO.updateRelease(fifo.get(i));
       }
       mav.setViewName("redirect:./list.do");
       return mav;

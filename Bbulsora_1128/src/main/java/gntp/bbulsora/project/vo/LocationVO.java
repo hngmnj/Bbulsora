@@ -8,6 +8,7 @@ public class LocationVO {
 	private String locType;
 	private int locQtt;
 	private int maxQtt;
+	private int preQtt;
 	
 	public LocationVO() {}
 	public LocationVO(String locArea, String locType, int locQtt, int maxQtt) {
@@ -49,9 +50,17 @@ public class LocationVO {
 		this.maxQtt = maxQtt;
 	}
 	
+	public int getPreQtt() {
+		return preQtt;
+	}
+	
+	public void setPreQtt(int preQtt) {
+		this.preQtt = preQtt;
+	}
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "locArea = "+locArea+", locType = "+locType+", locQtt = "+locQtt+", maxQtt = "+maxQtt;
+		return "locArea = "+locArea+", locType = "+locType+", locQtt = "+locQtt+", maxQtt = "+maxQtt+", preQtt = "+preQtt;
 	}
 }

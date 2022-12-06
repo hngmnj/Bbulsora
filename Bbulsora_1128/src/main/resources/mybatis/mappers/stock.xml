@@ -171,13 +171,13 @@
 
    <update id="subtractingFIFO" parameterType="fifoVO">
 	  <![CDATA[
-	  	update stock_t set stock_qtt = #{remainQtt}
+	  	update stock set stock_qtt = #{remainQtt}
 	  ]]> 
 	  	<if test="remainQtt == 0">
-	  		lot_area set NULL
+	  		, loc_area = NULL
 	  	</if>
 	  <![CDATA[	
-	  	where lot = {lot}
+	  	where lot = #{lot}
 	  ]]>
    </update>
 

@@ -19,6 +19,17 @@
 		<result property="totalQtt" column="total_qtt" />
 		<result property="cnt" column="cnt" />
 	</resultMap>
+	<resultMap id="fifoResult" type="fifoVO">
+		<result property="dlvryQtt" column="dlvry_qtt" />
+		<result property="remainQtt" column="remain_qtt" />
+		<result property="lot" column="lot" />
+		<result property="stockQtt" column="stock_qtt" />
+		<result property="compCd" column="comp_cd" />
+		<result property="itemCd" column="item_cd" />
+		<result property="dlvryCd" column="dlvry_cd" />
+		<result property="dlvrySeq" column="dlvry_seq" />
+		<result property="stateCd" column="state_cd" />
+	</resultMap>
 
 	<insert id="insertDeliveryReq" parameterType="deliveryVO">
 		<![CDATA[
@@ -115,4 +126,23 @@
 			where dlvry_seq = #{dlvrySeq}
 		]]>
 	</update>
+	
+	<select id="selectForFIFO" resultMap="fifoResult" parameterType="Map">
+	  <![CDATA[
+	  with FIFO as (
+			select dlvry_cd as lot, dlvry_qtt from delivery where comp_cd = #{compCd} and item_cd = #{itemCd} and dlvry_cd = #{dlvryCd}
+				union
+			select stk.lot, stk.stock_qtt from stock stk
+				left join store str on stk.store_seq = str.store_seq
+				left join order_t o on str.order_seq = o.order_seq
+				left join company c on o.comp_cd = c.comp_cd
+				where o.item_cd = #{itemCd} and c.comp_cd = #{compCd} and stk.stock_qtt != 0
+			) select f.lot, case when (sum(g.dlvry_qtt)-#{dlvryQtt})<0 then 0 else (sum(g.dlvry_qtt)-#{dlvryQtt}) end remain_qtt
+					from FIFO f
+					left join FIFO g
+					on g.lot <= f.lot
+					group by f.lot, f.dlvry_qtt
+					having f.dlvry_qtt-sum(g.dlvry_qtt) > #{dlvryQtt}*(-1)
+      ]]>	
+	</select>
 </mapper>
