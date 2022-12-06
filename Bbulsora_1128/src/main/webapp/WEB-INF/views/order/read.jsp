@@ -28,7 +28,7 @@
     		type: "get",
     		url: "${contextPath}/order/update.do",
     		dataType: "text",
-    		data: {storeQtt: $('#storeQtt'+seq).val(), stateCd: $('#stateCd'+seq).val(), orderCd: $('#orderCd'+seq).val(), orderSeq: $('#orderSeq'+seq).val()},
+    		data: {storeQtt: $('#storeQtt'+seq).val(), prevStateCd: $('#prevStateCd'+seq).val(), stateCd: $('#stateCd'+seq).val(), orderCd: $('#orderCd'+seq).val(), orderSeq: $('#orderSeq'+seq).val()},
     	  	success : function(data,status){
 				alert("수정 완료");
 				location.replace("${contextPath}/order/read.do?orderCd="+$('#orderCd'+seq).val());

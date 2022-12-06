@@ -9,17 +9,34 @@
 		<result property="locType" column="loc_type" />
 		<result property="locQtt" column="loc_qtt" />
 		<result property="maxQtt" column="max_qtt" />
+		<result property="preQtt" column="pre_qtt" />
 	</resultMap>
 	
 	<select id="selectAllLocationList" resultMap="locResult">
 	     <![CDATA[
-	        select l.loc_area, sum(s.stock_qtt) as loc_qtt, l.max_qtt
-	         from stock s
-	         right join location l
-	          on s.loc_area = l.loc_area
-	          where l.loc_area is NOT NULL
-	          or s.loc_area is NULL
-	          group by l.loc_area order by l.loc_area
+	        with stock as (
+				select l.loc_area, sum(stock_qtt) as loc_qtt
+	         	from stock stk
+	         	right join location l
+	          	on stk.loc_area = l.loc_area
+	          	where l.loc_area is NOT NULL
+	          	or stk.loc_area is NULL
+	          	group by l.loc_area order by l.loc_area
+			), prediction as (
+				   select l.loc_area, sum(str.store_qtt) as pre_qtt
+				   from location l
+            	   left join store str
+            	   on l.loc_area = str.loc_area
+            	   where str.state_cd < 'I004'
+            	   and l.loc_area is NOT NULL 
+            	   or str.loc_area is NULL
+            	   group by l.loc_area order by l.loc_area
+			) select l.loc_area, l.max_qtt, s.loc_qtt, p.pre_qtt
+				  from stock s
+				  right join location l
+    			  on s.loc_area = l.loc_area
+    			  left join prediction p
+    			  on l.loc_area = p.loc_area;
 	     ]]>
 	</select>
 
