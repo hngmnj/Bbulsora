@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.advinfo">
+	<resultMap id="advResult" type="advinfoVO">
+		<result property="ouput" column="output" />
+		<result property="d1" column="d1" />
+		<result property="d2" column="d2" />
+		<result property="d3" column="d3" />
+		<result property="d4" column="d4" />
+		<result property="d5" column="d5" />
+		<result property="d6" column="d6" />
+		<result property="d7" column="d7" />
+		<result property="d8" column="d8" />
+		<result property="d9" column="d9" />
+		<result property="d10" column="d10" />
+		<result property="d11" column="d11" />
+		<result property="d12" column="d12" />
+		<result property="d13" column="d13" />
+		<result property="d14" column="d14" />
+		<result property="d15" column="d15" />
+		<result property="d16" column="d16" />
+		<result property="d17" column="d17" />
+		<result property="d18" column="d18" />
+		<result property="d19" column="d19" />
+		<result property="d20" column="d20" />
+		<result property="d21" column="d21" />
+		<result property="d22" column="d22" />
+		<result property="d23" column="d23" />
+		<result property="d24" column="d24" />
+		<result property="d25" column="d25" />
+		<result property="d26" column="d26" />
+		<result property="d27" column="d27" />
+		<result property="d28" column="d28" />
+		<result property="d29" column="d29" />
+		<result property="d30" column="d30" />
+		<result property="d31" column="d31" />
+		<result property="itemCd" column="item_cd" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+	</resultMap>
+	
+	<select id="selectMonthSche" resultMap="advResult" parameterType="String">
+      <![CDATA[
+        select d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19,
+         d20, d21, d22, d23, d24, d25, d26, d27, d28, d29, d30, d31
+        from advinfo
+        where item_cd = #{itemCd}
+      ]]>
+	</select>
+	
+
+	
+	<select id="selectItemList" resultMap="advResult" parameterType="String">
+      <![CDATA[
+        select item_cd
+        from advinfo
+        where item_cd like '#{sup}%'
+      ]]>
+	</select>
+
+</mapper>

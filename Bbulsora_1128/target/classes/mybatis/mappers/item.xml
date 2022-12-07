@@ -17,6 +17,8 @@
 		<result property="compName" column="comp_name" />
 	</resultMap>
 
+
+
 	<select id="selectMyItems" resultMap="itemResult" parameterType="String">
       <![CDATA[
       	select *

@@ -16,7 +16,7 @@
 
 	<select id="selectSupName" resultMap="compResult">
       <![CDATA[
-         select comp_name from company
+         select comp_cd, comp_name from company
 		 where comp_cd like 'SUP%'
       ]]>
 	</select>

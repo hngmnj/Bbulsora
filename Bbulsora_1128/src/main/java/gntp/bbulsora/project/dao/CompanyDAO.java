@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import gntp.bbulsora.project.vo.AdvinfoVO;
 import gntp.bbulsora.project.vo.CompanyVO;
 
 @Repository("companyDAO")
@@ -15,6 +16,10 @@ public class CompanyDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	public CompanyDAO() {}
+	
+	public List<AdvinfoVO> selectOneMonth(String itemCd) {
+		return sqlSession.selectList("mapper.advinfo.selectMonthSche", itemCd);
+	}
 	
 	public List<CompanyVO> selectSupName() {
 		return sqlSession.selectList("mapper.company.selectSupName");

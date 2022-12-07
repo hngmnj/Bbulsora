@@ -45,6 +45,7 @@ function showLocSetWindow(storeSeq) {
 		<c:forEach var="store" items="${list}">
 			<tr>
 				<td>${store.storeSeq}</td>
+				
 				<td>${store.storeQtt}</td>
 				<td>${store.storeDate}</td>
 				<td>${store.stateContent}</td>
