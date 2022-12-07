@@ -6,10 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="${contextPath}/resources/css/default_table.css" type="text/css">
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" href="${contextPath}/resources/css/default_table.css" type="text/css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 //중분류 옵션 변경 시 실행
 function srchMinor() {

@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Is it ok?</title>
+<title>Hello</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style type="text/css">
 .cal_top{
@@ -33,9 +35,17 @@ table.calendar td{
 			<option value="">선택</option>
 			
 			<c:forEach var="company" items="${supList}">
-				<option value="${company.compName}">${company.compName}</option>
+				<option value="${company.compCd}">${company.compName}</option>
 			</c:forEach>
 		</select>
+	
+	<span id="itemName_list">
+		품목<select id="itemName"><option value="">선택</option>
+		
+		</select>
+	</span>
+		
+	<input type="submit" value="일정조회" id="check_cal">
 	</div>
 	
 
@@ -64,15 +74,64 @@ table.calendar td{
         drawDays();
         $("#movePrevMonth").on("click", function(){movePrevMonth();});
         $("#moveNextMonth").on("click", function(){moveNextMonth();});
-    });
+        
+        
+        $('#supName').on('change', function() {
+        	$.ajax({
+        		type : "get",
+        		url : "${contextPath}/rest/getSupsItem.do",
+        		dataType : "text",
+        		data : {compCd:$('#supName').val()},
+        		
+        		success : function(data,status){
+        			let jsonObj =JSON.parse(data);
+        			let result = "품목<select id='itemCd'> <option value=''>선택하세요</option>";
+        			for(let i=0; i<jsonObj.length; i++) {
+        				result += "<option value='"+jsonObj[i].itemCd+"'>"+jsonObj[i].itemName+"</option>";
+        				
+        			}
+        			result += "</select>&nbsp;&nbsp;";
+        			$('#itemName_list').html(result);
+        		},
+        		
+        		error : function(data, status) {
+        			alert("error?"+status);
+        		},
+        		
+        	}); //ajax end
+        });//supName end
+        
+        
+        $('#check_cal').on('click', function() {
+            $.ajax({
+            	type : "get",
+            	url : "${contextPath}/rest/getMonthSche.do",
+            	dataType : "text",
+            	data : {itemCd:$('#itemCd').val()},
+            	success : function(data, status) {
+            		let jsonObj = JSON.parse(data);
+            		console.log(jsonObj);
+					
+        		},
+        		error : function(data, status) {
+        			alert("error?"+status);
+        			console.log(itemCd);
+        		},
+        		
+            });//ajax end
+        });//check_cal end
+
+        
+    });//document end
+    
     
     //calendar 그리기
     function drawCalendar(){
         var setTableHTML = "";
-        setTableHTML+='<table class="calendar">';
+        setTableHTML+='<table class="calendar"> ';
         setTableHTML+='<tr><th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr>';
         for(var i=0;i<6;i++){
-            setTableHTML+='<tr height="100">';
+            setTableHTML+='<tr height="70">';
             for(var j=0;j<7;j++){
                 setTableHTML+='<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap">';
                 setTableHTML+='    <div class="cal-day"></div>';
@@ -137,16 +196,67 @@ table.calendar td{
         getNewInfo();
     }
 
-    
-    function getNewInfo(){
+    //정보갱신
+     function getNewInfo(){
         for(var i=0;i<42;i++){
             $tdDay.eq(i).text("");
+            $tdSche.eq(i).text("");
         }
         dayCount=0;
         firstDay = new Date(year,month-1,1);
         lastDay = new Date(year,month,0);
         drawDays();
+        drawSche();
     }
+    
+   //데이터 등록
+  function setData(){
+ 
+	jsonData ={
+		      	"2022":{
+                "12":{
+                	"1":"복구",
+                	"2":"?",
+                	"3":"시험가동",
+                	"4":"점검",
+                    "5":"점검",
+                    "6":"100/2500",
+                    "7":"100/2500",
+                }
+                ,"11":{
+                    "1":"칠석"
+                    ,"2":"광복절"
+                    ,"23":"처서"
+                }
+                ,"09":{
+                    "13":"추석"
+                    ,"23":"추분"
+                }
+            }
+	}
+
+        	
+        
+    }
+    
+    //스케줄 그리기
+    function drawSche(){
+        setData();
+        var dateMatch = null;
+        for(var i=firstDay.getDay();i<firstDay.getDay()+lastDay.getDate();i++){
+            var txt = "";
+            txt =jsonData[year];
+            if(txt){
+                txt = jsonData[year][month];
+                if(txt){
+                    txt = jsonData[year][month][i];
+                    dateMatch = firstDay.getDay() + i -1; 
+                    $tdSche.eq(dateMatch).text(txt);
+                }
+            }
+        }
+    }
+    
 </script>
 
 

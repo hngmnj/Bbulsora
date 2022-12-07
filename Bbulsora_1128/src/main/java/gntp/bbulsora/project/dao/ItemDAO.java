@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import gntp.bbulsora.project.vo.AdvinfoVO;
 import gntp.bbulsora.project.vo.ItemVO;
 import gntp.bbulsora.project.vo.MajorVO;
 import gntp.bbulsora.project.vo.MiddleVO;
@@ -19,7 +20,7 @@ public class ItemDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	public ItemDAO() {}
-
+	
 	public List<ItemVO> selectMyItems(String compCd) {
 		return sqlSession.selectList("mapper.item.selectMyItems", compCd);
 	}

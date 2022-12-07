@@ -10,13 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import gntp.bbulsora.project.dao.CompanyDAO;
 import gntp.bbulsora.project.dao.DeliveryDAO;
 import gntp.bbulsora.project.dao.ItemDAO;
 import gntp.bbulsora.project.dao.StockDAO;
 import gntp.bbulsora.project.dao.StoreDAO;
 import gntp.bbulsora.project.service.HomeService;
+import gntp.bbulsora.project.vo.AdvinfoVO;
 import gntp.bbulsora.project.vo.DeliveryVO;
 import gntp.bbulsora.project.vo.ItemVO;
 import gntp.bbulsora.project.vo.MemberVO;
@@ -31,11 +34,30 @@ public class RestMainController {
 	@Autowired
 	private ItemDAO itemDAO;
 	@Autowired
+	private CompanyDAO companyDAO;
+	@Autowired
 	private StockDAO stockDAO;
 	@Autowired
 	private StoreDAO storeDAO;
 	@Autowired
 	private DeliveryDAO deliveryDAO;
+	
+	/*
+	 * (고객사) 정보조회
+	 */
+	
+	@RequestMapping(value="/getSupsItem.do", method=RequestMethod.GET)
+	public List<ItemVO> getSupsItem(@RequestParam("compCd") String compCd) throws Exception {
+		return itemDAO.selectMyItems(compCd);
+	}
+	
+	@RequestMapping(value="/getMonthSche.do", method=RequestMethod.GET)
+	@ResponseBody
+	public List<AdvinfoVO> getMonthSche(@RequestParam("itemCd") String itemCd) {
+		//String corp = supName.substring(3,6).toUpperCase();
+		return companyDAO.selectOneMonth(itemCd);
+	}
+	
 	
 	/* 
 	 * 품목관련

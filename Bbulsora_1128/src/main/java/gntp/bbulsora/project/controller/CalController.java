@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import gntp.bbulsora.project.dao.CompanyDAO;
+import gntp.bbulsora.project.dao.ItemDAO;
 
 @Controller("calController")
 @RequestMapping("/cal")
@@ -18,6 +19,7 @@ public class CalController {
 	
 	@Autowired
 	private CompanyDAO companyDAO;
+
 	
 	/////////////////////    기본 메소드 형    ////////////////////////////////
 	public ModelAndView basic(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -28,11 +30,13 @@ public class CalController {
 		return mav;
 	}
 
+	
 	@RequestMapping(value="/read.do", method=RequestMethod.GET)
 	public ModelAndView read(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = this.getViewName(request);
 		mav.addObject("supList", companyDAO.selectSupName());
+		
 		mav.setViewName(viewName);
 		return mav;
 	}
