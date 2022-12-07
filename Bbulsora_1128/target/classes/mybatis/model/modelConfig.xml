@@ -19,5 +19,6 @@
 		<typeAlias type="gntp.bbulsora.project.vo.MiddleVO"  alias="middleVO" />
 		<typeAlias type="gntp.bbulsora.project.vo.MinorVO"  alias="minorVO" />
 		<typeAlias type="gntp.bbulsora.project.vo.FifoVO"  alias="fifoVO" />
+		<typeAlias type="gntp.bbulsora.project.vo.AdvinfoVO"  alias="advinfoVO" />
 	</typeAliases>
 </configuration>
