@@ -12,7 +12,7 @@
 	<select id="selectStatesForUpdateOrder" resultMap="stateResult"
 		parameterType="String">
       <![CDATA[
-        select * from state where state_cd > #{orderState} and state_cd < 'O007';	
+        select * from state where state_cd > #{orderState} and state_cd <= 'O007';	
       ]]>
 	</select>
 
