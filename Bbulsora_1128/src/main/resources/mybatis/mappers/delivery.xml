@@ -172,9 +172,4 @@
       ]]>	
 	</select>
 	
-	<select id="emptySet" resultMap="fifoResult">
-		<![CDATA[
-			select * from delivery
-		]]>
-	</select>
 </mapper>
