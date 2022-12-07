@@ -10,7 +10,7 @@
 <form action="update.do" method="post">
 <input type="hidden" name="itemCd" value="${item.itemCd}">
 <table>
-	<tr><td>품목이미지</td><td><img src="${item.img}" alt="" width="300" height="200"></td></tr>
+	<tr><td>품목이미지</td><td><img src="/images/${item.img}" alt="" width="300" height="200"></td></tr>
 	<tr><td>품목코드</td><td>${item.itemCd}</td></tr>	
 	<tr><td>품목명</td><td><input type="text" name="itemName" value="${item.itemName}"></td></tr>
 	<tr><td>대분류</td><td><input type="text" name="major" value="${item.major}"></td></tr>
