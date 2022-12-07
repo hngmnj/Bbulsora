@@ -122,6 +122,7 @@ public class BoardController {
 	// Download
 	@RequestMapping(value="download.do", method={RequestMethod.GET, RequestMethod.POST})
 	public void download(@RequestParam("filepath") String filepath, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println(filepath);
 		UpDownloadUtils.download(filepath,request,response);
 	}
 	
