@@ -108,7 +108,6 @@
     			on str.store_seq = stk.store_seq
     			where d.dlvry_cd = #{dlvryCd}
     			and o.comp_cd = #{compCd}
-                and stk.loc_area is NOT NULL
                 group by d.item_cd;
 		]]>
 	</select>
