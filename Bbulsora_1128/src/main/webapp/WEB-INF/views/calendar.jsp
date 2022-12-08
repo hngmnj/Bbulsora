@@ -47,7 +47,7 @@ table.calendar td{
 		
 	<input type="submit" value="일정조회" id="check_cal">
 	</div>
-	
+	<input type="file" id="infoCsv" name="infoCsv">
 
     <div class="cal_top">
         <a href="#" id="movePrevMonth"><span id="prevMonth" class="cal_tit">&lt;</span></a>
@@ -57,7 +57,7 @@ table.calendar td{
     </div>
     <div id="cal_tab" class="cal">
     </div>
-
+	
 <script type="text/javascript">
     
     var today = null;
