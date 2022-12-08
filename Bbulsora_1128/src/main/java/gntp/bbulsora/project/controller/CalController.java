@@ -55,7 +55,7 @@ public class CalController {
 		if(csvFile==null || csvFile.isEmpty()) {
 			throw new RuntimeException("CSV 파일을 선택해주세요");
 		}
-		File destFile = new File(Filepaths.UP_DOWN_PATH+csvFile.getOriginalFilename());
+		File destFile = new File(Filepaths.CSV_PATH+csvFile.getOriginalFilename());
 		csvFile.transferTo(destFile);
 		ArrayList<AdvinfoVO> list = tool.getInfoData(destFile);
 		for (AdvinfoVO info : list) {
