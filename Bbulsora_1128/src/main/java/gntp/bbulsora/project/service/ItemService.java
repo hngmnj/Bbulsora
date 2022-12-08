@@ -40,10 +40,12 @@ public class ItemService {
 		MultipartFile uploadImage = item.getuploadImage();
 		if(!uploadImage.isEmpty()) {
 			OriginalFileName = uploadImage.getOriginalFilename();
+			System.out.println(OriginalFileName);
 			filePath = Filepaths.IMG_PATH+OriginalFileName;
 			uploadImage.transferTo(new File(filePath));
 		}
-		item.setImg(filePath);
+		item.setImgName(OriginalFileName);
+		item.setImgPath(filePath);
 		flag = itemDAO.insertOne(item);
 		return flag;
 	}

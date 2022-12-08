@@ -12,7 +12,8 @@
 		<result property="minor" column="minor" />
 		<result property="standard" column="standard" />
 		<result property="unit" column="unit" />
-		<result property="img" column="img" />
+		<result property="imgName" column="img_name" />
+		<result property="imgPath" column="img_path" />
 		<result property="compCd" column="comp_cd" />
 		<result property="compName" column="comp_name" />
 	</resultMap>
@@ -106,7 +107,7 @@
 	<insert id="insertItem" parameterType="itemVO">
 		<![CDATA[
 		 insert into item
-		 values(#{itemCd}, #{itemName}, #{major}, #{middle}, #{minor}, #{standard}, #{unit}, #{img}, #{compCd}) 
+		 values(#{itemCd}, #{itemName}, #{major}, #{middle}, #{minor}, #{standard}, #{unit}, #{imgName}, #{imgPath}, #{compCd}) 
 		]]>
 	</insert>
 
