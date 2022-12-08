@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>      
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -30,6 +31,15 @@ table.calendar td{
 </style>
 </head>
 <body>
+	<c:if test="${fn:substring(user.compCd,0,3) eq 'SUP'}">
+		<form id="csvUploadForm" action="csvCreate.do" name="csvUploadForm" enctype="multipart/form-data" method="post">
+		<div>
+			생산계획 업로드 <input type="file" id="infoCsv" name="infoCsv"/>
+			<button type="button" id="addCsvImportBtn" class="btn" onclick="check()"><span>업로드</span></button>
+		</div>
+		</form>
+	</c:if>
+
 	<div>
 		공급사<select id="supName">
 			<option value="">선택</option>
@@ -57,7 +67,10 @@ table.calendar td{
     </div>
     <div id="cal_tab" class="cal">
     </div>
-
+	
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+<script src="https://malsup.github.io/jquery.form.js"></script> 
 <script type="text/javascript">
     
     var today = null;
@@ -172,6 +185,44 @@ table.calendar td{
         }
     }
     
+    //CSV 파일로 생산계획 업로드
+    function checkFileType(filepath) {
+		var fileFormat = filepath.split(".");
+		if(fileFormat.indexOf("csv") > -1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+    
+    function check() {
+		var file = $("#infoCsv").val();
+		if(file == "" || file == null) {
+			alert("파일을 선택하세요");
+			return false;
+		} else if(!checkFileType(file)) {
+			alert("지원하지 않는 파일형식입니다")
+			return false;
+		}
+		if(confirm("업로드 하시겠습니까?")) {
+			var options = {
+					success : function(data) {
+						console.log(data);
+						alert("업로드 성공");
+						location.replace("${contextPath}/cal/read.do");
+					},
+				type : "POST"	
+			};
+			console.log(options)
+			$("#csvUploadForm").ajaxSubmit(options);
+			
+		}
+	}
+    
+    function insertCsv() {
+    	
+    }
+    
     $(document).ready(function() {
         drawCalendar();
         initDate();
@@ -211,7 +262,7 @@ table.calendar td{
             	type : "get",
             	url : "${contextPath}/rest/getMonthSche.do",
             	dataType : "text",
-            	data : {itemCd:$('#itemCd').val()},
+            	data : {itemCd:$('#itemCd').val(), year:year, month:month},
             	success : function(data, status) {
             		let jsonData = JSON.parse(data);
             		console.log(jsonData);
@@ -224,7 +275,6 @@ table.calendar td{
         		
             });//ajax end
         });//check_cal end
- 
         
     });//document end
     

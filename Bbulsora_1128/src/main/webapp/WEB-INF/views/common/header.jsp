@@ -25,6 +25,7 @@
 	</c:when>
 	<c:when test="${fn:substring(user.compCd,0,3) eq 'SUP'}">
 	<!-- 공급사 매뉴 -->
+	<a href="${contextPath}/cal/read.do">정보조회</a>
 	<a href="${contextPath}/order/list.do">주문확인</a>
 	<a href="${contextPath}/item/list.do?compCd=${user.compCd}">품목관리</a>
 	<a href="${contextPath}/board/list.do">공지사항</a>

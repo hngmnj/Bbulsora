@@ -29,6 +29,10 @@ public class CompanyDAO {
 		return sqlSession.selectList("mapper.advinfo.selectMonthSche", itemCd);
 	}
 	
+	public int insertMonthSche(AdvinfoVO info) {
+		return sqlSession.insert("mapper.advinfo.insertMonthSche", info);
+	}
+	
 	public List<CompanyVO> selectSupName() {
 		return sqlSession.selectList("mapper.company.selectSupName");
 	}
@@ -75,6 +79,14 @@ public class CompanyDAO {
 		if(affectedCount > 0)
 			flag = true;
 		return flag;
+	}
+
+	public AdvinfoVO selectBoolean(AdvinfoVO info) {
+		return sqlSession.selectOne("mapper.advinfo.selectBoolean", info);
+	}
+
+	public int updateMonthSche(AdvinfoVO info) {
+		return sqlSession.update("mapper.advinfo.updateMonthSche", info);
 	}
 
 }
