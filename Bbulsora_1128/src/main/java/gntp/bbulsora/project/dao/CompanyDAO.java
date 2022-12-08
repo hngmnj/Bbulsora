@@ -81,4 +81,12 @@ public class CompanyDAO {
 		return flag;
 	}
 
+	public AdvinfoVO selectBoolean(AdvinfoVO info) {
+		return sqlSession.selectOne("mapper.advinfo.selectBoolean", info);
+	}
+
+	public int updateMonthSche(AdvinfoVO info) {
+		return sqlSession.update("mapper.advinfo.updateMonthSche", info);
+	}
+
 }

@@ -68,6 +68,9 @@ table.calendar td{
     <div id="cal_tab" class="cal">
     </div>
 	
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+<script src="https://malsup.github.io/jquery.form.js"></script> 
 <script type="text/javascript">
     
     var today = null;
@@ -259,7 +262,7 @@ table.calendar td{
             	type : "get",
             	url : "${contextPath}/rest/getMonthSche.do",
             	dataType : "text",
-            	data : {itemCd:$('#itemCd').val()},
+            	data : {itemCd:$('#itemCd').val(), year:year, month:month},
             	success : function(data, status) {
             		let jsonData = JSON.parse(data);
             		console.log(jsonData);

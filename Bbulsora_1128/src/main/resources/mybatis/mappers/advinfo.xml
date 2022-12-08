@@ -5,6 +5,9 @@
 
 <mapper namespace="mapper.advinfo">
 	<resultMap id="advResult" type="advinfoVO">
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="itemCd" column="item_cd" />
 		<result property="output" column="output" />
 		<result property="d1" column="d1" />
 		<result property="d2" column="d2" />
@@ -37,9 +40,6 @@
 		<result property="d29" column="d29" />
 		<result property="d30" column="d30" />
 		<result property="d31" column="d31" />
-		<result property="itemCd" column="item_cd" />
-		<result property="year" column="year" />
-		<result property="month" column="month" />
 	</resultMap>
 	
 	
@@ -71,7 +71,57 @@
       ]]>
 	</select>
 	
-
+	<select id="selectBoolean" resultMap="advResult" parameterType="advinfoVO">
+      <![CDATA[
+        select * from advinfo
+        where year = #{year} and month = #{month} and item_cd = #{itemCd}
+      ]]>
+	</select>
+	
+	<insert id="insertMonthSche" parameterType="advinfoVO">
+		<![CDATA[
+			insert into advinfo values (#{year}, #{month}, #{itemCd}, #{output},
+			 #{d1}, #{d2}, #{d3}, #{d4}, #{d5}, #{d6}, #{d7}, #{d8}, #{d9}, #{d10},
+         	 #{d11}, #{d12}, #{d13}, #{d14}, #{d15}, #{d16}, #{d17}, #{d18}, #{d19}, #{d20},
+         	 #{d21}, #{d22}, #{d23}, #{d24}, #{d25}, #{d26}, #{d27}, #{d28}
+        ]]>
+        <choose>
+        	<when test="d29 == null and d30 == null and d31 == null">, null, null, null</when>
+			<when test="d29 != null and d30 == null and d31 == null">, #{d29}, null, null</when>
+			<when test="d29 != null and d30 != null and d31 == null">, #{d29}, #{d30}, null</when>
+			<otherwise>, #{d29}, #{d30}, #{d31}</otherwise>
+		</choose>
+		<![CDATA[
+			)
+		]]>
+	</insert>
+	
+	<update id="updateMonthSche" parameterType="advinfoVO">
+		<![CDATA[
+			update advinfo set 
+			 d1 = #{d1}, d2 = #{d2}, d3 = #{d3}, d4 = #{d4}, d5 = #{d5}, 
+			 d6 = #{d6}, d7 = #{d7}, d8 = #{d8}, d9 = #{d9}, d10 = #{d10},
+         	 d11 = #{d11}, d12 = #{d12}, d13 = #{d13}, d14 = #{d14}, d15 = #{d15}, 
+         	 d16 = #{d16}, d17 = #{d17}, d18 = #{d18}, d19 = #{d19}, d20 = #{d20},
+         	 d21 = #{d21}, d22 = #{d22}, d23 = #{d23}, d24 = #{d24}, d25 = #{d25}, 
+         	 d26 = #{d26}, d27 = #{d27}, d28 = #{d28}
+        ]]>
+        	<choose>
+        		<when test="d29 != null">, d29 = #{d29}</when>
+        		<otherwise>, d29 = null</otherwise>
+        	</choose>
+			<choose>
+				<when test="d30 != null">, d30 = #{d30}</when>
+				<otherwise>, d30 = null</otherwise>
+			</choose>
+			<choose>
+				<when test="d31 != null">, d31 = #{d31}</when>
+				<otherwise>, d31 = null</otherwise>
+			</choose>
+		<![CDATA[
+			where year = #{year} and month = #{month} and item_cd = #{itemCd}
+		]]>
+	</update>
 	
 <!-- 	<select id="selectItemList" resultMap="advResult" parameterType="String">
       <![CDATA[

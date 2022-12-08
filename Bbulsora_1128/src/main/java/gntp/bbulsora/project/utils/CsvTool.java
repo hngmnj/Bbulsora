@@ -57,6 +57,10 @@ public class CsvTool {
 			info = new AdvinfoVO(line);
 			list.add(info);
 		}
+		list.remove(0);
+		for(int i=0;i<list.size();i++) {
+			System.out.println(list.get(i));
+		}
 		br.close();
 		fr.close();
 		return list;

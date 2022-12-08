@@ -2,6 +2,7 @@ package gntp.bbulsora.project.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,11 +56,16 @@ public class CalController {
 		if(csvFile==null || csvFile.isEmpty()) {
 			throw new RuntimeException("CSV 파일을 선택해주세요");
 		}
-		File destFile = new File(Filepaths.CSV_PATH+csvFile.getOriginalFilename());
+		File destFile = new File(Filepaths.LOCAL_CSV_PATH+csvFile.getOriginalFilename());
 		csvFile.transferTo(destFile);
 		ArrayList<AdvinfoVO> list = tool.getInfoData(destFile);
 		for (AdvinfoVO info : list) {
-			companyDAO.insertMonthSche(info);
+			AdvinfoVO test = companyDAO.selectBoolean(info);
+			if(test!=null) {
+				companyDAO.updateMonthSche(info);
+			} else {
+				companyDAO.insertMonthSche(info);
+			}
 		}
 		mav.setViewName("redirect:./read.do");
 		return mav;
