@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +21,9 @@
 	<tr><td>규격</td><td><input type="text" name="standard" value="${item.standard}"></td></tr>
 	<tr><td>단위</td><td><input type="text" name="unit" value="${item.unit}"></td></tr>
 	<tr><td>기업코드</td><td><input type="text" name="compCd" value="${item.compCd}"></td></tr>
-	<tr><td colspan="3"><input type="submit" value="수정하기"> <a href="delete.do?itemCd=${item.itemCd}"><input type="button" value="삭제하기"></a></td><td>
+	<c:if test="${fn:substring(user.compCd,0,3) ne 'CLI'}">
+	<tr><td colspan="3"><input type="submit" value="수정하기"> <a href="delete.do?itemCd=${item.itemCd}"><input type="button" value="삭제하기"></a></td></tr>
+	</c:if>
 </table>
 </form>
 </body>
