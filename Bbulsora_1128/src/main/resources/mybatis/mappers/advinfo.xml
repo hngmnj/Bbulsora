@@ -5,7 +5,7 @@
 
 <mapper namespace="mapper.advinfo">
 	<resultMap id="advResult" type="advinfoVO">
-		<result property="ouput" column="output" />
+		<result property="output" column="output" />
 		<result property="d1" column="d1" />
 		<result property="d2" column="d2" />
 		<result property="d3" column="d3" />
@@ -42,10 +42,30 @@
 		<result property="month" column="month" />
 	</resultMap>
 	
+	
+	
+	<select id="selectYear" resultType="String" parameterType="String">
+      <![CDATA[
+        select year
+        from advinfo
+        where item_cd = #{itemCd}
+      ]]>
+	</select>
+	
+	<select id="selectMonth" resultType="String" parameterType="String">
+      <![CDATA[
+        select month
+        from advinfo
+        where item_cd = #{itemCd}
+      ]]>
+	</select>
+	
+	
 	<select id="selectMonthSche" resultMap="advResult" parameterType="String">
       <![CDATA[
-        select year, month, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19,
-         d20, d21, d22, d23, d24, d25, d26, d27, d28, d29, d30, d31
+        select year, month, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10,
+         d11, d12, d13, d14, d15, d16, d17, d18, d19, d20,
+         d21, d22, d23, d24, d25, d26, d27, d28, d29, d30, d31, output
         from advinfo
         where item_cd = #{itemCd}
       ]]>
@@ -53,12 +73,12 @@
 	
 
 	
-	<select id="selectItemList" resultMap="advResult" parameterType="String">
+<!-- 	<select id="selectItemList" resultMap="advResult" parameterType="String">
       <![CDATA[
         select item_cd
         from advinfo
         where item_cd like '#{sup}%'
       ]]>
-	</select>
+	</select> -->
 
 </mapper>
