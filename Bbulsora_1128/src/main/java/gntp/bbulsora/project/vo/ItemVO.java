@@ -12,7 +12,8 @@ public class ItemVO {
 	private String minor;
 	private String standard;
 	private String unit;
-	private String img;
+	private String imgName;
+	private String imgPath;
 	private String compCd;
 	private String compName;
 	private MultipartFile uploadImage;
@@ -27,12 +28,13 @@ public class ItemVO {
 		this.minor = temp[3].trim();
 		this.standard = temp[4].trim();
 		this.unit = temp[5].trim();
-		this.img = temp[6].trim();
-		this.compCd = temp[7].trim();
+		this.imgName = temp[6].trim();
+		this.imgPath = temp[7].trim();
+		this.compCd = temp[8].trim();
 	}
 
 	public ItemVO(String itemCd, String itemName, String major, String middle, String minor, String standard,
-			String unit, String img, String compCd, String compName, MultipartFile uploadImage) {
+			String unit, String imgName, String imgPath, String compCd, String compName, MultipartFile uploadImage) {
 		this.itemCd = itemCd;
 		this.itemName = itemName;
 		this.major = major;
@@ -40,7 +42,8 @@ public class ItemVO {
 		this.minor = minor;
 		this.standard = standard;
 		this.unit = unit;
-		this.img = img;
+		this.imgName = imgName;
+		this.imgPath = imgPath;
 		this.compCd = compCd;
 		this.uploadImage = uploadImage;
 		this.compName = compName;
@@ -102,12 +105,21 @@ public class ItemVO {
 		this.unit = unit;
 	}
 
-	public String getImg() {
-		return img;
+	public String getImgName() {
+		return imgName;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
+	}
+
+	
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 	public String getCompCd() {
@@ -129,8 +141,8 @@ public class ItemVO {
 	@Override
 	public String toString() {
 		return "ItemVO [itemCd=" + itemCd + ", itemName=" + itemName + ", major=" + major + ", middle=" + middle
-				+ ", minor=" + minor + ", standard=" + standard + ", unit=" + unit + ", img=" + img + ", compCd="
-				+ compCd + "]";
+				+ ", minor=" + minor + ", standard=" + standard + ", unit=" + unit + ", imgName=" + imgName + ", imgPath=" + imgPath 
+				+ ", compCd=" + compCd + "]";
 	}
 
 	public String getCompName() {

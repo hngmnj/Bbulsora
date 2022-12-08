@@ -23,6 +23,7 @@ import gntp.bbulsora.project.utils.CodeMakingRule;
 import gntp.bbulsora.project.utils.CsvTool;
 import gntp.bbulsora.project.utils.Filepaths;
 import gntp.bbulsora.project.vo.ItemVO;
+import gntp.bbulsora.project.vo.MemberVO;
 
 @Controller("itemController")
 @RequestMapping("/item")
@@ -60,7 +61,8 @@ public class ItemController {
 		ModelAndView mav = new ModelAndView();
 		item.setItemCd(CodeMakingRule.ItemCode(item));
 		itemService.itemInsertwPic(item);
-		mav.setViewName("redirect:./list.do");
+		MemberVO user = (MemberVO) request.getSession().getAttribute("user");
+		mav.setViewName("redirect:./list.do?compCd="+user.getCompCd());
 		return mav;
 	}
 	
@@ -85,11 +87,13 @@ public class ItemController {
 		ArrayList<ItemVO> list = tool.getItemData(destFile);
 		for (ItemVO item : list) {
 			item.setItemCd(CodeMakingRule.ItemCode(item));
-			String address = Filepaths.IMG_PATH+item.getImg();
-			item.setImg(address);
+			String address = Filepaths.IMG_PATH+item.getImgPath();
+			item.setImgName(csvFile.getOriginalFilename());
+			item.setImgPath(address);
 			itemDAO.insertOne(item);
 		}	
-		mav.setViewName("redirect:./list.do");
+		MemberVO user = (MemberVO) request.getSession().getAttribute("user");
+		mav.setViewName("redirect:./list.do?compCd="+user.getCompCd());
 		return mav;
 	}
 	
@@ -119,7 +123,7 @@ public class ItemController {
 		ModelAndView mav = new ModelAndView();
 		String viewName = this.getViewName(request);
 		ItemVO item = itemDAO.selectOne(itemCd);
-		System.out.println(item.getImg());
+		System.out.println(item.getImgName());
 		mav.addObject("item", item);
 		mav.setViewName(viewName);
 		return mav;
@@ -130,7 +134,8 @@ public class ItemController {
 	public ModelAndView update(@ModelAttribute("info") ItemVO item, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		itemDAO.updateOne(item);
-		mav.setViewName("redirect:./list.do");
+		MemberVO user = (MemberVO) request.getSession().getAttribute("user");
+		mav.setViewName("redirect:./list.do?compCd="+user.getCompCd());
 		return mav;
 	}
 	
@@ -139,7 +144,8 @@ public class ItemController {
 	public ModelAndView delete(@RequestParam("itemCd") String itemCd, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		itemDAO.deleteOne(itemCd);
-		mav.setViewName("redirect:./list.do");
+		MemberVO user = (MemberVO) request.getSession().getAttribute("user");
+		mav.setViewName("redirect:./list.do?compCd="+user.getCompCd());
 		return mav;
 	}
 	
