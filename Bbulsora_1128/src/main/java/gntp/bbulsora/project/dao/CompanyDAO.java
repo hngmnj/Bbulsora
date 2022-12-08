@@ -29,6 +29,10 @@ public class CompanyDAO {
 		return sqlSession.selectList("mapper.advinfo.selectMonthSche", itemCd);
 	}
 	
+	public int insertMonthSche(AdvinfoVO info) {
+		return sqlSession.insert("mapper.advinfo.insertMonthSche", info);
+	}
+	
 	public List<CompanyVO> selectSupName() {
 		return sqlSession.selectList("mapper.company.selectSupName");
 	}

@@ -15,21 +15,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import gntp.bbulsora.project.dao.CompanyDAO;
-import gntp.bbulsora.project.dao.ItemDAO;
-import gntp.bbulsora.project.utils.CodeMakingRule;
 import gntp.bbulsora.project.utils.CsvTool;
 import gntp.bbulsora.project.utils.Filepaths;
 import gntp.bbulsora.project.vo.AdvinfoVO;
-import gntp.bbulsora.project.vo.ItemVO;
 import gntp.bbulsora.project.vo.MemberVO;
 
 @Controller("calController")
 @RequestMapping("/cal")
 
 public class CalController {
-//	@Autowired
-//	private AdvinfoDAO advinfoDAO;
-	
 	@Autowired
 	private CompanyDAO companyDAO;
 
@@ -65,10 +59,9 @@ public class CalController {
 		csvFile.transferTo(destFile);
 		ArrayList<AdvinfoVO> list = tool.getInfoData(destFile);
 		for (AdvinfoVO info : list) {
-//			adv.insertOne(item);
-		}	
-		MemberVO user = (MemberVO) request.getSession().getAttribute("user");
-		mav.setViewName("redirect:./list.do?compCd="+user.getCompCd());
+			companyDAO.insertMonthSche(info);
+		}
+		mav.setViewName("redirect:./read.do");
 		return mav;
 	}
 
