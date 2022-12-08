@@ -102,7 +102,7 @@ table.calendar td{
         });//supName end
         
         
-        $('#check_cal').on('click', function() {
+         $('#check_cal').on('click', function() {
             $.ajax({
             	type : "get",
             	url : "${contextPath}/rest/getMonthSche.do",
@@ -111,7 +111,7 @@ table.calendar td{
             	success : function(data, status) {
             		let jsonObj = JSON.parse(data);
             		console.log(jsonObj);
-					
+
         		},
         		error : function(data, status) {
         			alert("error?"+status);
@@ -120,7 +120,7 @@ table.calendar td{
         		
             });//ajax end
         });//check_cal end
-
+ 
         
     });//document end
     
@@ -214,30 +214,29 @@ table.calendar td{
  
 	jsonData ={
 		      	"2022":{
-                "12":{
-                	"1":"복구",
-                	"2":"?",
-                	"3":"시험가동",
-                	"4":"점검",
-                    "5":"점검",
-                    "6":"100/2500",
-                    "7":"100/2500",
-                }
-                ,"11":{
-                    "1":"칠석"
-                    ,"2":"광복절"
-                    ,"23":"처서"
-                }
-                ,"09":{
-                    "13":"추석"
-                    ,"23":"추분"
-                }
+	                "12":{
+	                	"1":"복구",
+	                	"2":"?",
+	                	"3":"시험가동",
+	                	"4":"점검",
+	                    "5":"점검",
+	                    "6":"100/2500",
+	                    "7":"100/2500",
+	                }
+	                ,"11":{
+	                    "1":"칠석"
+	                    ,"2":"광복절"
+	                    ,"23":"처서"
+	                }
+	                ,"09":{
+	                    "13":"추석"
+	                    ,"23":"추분"
+	                }
             }
+	
 	}
-
-        	
-        
-    }
+	
+  }
     
     //스케줄 그리기
     function drawSche(){
