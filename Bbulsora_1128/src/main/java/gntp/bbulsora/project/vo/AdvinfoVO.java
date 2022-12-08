@@ -81,8 +81,45 @@ public class AdvinfoVO {
 		this.year = year;
 		this.month = month;
 	}
-
-
+	
+	public AdvinfoVO(String data) {
+		String[] temp = data.split(",");
+		this.year = temp[0].trim();
+		this.month = temp[1].trim();
+		this.itemCd = temp[2].trim();
+		this.output = Integer.parseInt(temp[3].trim());
+		this.d1 = Integer.parseInt(temp[4].trim());
+		this.d2 = Integer.parseInt(temp[5].trim());
+		this.d3 = Integer.parseInt(temp[6].trim());
+		this.d4 = Integer.parseInt(temp[7].trim());
+		this.d5 = Integer.parseInt(temp[8].trim());
+		this.d6 = Integer.parseInt(temp[9].trim());
+		this.d7 = Integer.parseInt(temp[10].trim());
+		this.d8 = Integer.parseInt(temp[11].trim());
+		this.d9 = Integer.parseInt(temp[12].trim());
+		this.d10 = Integer.parseInt(temp[13].trim());
+		this.d11 = Integer.parseInt(temp[14].trim());
+		this.d12 = Integer.parseInt(temp[15].trim());
+		this.d13 = Integer.parseInt(temp[16].trim());
+		this.d14 = Integer.parseInt(temp[17].trim());
+		this.d15 = Integer.parseInt(temp[18].trim());
+		this.d16 = Integer.parseInt(temp[19].trim());
+		this.d17 = Integer.parseInt(temp[20].trim());
+		this.d18 = Integer.parseInt(temp[21].trim());
+		this.d19 = Integer.parseInt(temp[22].trim());
+		this.d20 = Integer.parseInt(temp[23].trim());
+		this.d21 = Integer.parseInt(temp[24].trim());
+		this.d22 = Integer.parseInt(temp[25].trim());
+		this.d23 = Integer.parseInt(temp[26].trim());
+		this.d24 = Integer.parseInt(temp[27].trim());
+		this.d25 = Integer.parseInt(temp[28].trim());
+		this.d26 = Integer.parseInt(temp[29].trim());
+		this.d27 = Integer.parseInt(temp[30].trim());
+		this.d28 = Integer.parseInt(temp[31].trim());
+		this.d29 = Integer.parseInt(temp[32].trim());
+		this.d30 = Integer.parseInt(temp[33].trim());
+		this.d31 = Integer.parseInt(temp[34].trim());
+	}
 
 	public int getOutput() {
 		return output;
