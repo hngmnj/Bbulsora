@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import gntp.bbulsora.project.vo.AdvinfoVO;
 import gntp.bbulsora.project.vo.ItemVO;
 import gntp.bbulsora.project.vo.StateVO;
 
@@ -44,4 +45,20 @@ public class CsvTool {
 		return list;
 	}
 	
+	public ArrayList<AdvinfoVO> getInfoData(File destFile) throws IOException {
+		ArrayList<AdvinfoVO> list = null;
+		list = new ArrayList<AdvinfoVO>();
+		File file = new File(destFile.getAbsolutePath());
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		String line = null;
+		AdvinfoVO info = null;
+		while((line=br.readLine())!=null) {
+			info = new AdvinfoVO(line);
+			list.add(info);
+		}
+		br.close();
+		fr.close();
+		return list;
+	}
 }
