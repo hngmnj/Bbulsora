@@ -1,5 +1,8 @@
 package gntp.bbulsora.project.controller;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,15 +10,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import gntp.bbulsora.project.dao.CompanyDAO;
 import gntp.bbulsora.project.dao.ItemDAO;
+import gntp.bbulsora.project.utils.CodeMakingRule;
+import gntp.bbulsora.project.utils.CsvTool;
+import gntp.bbulsora.project.utils.Filepaths;
+import gntp.bbulsora.project.vo.AdvinfoVO;
+import gntp.bbulsora.project.vo.ItemVO;
+import gntp.bbulsora.project.vo.MemberVO;
 
 @Controller("calController")
 @RequestMapping("/cal")
 
 public class CalController {
+//	@Autowired
+//	private AdvinfoDAO advinfoDAO;
 	
 	@Autowired
 	private CompanyDAO companyDAO;
@@ -38,6 +51,24 @@ public class CalController {
 		mav.addObject("supList", companyDAO.selectSupName());
 		
 		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@RequestMapping(value="/csvCreate.do", method=RequestMethod.POST)
+	public ModelAndView csvCreate(@RequestParam("infoCsv") MultipartFile csvFile, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		CsvTool tool = new CsvTool();
+		if(csvFile==null || csvFile.isEmpty()) {
+			throw new RuntimeException("CSV 파일을 선택해주세요");
+		}
+		File destFile = new File(Filepaths.UP_DOWN_PATH+csvFile.getOriginalFilename());
+		csvFile.transferTo(destFile);
+		ArrayList<AdvinfoVO> list = tool.getInfoData(destFile);
+		for (AdvinfoVO info : list) {
+//			adv.insertOne(item);
+		}	
+		MemberVO user = (MemberVO) request.getSession().getAttribute("user");
+		mav.setViewName("redirect:./list.do?compCd="+user.getCompCd());
 		return mav;
 	}
 
