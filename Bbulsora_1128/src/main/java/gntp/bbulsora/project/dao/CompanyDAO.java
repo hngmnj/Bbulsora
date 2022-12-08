@@ -17,7 +17,15 @@ public class CompanyDAO {
 	private SqlSession sqlSession;
 	public CompanyDAO() {}
 	
-	public List<AdvinfoVO> selectOneMonth(String itemCd) {
+	public String selectYear(String itemCd) {
+		return sqlSession.selectOne("mapper.advinfo.selectYear", itemCd);
+	}
+	
+	public String selectMonth(String itemCd) {
+		return sqlSession.selectOne("mapper.advinfo.selectMonth", itemCd);
+	}
+	
+	public List<AdvinfoVO> selectMonthSche(String itemCd) {
 		return sqlSession.selectList("mapper.advinfo.selectMonthSche", itemCd);
 	}
 	

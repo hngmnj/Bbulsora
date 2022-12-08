@@ -50,13 +50,56 @@ public class RestMainController {
 	public List<ItemVO> getSupsItem(@RequestParam("compCd") String compCd) throws Exception {
 		return itemDAO.selectMyItems(compCd);
 	}
-	
+
 
 	
-	@RequestMapping(value="/getMonthSche.do", method=RequestMethod.GET)
-	public List<AdvinfoVO> getMonthSche(@RequestParam("itemCd") String itemCd) {
-		return companyDAO.selectOneMonth(itemCd);
+	@RequestMapping(value="/getMonthSche.do", method=RequestMethod.GET) 
+	public Map<String, Map<String, Map<String, String>>> getMonthSche(@RequestParam("itemCd") String itemCd) {
+		List<AdvinfoVO> list = new ArrayList<AdvinfoVO> (); 
+		list = companyDAO.selectMonthSche(itemCd); 
+		Map<String, String> dayMap = new HashMap<String, String> ();
+
+		dayMap.put("1", Integer.toString(list.get(0).getD1())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("2", Integer.toString(list.get(0).getD2())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("3", Integer.toString(list.get(0).getD3())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("4", Integer.toString(list.get(0).getD4())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("5", Integer.toString(list.get(0).getD5())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("6", Integer.toString(list.get(0).getD6())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("7", Integer.toString(list.get(0).getD7())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("8", Integer.toString(list.get(0).getD8())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("9", Integer.toString(list.get(0).getD9())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("10", Integer.toString(list.get(0).getD10())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("11", Integer.toString(list.get(0).getD11())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("12", Integer.toString(list.get(0).getD12())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("13", Integer.toString(list.get(0).getD13())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("14", Integer.toString(list.get(0).getD14())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("15", Integer.toString(list.get(0).getD15())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("16", Integer.toString(list.get(0).getD16())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("17", Integer.toString(list.get(0).getD17())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("18", Integer.toString(list.get(0).getD18())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("19", Integer.toString(list.get(0).getD19())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("20", Integer.toString(list.get(0).getD20())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("21", Integer.toString(list.get(0).getD21())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("22", Integer.toString(list.get(0).getD22())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("23", Integer.toString(list.get(0).getD23())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("24", Integer.toString(list.get(0).getD24())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("25", Integer.toString(list.get(0).getD25())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("26", Integer.toString(list.get(0).getD26())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("27", Integer.toString(list.get(0).getD27())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("28", Integer.toString(list.get(0).getD28())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("29", Integer.toString(list.get(0).getD29())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("30", Integer.toString(list.get(0).getD30())+"/"+Integer.toString(list.get(0).getOutput()));
+		dayMap.put("31", Integer.toString(list.get(0).getD31())+"/"+Integer.toString(list.get(0).getOutput()));
+		
+		String month = companyDAO.selectMonth(itemCd);
+		Map<String, Map<String, String>> monthMap = new HashMap<String,Map<String, String>> ();
+		monthMap.put(month, dayMap);
+		String year = companyDAO.selectYear(itemCd);
+		Map<String, Map<String, Map<String, String>>> yearMap = new HashMap<String, Map<String, Map<String, String>>> ();
+		yearMap.put(year, monthMap);
+		return yearMap;
 	}
+
 	
 	/* 
 	 * 품목관련
