@@ -1,5 +1,6 @@
 package gntp.bbulsora.project.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import gntp.bbulsora.project.dao.CompanyDAO;
@@ -51,13 +51,12 @@ public class RestMainController {
 		return itemDAO.selectMyItems(compCd);
 	}
 	
+
+	
 	@RequestMapping(value="/getMonthSche.do", method=RequestMethod.GET)
-	@ResponseBody
 	public List<AdvinfoVO> getMonthSche(@RequestParam("itemCd") String itemCd) {
-		//String corp = supName.substring(3,6).toUpperCase();
 		return companyDAO.selectOneMonth(itemCd);
 	}
-	
 	
 	/* 
 	 * 품목관련
