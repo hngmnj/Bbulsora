@@ -80,7 +80,7 @@ function catchNullException() {
 		<tr><td><input type="text" placeholder="이름" name="name"></td><td></td></tr>
 		<tr><td><input type="text" placeholder="연락처" name="phone"></td><td></td></tr>
 		<tr><td><input type="text" placeholder="이메일" name="email"></td><td></td></tr>
-		<tr><td><select name="compCd"><option value="">--기업명 선택--</option><c:forEach var="comp" items="${compList}"><option value="${comp.compCd}">${comp.compName}</option></c:forEach></select></td><td></td></tr>
+		<tr><td><select name="compCd"><option value="">--기업명 선택--</option><c:forEach var="comp" items="${compList}"><option value="${comp.compCd}">${comp.compName}(${comp.sort eq 'CLIENT' ? "고객사" : "공급사"})</option></c:forEach></select></td><td></td></tr>
 		<tr><td align="center"><input style="display: none;" type="submit" value="회원가입" onclick="return catchNullException()" id="btn_submit"></td><td></td></tr>
 	</table>
 	</form>
