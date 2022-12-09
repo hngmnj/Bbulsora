@@ -1,7 +1,9 @@
 package gntp.bbulsora.project.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +19,20 @@ public class CompanyDAO {
 	private SqlSession sqlSession;
 	public CompanyDAO() {}
 	
-	public String selectYear(String itemCd) {
-		return sqlSession.selectOne("mapper.advinfo.selectYear", itemCd);
+	public String selectYear(Map<String, Object> data) {
+		return sqlSession.selectOne("mapper.advinfo.selectYear", data);
 	}
 	
-	public String selectMonth(String itemCd) {
-		return sqlSession.selectOne("mapper.advinfo.selectMonth", itemCd);
+	public String selectMonth(Map<String, Object> data) {
+		return sqlSession.selectOne("mapper.advinfo.selectMonth", data);
 	}
 	
-	public List<AdvinfoVO> selectMonthSche(String itemCd) {
-		return sqlSession.selectList("mapper.advinfo.selectMonthSche", itemCd);
+	public List<AdvinfoVO> selectMonthSche(Map<String, Object> data) {
+		return sqlSession.selectList("mapper.advinfo.selectMonthSche", data);
+	}
+	
+	public int insertMonthSche(AdvinfoVO info) {
+		return sqlSession.insert("mapper.advinfo.insertMonthSche", info);
 	}
 	
 	public List<CompanyVO> selectSupName() {
@@ -75,6 +81,14 @@ public class CompanyDAO {
 		if(affectedCount > 0)
 			flag = true;
 		return flag;
+	}
+
+	public AdvinfoVO selectBoolean(AdvinfoVO info) {
+		return sqlSession.selectOne("mapper.advinfo.selectBoolean", info);
+	}
+
+	public int updateMonthSche(AdvinfoVO info) {
+		return sqlSession.update("mapper.advinfo.updateMonthSche", info);
 	}
 
 }

@@ -170,4 +170,5 @@
 					having f.dlvry_qtt-sum(g.dlvry_qtt) > #{dlvryQtt}*(-1)
       ]]>	
 	</select>
+	
 </mapper>
