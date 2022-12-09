@@ -170,7 +170,6 @@ table.calendar td{
         for(var i=firstDay.getDate();i<firstDay.getDate()+lastDay.getDate();i++){
             var txt = "";
             txt = jsonData[year];
-            console.log(txt);
             if(txt){
                 txt = jsonData[year][month];
                 if(txt){
@@ -205,13 +204,11 @@ table.calendar td{
 		if(confirm("업로드 하시겠습니까?")) {
 			var options = {
 					success : function(data) {
-						console.log(data);
 						alert("업로드 성공");
 						location.replace("${contextPath}/cal/read.do");
 					},
 				type : "POST"	
 			};
-			console.log(options)
 			$("#csvUploadForm").ajaxSubmit(options);
 			
 		}
@@ -263,12 +260,10 @@ table.calendar td{
             	data : {itemCd:$('#itemCd').val(), year:year, month:month},
             	success : function(data, status) {
             		let jsonData = JSON.parse(data);
-            		console.log(jsonData);
             		drawSche(jsonData);
         		},
         		error : function(data, status) {
         			alert(status+": 요청하신 기간에 업로드된 데이터가 없습니다.");
-        			console.log(itemCd);
         		},
         		
             });//ajax end
