@@ -267,7 +267,7 @@ table.calendar td{
             		drawSche(jsonData);
         		},
         		error : function(data, status) {
-        			alert("error?"+status);
+        			alert(status+": 요청하신 기간에 업로드된 데이터가 없습니다.");
         			console.log(itemCd);
         		},
         		
