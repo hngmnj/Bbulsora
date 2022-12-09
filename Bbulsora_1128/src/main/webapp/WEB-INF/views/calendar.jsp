@@ -117,6 +117,9 @@ table.calendar td{
     function drawDays(){
         $("#cal_top_year").text(year);
         $("#cal_top_month").text(month);
+        if(month<10) {
+        	$("#cal_top_month").text("0"+month);
+        }
         for(var i=firstDay.getDay();i<firstDay.getDay()+lastDay.getDate();i++){
             $tdDay.eq(i).text(++dayCount);
         }
@@ -135,9 +138,6 @@ table.calendar td{
             month=12;
             year--;
         }
-        if(month<10){
-            month=String("0"+month);
-        }
         getNewInfo();
         }
     
@@ -146,9 +146,6 @@ table.calendar td{
         if(month>12){
             month=1;
             year++;
-        }
-        if(month<10){
-            month=String("0"+month);
         }
         getNewInfo();
     }
@@ -172,7 +169,8 @@ table.calendar td{
         var dateMatch = null;
         for(var i=firstDay.getDate();i<firstDay.getDate()+lastDay.getDate();i++){
             var txt = "";
-            txt =jsonData[year];
+            txt = jsonData[year];
+            console.log(txt);
             if(txt){
                 txt = jsonData[year][month];
                 if(txt){
