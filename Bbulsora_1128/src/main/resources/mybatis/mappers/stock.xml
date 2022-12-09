@@ -70,7 +70,7 @@
          ]]>
    </select>
 
-   <select id="selectItemName" resultMap="stkResult">
+   <select id="selectItemName" resultMap="stkResult" parameterType="String">
       <![CDATA[
          select distinct(i.item_name) from stock stk
          left join store str
@@ -80,6 +80,10 @@
          left join item i
          on o.item_cd = i.item_cd
          ]]>
+         <if test="compCd != 'ADMIN'">
+         	where o.comp_cd = #{compCd}
+         	and stk.loc_area is NOT NULL
+         </if>
    </select>
    
    <select id="selectClient" resultMap="stkResult">
@@ -90,7 +94,7 @@
          left join order_t o
          on str.order_seq = o.order_seq
            left join company c
-           on o.comp_cd = c.comp_cd;
+           on o.comp_cd = c.comp_cd
          ]]>
    </select>
    

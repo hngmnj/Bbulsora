@@ -34,7 +34,7 @@ public class StockService {
 			list = stockDAO.selectAllForCli(map);
 		}
 		map.put("list", list);
-		map.put("itemList", stockDAO.selectItemList());
+		map.put("itemList", stockDAO.selectItemList(compCd));
 		map.put("clientList", stockDAO.selectClientList());
 		map.remove("compCd");
 		return map;
