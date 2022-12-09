@@ -28,8 +28,8 @@ public class StockDAO {
 	}
 	
 	// 품목 조회
-	public List<StockVO> selectItemList() {
-		return sqlSession.selectList("mapper.stock.selectItemName");		
+	public List<StockVO> selectItemList(String compCd) {
+		return sqlSession.selectList("mapper.stock.selectItemName", compCd);		
 	}
 	
 	// 상태 조회
