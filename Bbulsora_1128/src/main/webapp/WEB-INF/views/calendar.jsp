@@ -169,7 +169,9 @@ table.calendar td{
         var dateMatch = null;
         for(var i=firstDay.getDate();i<firstDay.getDate()+lastDay.getDate();i++){
             var txt = "";
-            txt = jsonData[year];
+            if(jsonData != null){
+            	txt = jsonData[year];
+            }
             if(txt){
                 txt = jsonData[year][month];
                 if(txt){
