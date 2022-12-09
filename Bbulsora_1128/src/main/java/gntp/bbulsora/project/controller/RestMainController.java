@@ -54,10 +54,11 @@ public class RestMainController {
 
 	
 	@RequestMapping(value="/getMonthSche.do", method=RequestMethod.GET) 
-	public Map<String, Map<String, Map<String, String>>> getMonthSche(@RequestParam("itemCd") String itemCd) {
+	public Map<String, Map<String, Map<String, String>>> getMonthSche(@RequestParam Map<String, Object> data) {
 		List<AdvinfoVO> list = new ArrayList<AdvinfoVO> ();
-		System.out.println(itemCd);
-		list = companyDAO.selectMonthSche(itemCd); 
+		System.out.println(data);
+		list = companyDAO.selectMonthSche(data);
+		System.out.println(list);
 		Map<String, String> dayMap = new HashMap<String, String> ();
 
 		dayMap.put("1", list.get(0).getD1()+"/"+list.get(0).getOutput());
@@ -88,14 +89,17 @@ public class RestMainController {
 		dayMap.put("26", list.get(0).getD26()+"/"+list.get(0).getOutput());
 		dayMap.put("27", list.get(0).getD27()+"/"+list.get(0).getOutput());
 		dayMap.put("28", list.get(0).getD28()+"/"+list.get(0).getOutput());
-		dayMap.put("29", list.get(0).getD29()+"/"+list.get(0).getOutput());
-		dayMap.put("30", list.get(0).getD30()+"/"+list.get(0).getOutput());
-		dayMap.put("31", list.get(0).getD31()+"/"+list.get(0).getOutput());
-		
-		String month = companyDAO.selectMonth(itemCd);
+		if(list.get(0).getD29() != null) {
+			dayMap.put("29", list.get(0).getD29()+"/"+list.get(0).getOutput());
+		} if(list.get(0).getD30() != null) {
+			dayMap.put("30", list.get(0).getD30()+"/"+list.get(0).getOutput());
+		} if(list.get(0).getD31() != null) {
+			dayMap.put("31", list.get(0).getD31()+"/"+list.get(0).getOutput());
+		}
+		String month = companyDAO.selectMonth(data);
 		Map<String, Map<String, String>> monthMap = new HashMap<String,Map<String, String>> ();
 		monthMap.put(month, dayMap);
-		String year = companyDAO.selectYear(itemCd);
+		String year = companyDAO.selectYear(data);
 		Map<String, Map<String, Map<String, String>>> yearMap = new HashMap<String, Map<String, Map<String, String>>> ();
 		yearMap.put(year, monthMap);
 		return yearMap;
