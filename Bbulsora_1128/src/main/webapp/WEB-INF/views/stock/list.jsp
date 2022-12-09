@@ -121,13 +121,35 @@ function checkDelivery() {
       let deliveryList = [];
       let delivery;
       let iterator = tableMap.keys();
+      const date = new Date();
+      let year = date.getFullYear();
+      let month = "-"+(date.getMonth()+1);
+      let day = "-"+date.getDate();
+      if(date.getMonth()+1<10) {
+    	  month = "-0"+(date.getMonth()+1);
+      } if(date.getDate()<10) {
+    	  day = "-0"+date.getDate();
+      }
       for(let i=0; i<tableMap.size; i++){
          let key = iterator.next().value;
          delivery = new Object();
          delivery.itemCd = key;
          delivery.dlvryQtt = $('#'+key+'qtt').val();
          delivery.reqDate = $('#'+key+'date').val();
-         deliveryList.push(delivery);
+         let today = year+month+day;
+         console.log(delivery.reqDate+" vs "+today)
+         if(delivery.dlvryQtt==0 || delivery.dlvryQtt=="") {
+        	 alert("수량은 0이 될 수 없습니다.");
+        	 return false;
+         } if(delivery.reqDate=="") {
+        	 alert("요청일은 필수로 기입해주시기 바랍니다.");
+        	 return false;
+         } if(delivery.reqDate<today) {
+        	 alert("오늘 이전의 날짜를 선택할 수 없습니다.");
+        	 return false;
+         } else {
+         	deliveryList.push(delivery);
+         }
       }
 
       $.ajax({

@@ -101,6 +101,10 @@ function checkOrder() {
 			order = new Object();
 			order.itemCd = key;
 			order.orderQtt = $('#'+key).val();
+			if(order.orderQtt==0 || order.orderQtt=="") {
+				alert('주문 수량은 0이 될 수 없습니다.');
+				return false;
+			}
 			orderList.push(order);
 		}
 
