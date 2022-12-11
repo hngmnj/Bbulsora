@@ -105,7 +105,7 @@
 	
 	<select id="selectStoreBySeq" parameterType="int" resultMap="strResult">
 	  <![CDATA[
-		select str.store_seq, i.item_name, str.store_qtt, str.store_date, sta.state_content
+		select o.order_cd, str.store_seq, i.item_name, str.store_qtt, str.store_date, sta.state_content
 		from store str left join state sta
 		on str.state_cd = sta.state_cd
 		left join order_t o

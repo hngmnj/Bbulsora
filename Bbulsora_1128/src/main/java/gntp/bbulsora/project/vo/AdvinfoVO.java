@@ -1,5 +1,7 @@
 package gntp.bbulsora.project.vo;
 
+import java.util.Arrays;
+
 import org.springframework.stereotype.Component;
 
 @Component("advinfoVO")
@@ -83,8 +85,10 @@ public class AdvinfoVO {
 	}
 	
 	public AdvinfoVO(String data) {
+		System.out.println(data);
 		String[] temp = data.split(",");
 		int size = temp.length;
+		System.out.println(size);
 		this.year = temp[0].trim();
 		this.month = temp[1].trim();
 		this.itemCd = temp[2].trim();
@@ -117,9 +121,9 @@ public class AdvinfoVO {
 		this.d26 = temp[29].trim();
 		this.d27 = temp[30].trim();
 		this.d28 = temp[31].trim();
-		this.d29 = null;
-		this.d30 = null;
-		this.d31 = null;
+		this.d29 = "";
+		this.d30 = "";
+		this.d31 = "";
 		if(size>32) {
 			this.d29 = temp[32].trim();
 		}
@@ -410,5 +414,17 @@ public class AdvinfoVO {
 	public void setMonth(String month) {
 		this.month = month;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return d1+","+d2+","+d3+","+d4+","+d5+","+d6+","+d7+","+d8+","+d9+","+d10+","+d11+","+d12+","+d13+","+d14+","+d15+","
+				+d16+","+d17+","+d18+","+d19+","+d20+","+d21+","+d22+","+d23+","+d24+","+d25+","+d26+","+d27+","+d28+","+d29+","+d30+","+d31;
+	}
 
+	public String[] dayData(AdvinfoVO vo) {
+		String data = vo.toString();
+		String[] dayData = data.split(",");
+		return dayData;
+	}
 }

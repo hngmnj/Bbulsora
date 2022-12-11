@@ -28,17 +28,35 @@ table.calendar td{
     border: 1px solid skyblue;
     width: 100px;
 }
+#dropdownGuide {
+  position: relative;
+  display: inline-block;
+}
+#guide {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 400px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 4px 4px;
+  z-index: 1;
+}
+#dropdownGuide:hover #guide {
+  display: block;
+}
 </style>
 </head>
 <body>
+<div align="center">
 	<c:if test="${fn:substring(user.compCd,0,3) eq 'SUP'}">
 		<form id="csvUploadForm" action="csvCreate.do" name="csvUploadForm" enctype="multipart/form-data" method="post">
-		<div>
-			생산계획 업로드 <input type="file" id="infoCsv" name="infoCsv"/>
+			<div id="dropdownGuide">
+			<span>생산일정 업로드 시<input type="file" id="infoCsv" name="infoCsv"/></span>
 			<button type="button" id="addCsvImportBtn" class="btn" onclick="check()"><span>업로드</span></button>
-		</div>
+			<div id="guide"><p>생산계획 CSV 파일을 업로드해주세요</p></div></div>
 		</form>
 	</c:if>
+
 
 	<div>
 		공급사<select id="supName">
@@ -57,7 +75,8 @@ table.calendar td{
 		
 	<input type="submit" value="일정조회" id="check_cal">
 	</div>
-	
+</div>
+<br/>
 
     <div class="cal_top">
         <a href="#" id="movePrevMonth"><span id="prevMonth" class="cal_tit">&lt;</span></a>
@@ -65,6 +84,7 @@ table.calendar td{
         <span id="cal_top_month"></span>
         <a href="#" id="moveNextMonth"><span id="nextMonth" class="cal_tit">&gt;</span></a>
     </div>
+    <br/>
     <div id="cal_tab" class="cal">
     </div>
 	
@@ -80,6 +100,7 @@ table.calendar td{
     var lastDay = null;
     var $tdDay = null;
     var $tdSche = null;
+    var $tdMqtt = null;
    
     
     //calendar 그리기
@@ -93,6 +114,7 @@ table.calendar td{
                 setTableHTML+='<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap">';
                 setTableHTML+='    <div class="cal-day"></div>';
                 setTableHTML+='    <div class="cal-schedule"></div>';
+                setTableHTML+='    <div class="cal-qtt"></div>';
                 setTableHTML+='</td>';
             }
             setTableHTML+='</tr>';
@@ -105,6 +127,7 @@ table.calendar td{
     function initDate(){
         $tdDay = $("td div.cal-day")
         $tdSche = $("td div.cal-schedule")
+        $tdMqtt = $("td div.cal-qtt")
         dayCount = 0;
         today = new Date();
         year = today.getFullYear();
@@ -155,6 +178,7 @@ table.calendar td{
         for(var i=0;i<42;i++){
             $tdDay.eq(i).text("");
             $tdSche.eq(i).text("");
+            $tdMqtt.eq(i).text("");
         }
         dayCount=0;
         firstDay = new Date(year,month-1,1);
@@ -169,16 +193,18 @@ table.calendar td{
         var dateMatch = null;
         for(var i=firstDay.getDate();i<firstDay.getDate()+lastDay.getDate();i++){
             var txt = "";
+            var qtt = "";
             if(jsonData != null){
             	txt = jsonData[year];
             }
             if(txt){
                 txt = jsonData[year][month];
                 if(txt){
-                    txt = jsonData[year][month][i];
+                    txt = jsonData[year][month]["Qtt"] - jsonData[year][month][i];
+                    qtt = jsonData[year][month]["Qtt"];
                     dateMatch = firstDay.getDay() + i -1; 
-                    $tdSche.eq(dateMatch).text(txt);
-                    
+                    $tdSche.eq(dateMatch).text("발주가능: "+txt);
+                    $tdMqtt.eq(dateMatch).text("최대생산: "+qtt);
                 }
             }
         }

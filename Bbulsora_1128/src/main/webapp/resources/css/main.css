@@ -43,3 +43,8 @@
 	top:20%;
 	text-align: center;
 }
+
+#id {
+	background-color: rgb(102,102,255);
+	color: white;
+}

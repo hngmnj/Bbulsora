@@ -225,11 +225,11 @@ $(document).ready(function(){
 </c:forEach>
 </table>
 </div>
-
+<br/>
 <div id="search_stock_by_lot" style="overflow:auto; height: 200px">
 
 </div>
-
+<br/>
 <c:if test="${fn:substring(user.compCd,0,3) eq 'CLI'}">
 <div id="delivery_request" style="overflow:auto; text-align:center; height: 200px">
 

@@ -86,11 +86,17 @@
          	 #{d21}, #{d22}, #{d23}, #{d24}, #{d25}, #{d26}, #{d27}, #{d28}
         ]]>
         <choose>
-        	<when test="d29 == null and d30 == null and d31 == null">, null, null, null</when>
-			<when test="d29 != null and d30 == null and d31 == null">, #{d29}, null, null</when>
-			<when test="d29 != null and d30 != null and d31 == null">, #{d29}, #{d30}, null</when>
-			<otherwise>, #{d29}, #{d30}, #{d31}</otherwise>
-		</choose>
+        	<when test="d29 != ''">, #{d29}</when>
+        	<otherwise>, null</otherwise>
+        </choose>
+		<choose>
+        	<when test="d30 != ''">, #{d30}</when>
+        	<otherwise>, null</otherwise>
+        </choose>
+        <choose>
+        	<when test="d31 != ''">, #{d31}</when>
+        	<otherwise>, null</otherwise>
+        </choose>
 		<![CDATA[
 			)
 		]]>
@@ -107,15 +113,15 @@
          	 d26 = #{d26}, d27 = #{d27}, d28 = #{d28}
         ]]>
         	<choose>
-        		<when test="d29 != null">, d29 = #{d29}</when>
+        		<when test="d29 != ''">, d29 = #{d29}</when>
         		<otherwise>, d29 = null</otherwise>
         	</choose>
 			<choose>
-				<when test="d30 != null">, d30 = #{d30}</when>
+				<when test="d30 != ''">, d30 = #{d30}</when>
 				<otherwise>, d30 = null</otherwise>
 			</choose>
 			<choose>
-				<when test="d31 != null">, d31 = #{d31}</when>
+				<when test="d31 != ''">, d31 = #{d31}</when>
 				<otherwise>, d31 = null</otherwise>
 			</choose>
 		<![CDATA[

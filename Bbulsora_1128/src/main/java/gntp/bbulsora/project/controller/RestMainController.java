@@ -1,6 +1,7 @@
 package gntp.bbulsora.project.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,46 +57,14 @@ public class RestMainController {
 	@RequestMapping(value="/getMonthSche.do", method=RequestMethod.GET) 
 	public Map<String, Map<String, Map<String, String>>> getMonthSche(@RequestParam Map<String, Object> data) {
 		List<AdvinfoVO> list = new ArrayList<AdvinfoVO> ();
-		System.out.println(data);
 		list = companyDAO.selectMonthSche(data);
-		System.out.println(list);
 		Map<String, String> dayMap = new HashMap<String, String> ();
-
-		dayMap.put("1", list.get(0).getD1()+"/"+list.get(0).getOutput());
-		dayMap.put("2", list.get(0).getD2()+"/"+list.get(0).getOutput());
-		dayMap.put("3", list.get(0).getD3()+"/"+list.get(0).getOutput());
-		dayMap.put("4", list.get(0).getD4()+"/"+list.get(0).getOutput());
-		dayMap.put("5", list.get(0).getD5()+"/"+list.get(0).getOutput());
-		dayMap.put("6", list.get(0).getD6()+"/"+list.get(0).getOutput());
-		dayMap.put("7", list.get(0).getD7()+"/"+list.get(0).getOutput());
-		dayMap.put("8", list.get(0).getD8()+"/"+list.get(0).getOutput());
-		dayMap.put("9", list.get(0).getD9()+"/"+list.get(0).getOutput());
-		dayMap.put("10", list.get(0).getD10()+"/"+list.get(0).getOutput());
-		dayMap.put("11", list.get(0).getD11()+"/"+list.get(0).getOutput());
-		dayMap.put("12", list.get(0).getD12()+"/"+list.get(0).getOutput());
-		dayMap.put("13", list.get(0).getD13()+"/"+list.get(0).getOutput());
-		dayMap.put("14", list.get(0).getD14()+"/"+list.get(0).getOutput());
-		dayMap.put("15", list.get(0).getD15()+"/"+list.get(0).getOutput());
-		dayMap.put("16", list.get(0).getD16()+"/"+list.get(0).getOutput());
-		dayMap.put("17", list.get(0).getD17()+"/"+list.get(0).getOutput());
-		dayMap.put("18", list.get(0).getD18()+"/"+list.get(0).getOutput());
-		dayMap.put("19", list.get(0).getD19()+"/"+list.get(0).getOutput());
-		dayMap.put("20", list.get(0).getD20()+"/"+list.get(0).getOutput());
-		dayMap.put("21", list.get(0).getD21()+"/"+list.get(0).getOutput());
-		dayMap.put("22", list.get(0).getD22()+"/"+list.get(0).getOutput());
-		dayMap.put("23", list.get(0).getD23()+"/"+list.get(0).getOutput());
-		dayMap.put("24", list.get(0).getD24()+"/"+list.get(0).getOutput());
-		dayMap.put("25", list.get(0).getD25()+"/"+list.get(0).getOutput());
-		dayMap.put("26", list.get(0).getD26()+"/"+list.get(0).getOutput());
-		dayMap.put("27", list.get(0).getD27()+"/"+list.get(0).getOutput());
-		dayMap.put("28", list.get(0).getD28()+"/"+list.get(0).getOutput());
-		if(list.get(0).getD29() != null) {
-			dayMap.put("29", list.get(0).getD29()+"/"+list.get(0).getOutput());
-		} if(list.get(0).getD30() != null) {
-			dayMap.put("30", list.get(0).getD30()+"/"+list.get(0).getOutput());
-		} if(list.get(0).getD31() != null) {
-			dayMap.put("31", list.get(0).getD31()+"/"+list.get(0).getOutput());
+		String[] dayData = list.get(0).dayData(list.get(0));
+		for(int i=0;i<dayData.length;i++) {
+			dayMap.put(""+(i+1)+"", dayData[i].trim());
 		}
+		dayMap.put("Qtt", list.get(0).getOutput());
+		System.out.println(dayMap);
 		String month = companyDAO.selectMonth(data);
 		Map<String, Map<String, String>> monthMap = new HashMap<String,Map<String, String>> ();
 		monthMap.put(month, dayMap);

@@ -190,7 +190,7 @@ $(document).ready(function(){
          </c:forEach>
       </table>
    </div>
-
+<br/>
 <div id="search_req_by_code" style="overflow:auto; height: 250px">
 
 </div>
