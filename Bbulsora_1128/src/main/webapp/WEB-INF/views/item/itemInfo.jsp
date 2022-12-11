@@ -7,12 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Info</title>
+<link rel="stylesheet" href="${contextPath}/resources/css/item_table.css" type="text/css">
 </head>
 <body>
 <form action="update.do" method="post">
 <input type="hidden" name="itemCd" value="${item.itemCd}">
 <table>
-	<tr><td>품목이미지</td><td><img src="/images/${item.imgName}" alt="" width="300" height="200"></td></tr>
+	<tr><td colspan="2"><img src="/images/${item.imgName}" alt="" width="300" height="200"></td></tr>
 	<tr><td>품목코드</td><td>${item.itemCd}</td></tr>
 	<tr><td>기업명</td><td>${item.compName}</td></tr>
 	<tr><td>품목명</td><td><input type="text" name="itemName" value="${item.itemName}"></td></tr>
