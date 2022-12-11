@@ -62,7 +62,7 @@ public class HomeController {
 	public String update(@ModelAttribute("info") MemberVO member, HttpServletRequest request) {
 		homeService.updateMember(member);
 		request.getSession().setAttribute("user", member);
-		return "viewUpdate";
+		return "redirect:./main.do";
 	}
 	
 	//계정 정보 수정 페이지 이동

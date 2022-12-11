@@ -58,15 +58,12 @@ public class StoreController {
 	@RequestMapping(value="/update.do", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView update(@ModelAttribute("info") StoreVO vo, @RequestParam Map<String, String> store, HttpServletRequest request, HttpServletResponse response, RedirectAttributes re) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(vo);
-		storeDAO.updateOne(store);
 		store.put("lot", CodeMakingRule.LotNo(vo));
-		System.out.println(store);
 		if(vo.getStateCd().equals("I004")) {
 			storeDAO.insertStock(store);
 		}
 		re.addAttribute("storeSeq", store.get("storeSeq"));
-		mav.setViewName("redirect:./list.do");
+		mav.setViewName("redirect:./read.do?orderCd="+vo.getOrderCd());
 		return mav;
 	}   
 
@@ -134,7 +131,6 @@ public class StoreController {
 		if (fileName.lastIndexOf("/") != -1) {
 			fileName = fileName.substring(fileName.lastIndexOf("/"), fileName.length());
 		}
-		System.out.println(fileName);
 		return "/store"+fileName;
 	}
 }

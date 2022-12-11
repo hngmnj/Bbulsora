@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/default_table.css" type="text/css">
 
 <script type="text/javascript">
+var open;
+
 function upConfirm() {
 	return confirm("입고상태를 수정하시겠습니까?");
 }
@@ -19,7 +21,7 @@ function showLocSetWindow(storeSeq) {
     let url = "${contextPath}/store/location.do?storeSeq="+storeSeq;
     let name = "로케이션 설정";
     let option = "width = 1200, height = 600, top = 0, left = 0, location = no";
-    window.open(url, name, option);
+    open = window.open(url, name, option);
 }
 </script>
 
@@ -60,7 +62,7 @@ function showLocSetWindow(storeSeq) {
 						  <input type="hidden" name="itemCd" value="${store.itemCd}">
 		                  <input type="hidden" name="locArea" value="${store.locArea}">
 		                  <input type="hidden" name="storeQtt" value="${store.storeQtt}">
-		                  <input type="hidden" name="orderCd" value="${store.orderCd}">
+		                  <input type="hidden" id="orderCd" name="orderCd" value="${store.orderCd}">
 		                  <input type="hidden" name="storeSeq" value="${store.storeSeq}">
 		                  <input type="hidden" name="prevStateCd" value="${store.stateCd}">
 					

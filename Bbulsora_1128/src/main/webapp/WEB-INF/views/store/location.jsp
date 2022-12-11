@@ -20,6 +20,7 @@ function updateQtt(locArea) {
          data : {orderCd:$('#orderCd').val(), storeSeq:$('#storeSeq').val(), locArea:locArea},
          success : function(data,status){
             alert(locArea+"에 배치 완료");
+            window.opener.location.href = "${contextPath}/store/read.do?orderCd="+$('#orderCd').val();
             window.close();
          },
          error : function(data,status){
