@@ -10,7 +10,6 @@
 <body>
 <form action="create.do" method="post" enctype="multipart/form-data">
 <table>
-
 		<tr><td>품목명</td><td><input type="text" name="itemName"></td></tr>
 		<tr><td>대분류</td>
 		<td>
