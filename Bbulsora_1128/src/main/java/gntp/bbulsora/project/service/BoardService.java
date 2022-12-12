@@ -43,7 +43,7 @@ public class BoardService {
 	public boolean insertOne(BoardVO board) throws Exception {
 		boolean flag = false;
 		String fileName = null;
-		String OriginalFileName = null; 
+		String OriginalFileName = null;
 		MultipartFile uploadFile = board.getUploadFile();
 		if(!uploadFile.isEmpty()) {
 			OriginalFileName = uploadFile.getOriginalFilename();
