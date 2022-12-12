@@ -24,10 +24,5 @@
       <put-attribute name="title" value="신규 품목 등록" />
       <put-attribute name="body" value="/WEB-INF/views/item/itemCsv.jsp" />
    </definition>
-   
-   <definition name="/item/read" extends="baseLayout">
-      <put-attribute name="title" value="품목 정보" />
-      <put-attribute name="body" value="/WEB-INF/views/item/itemInfo.jsp" />
-   </definition>
 
 </tiles-definitions>

@@ -108,7 +108,7 @@ function checkOrder() {
 			orderList.push(order);
 		}
 
-		$.ajax({
+ 		$.ajax({
 			type : "post",
 			url : "${contextPath}/order/create.do",
 			dataType : "text",
@@ -122,7 +122,7 @@ function checkOrder() {
 				alert("error "+status);
 			},
 		}); // ajax end
-	}//if end
+	}//if end 
 	else {
 		return false;
 	}

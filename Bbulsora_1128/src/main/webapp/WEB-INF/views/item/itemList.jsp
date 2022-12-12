@@ -8,6 +8,18 @@
 <meta charset="UTF-8">
 <title>Item List</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/info_table.css" type="text/css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+//아이템 상세
+function showItemInfo(itemCd) {
+   let topMargin = event.screenY - event.clientY + 10;
+   let leftMargin = event.screenX - event.clientX;
+    let url = "${contextPath}/item/read.do?itemCd="+itemCd;
+    let name = "품목 상세정보";
+    let option = "width = 350, height = 450, location = no";
+    window.open(url, name, option);
+}
+</script>
 </head>
 <body>
 <div style="text-align:center"><h1>취급 품목 정보</h1></div>
@@ -16,7 +28,7 @@
 	<tr><th>품목코드</th><th>품목명</th><th>대분류</th><th>중분류</th><th>소분류</th><th>단위</th><th>기업코드</th>
 <c:forEach var="item" items="${list}">
 	<tr>
-		<td><a href="./read.do?itemCd=${item.itemCd}">${item.itemCd}</a></td>
+		<td><a href='#' target='_top' onclick='showItemInfo("${item.itemCd}")'>${item.itemCd}</a></td>
 		<td>${item.itemName}</td>
 		<td>${item.major}</td>
 		<td>${item.middle}</td>
