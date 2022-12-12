@@ -145,9 +145,12 @@ $(document).ready(function(){
    });
 });
 </script>
-<title>주문조회</title>
+<title>출고조회</title>
 </head>
 <body>
+<h1 align = "center">[출고 현황]</h1>
+</br>
+</br>
    <div id="delivery_sub_manu" style="text-align: center">
          요청일<input type="date" id="fromDate">&nbsp;~&nbsp;
          <input type="date" id="toDate">&nbsp;

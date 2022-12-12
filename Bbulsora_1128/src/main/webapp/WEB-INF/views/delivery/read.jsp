@@ -29,7 +29,7 @@
 		return confirm("입고 명세서를 내보내시겠습니까?");
 	}
 </script>
-<title>주문상세</title>
+<title>출고 상세</title>
 </head>
 <body>
 	<h3 style="text-align: center;">주문코드</h3>

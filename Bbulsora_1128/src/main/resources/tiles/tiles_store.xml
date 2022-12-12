@@ -12,12 +12,12 @@
 	</definition>
 
 	<definition name="/store/list" extends="baseLayout">
-		<put-attribute name="title" value="입고목록" />
+		<put-attribute name="title" value="입고 관리" />
 		<put-attribute name="body" value="/WEB-INF/views/store/storeList.jsp" />
 	</definition>
 	
 	<definition name="/store/read" extends="baseLayout">
-		<put-attribute name="title" value="입고상세" />
+		<put-attribute name="title" value="입고 상세" />
 		<put-attribute name="body" value="/WEB-INF/views/store/storeRead.jsp" />
 	</definition>
 </tiles-definitions>

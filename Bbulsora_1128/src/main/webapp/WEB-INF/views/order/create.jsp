@@ -188,10 +188,12 @@ $(document).ready(function(){
 });//document end
 
 </script>
-<title>주문요청</title>
+<title>주문등록</title>
 </head>
 <body>
-
+<h1 align = "center">[주문 작성]</h1>
+</br>
+</br>
 	<div id="order_sub_menu" style="text-align: center; height: 50px">
 		대분류<select id="major"><option value="">선택안함</option>
 			<c:forEach var="item" items="${itemList}">

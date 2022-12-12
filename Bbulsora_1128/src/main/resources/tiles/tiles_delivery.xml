@@ -12,7 +12,7 @@
 
    
    <definition name="/delivery/list" extends="baseLayout">
-      <put-attribute name="title" value="출고조회" />
+      <put-attribute name="title" value="출고 조회" />
       <put-attribute name="body" value="/WEB-INF/views/delivery/list.jsp" />
    </definition>
  

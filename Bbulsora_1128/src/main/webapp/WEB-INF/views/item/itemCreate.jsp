@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Add Item Info</title>
+<title>신규 품목 등록</title>
 </head>
 <body>
 <form action="create.do" method="post" enctype="multipart/form-data">

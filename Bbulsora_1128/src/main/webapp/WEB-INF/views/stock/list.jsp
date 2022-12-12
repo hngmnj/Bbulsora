@@ -46,9 +46,9 @@ function showStockInfoByLot(code) {
       data : {itemCd:code, compCd:"${user.compCd}", client:$('#client').val()},
       success : function(data,status) {
          let jsonObj = JSON.parse(data);
-         let result = "<table><tr><th>Lot No.</th><th>품목명</th><th>수량</th><th>로케이션</th><th>상태내용</th></tr>"
+         let result = "<h2 align='center'>로트 & 로케이션</h2><table><tr><th>Lot No.</th><th>품목명</th><th>수량</th><th>로케이션</th><th>상태내용</th></tr>"
          if("${user.compCd}"=="ADMIN") {
-        	 result = "<table><tr><th>Lot No.</th><th>품목명</th><th>고객사명</th><th>수량</th><th>로케이션</th><th>상태내용</th></tr>"
+        	 result = "<h2 align='center'>로트 & 로케이션</h2><table><tr><th>Lot No.</th><th>품목명</th><th>고객사명</th><th>수량</th><th>로케이션</th><th>상태내용</th></tr>"
          }
          for(let i=0;i<jsonObj.length;i++) {   
             result += "<tr><td>"+jsonObj[i].lot+"</td><td>"+jsonObj[i].itemName+"</td>"
@@ -69,7 +69,7 @@ function showStockInfoByLot(code) {
 //출고 요청 Part
 //0. 출고 기본 폼
 //주문요청 대기 테이블 폼
-const tableHeader = "<table><tr><th>품목명</th><th>수량</th><th>납기요청일</th><th>관리</th></tr>";
+const tableHeader = "<h2 align='center'>출고 요청</h2><table><tr><th>품목명</th><th>수량</th><th>납기요청일</th><th>관리</th></tr>";
 let tableMap = new Map();
 const tableFooter = "</table><br/><input type='button' value='출하요청' onclick='checkDelivery()'>";
 
@@ -204,7 +204,16 @@ $(document).ready(function(){
 <title>재고조회</title>
 </head>
 <body>
-
+<c:if test="${user.compCd eq 'ADMIN'}">
+<h1 align = "center">[재고 관리]</h1>
+</br>
+</br>
+</c:if>
+<c:if test="${fn:substring(user.compCd,0,3) eq 'CLI'}">
+<h1 align = "center">[보유재고 및 출고요청]</h1>
+</br>
+</br>
+</c:if>
 <div id="stock_sub_menu" style="text-align: center">
 품목명<select id="item"><option value="">선택안함</option><c:forEach var="item" items="${itemList}"><option value="${item.itemName}">${item.itemName}</option></c:forEach></select>
 <c:if test="${fn:substring(user.compCd,0,3) ne 'CLI'}">고객사명<select id="client"><option value="">선택안함</option><c:forEach var="client" items="${clientList}"><option value="${client.compName}">${client.compName}</option></c:forEach></select></c:if>
@@ -226,6 +235,7 @@ $(document).ready(function(){
 </table>
 </div>
 <br/>
+
 <div id="search_stock_by_lot" style="overflow:auto; height: 200px">
 
 </div>

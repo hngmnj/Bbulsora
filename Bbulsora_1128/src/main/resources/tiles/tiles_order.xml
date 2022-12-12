@@ -11,7 +11,7 @@
    </definition>
 
    <definition name="/order/viewCreate" extends="baseLayout">
-      <put-attribute name="title" value="주문요청" />
+      <put-attribute name="title" value="주문등록" />
       <put-attribute name="body" value="/WEB-INF/views/order/create.jsp" />
    </definition>
    

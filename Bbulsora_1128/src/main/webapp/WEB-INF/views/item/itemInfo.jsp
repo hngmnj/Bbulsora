@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Item Info</title>
+<title>취급 품목 정보</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/item_table.css" type="text/css">
 </head>
 <body>
