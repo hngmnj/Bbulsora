@@ -14,6 +14,7 @@
 <link rel="stylesheet"
    href="${contextPath}/resources/css/default_table.css" type="text/css">
 <script type="text/javascript">
+var code;
 
 //출하상태 일괄변경
 function allDlvryStateUd(code) {

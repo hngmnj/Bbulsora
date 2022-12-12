@@ -184,7 +184,7 @@
 	</update>
 	
 	<insert id="insertStore" parameterType="Map">
-		insert store(store_qtt, store_date, state_cd, order_seq) values(#{storeQtt}, curdate(), 'I001', #{orderSeq})
+		insert store(store_qtt, store_date, state_cd, order_seq) values(#{orderQtt}, curdate(), 'I001', #{orderSeq})
 	</insert>
 
 	<delete id="deleteOrder" parameterType="String">
