@@ -11,7 +11,7 @@
 	</definition>
 
 	<definition name="/cal/read" extends="baseLayout">
-		<put-attribute name="title" value="정보조회" />
+		<put-attribute name="title" value="생산계획정보" />
 		<put-attribute name="body" value="/WEB-INF/views/calendar.jsp" />
 	</definition>
 

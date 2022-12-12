@@ -13,7 +13,7 @@
 <c:choose>
 	<c:when test="${user.compCd eq 'ADMIN'}">
 	<!-- 관리자 매뉴 -->
-	<a href="${contextPath}/order/list.do">주문현황</a>
+	<a href="${contextPath}/order/list.do">주문관리</a>
 	<a href="${contextPath}/store/list.do">입고관리</a>
 	<a href="${contextPath}/delivery/list.do">출고관리</a>
 	<a href="${contextPath}/stock/list.do">재고관리</a>

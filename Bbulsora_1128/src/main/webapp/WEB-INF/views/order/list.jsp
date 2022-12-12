@@ -27,6 +27,9 @@
 <title>주문조회</title>
 </head>
 <body>
+<h1 align = "center">[주문 내역]</h1>
+</br>
+</br>
 	<div id="order_sub_manu" style="text-align: center">
 		<form action="${contextPath}/order/list.do" method="get">
 			요청일<input type="date" name="fromDate" value="${fromDate}">&nbsp;~&nbsp;<input

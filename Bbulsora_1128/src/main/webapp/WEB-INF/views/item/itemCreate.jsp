@@ -5,12 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Add Item Info</title>
+<title>신규 품목 등록</title>
 </head>
 <body>
 <form action="create.do" method="post" enctype="multipart/form-data">
 <table>
-
 		<tr><td>품목명</td><td><input type="text" name="itemName"></td></tr>
 		<tr><td>대분류</td>
 		<td>

@@ -58,6 +58,7 @@ public class StoreController {
 	@RequestMapping(value="/update.do", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView update(@ModelAttribute("info") StoreVO vo, @RequestParam Map<String, String> store, HttpServletRequest request, HttpServletResponse response, RedirectAttributes re) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		storeDAO.updateOne(store);
 		store.put("lot", CodeMakingRule.LotNo(vo));
 		if(vo.getStateCd().equals("I004")) {
 			storeDAO.insertStock(store);

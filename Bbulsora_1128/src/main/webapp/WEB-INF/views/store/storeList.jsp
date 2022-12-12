@@ -79,9 +79,11 @@ $(document).ready(function(){
 <title>Store List</title>
 </head>
 <body>
-<h1>입고 목록</h1>
+<h1 align = "center">[입고 관리]</h1>
+</br>
+</br>
 
-	<div id="store_sub_menu" style="text-align: left; height: 50px">
+	<div id="store_sub_menu" style="text-align: center; height: 50px">
 	
 		주문코드<select id="orderCd"><option value="">주문코드</option>
 				<c:forEach var="store" items="${orderCdList}">
@@ -111,7 +113,7 @@ $(document).ready(function(){
 	<br />
 
 
-	<h2>&nbsp;&nbsp;&nbsp;입고목록</h2>
+	<h2>&nbsp;&nbsp;&nbsp;입고내역</h2>
 	<div id="all_store_list" style="overflow: auto; text-align: center; height: 200px">
 		<table>
 			<thead>

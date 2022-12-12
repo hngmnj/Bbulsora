@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Hello</title>
+<title>생산계획정보</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style type="text/css">
 .cal_top{
@@ -47,6 +47,9 @@ table.calendar td{
 </style>
 </head>
 <body>
+<h1 align = "center">[공급사 생산계획정보]</h1>
+</br>
+</br>
 <div align="center">
 	<c:if test="${fn:substring(user.compCd,0,3) eq 'SUP'}">
 		<form id="csvUploadForm" action="csvCreate.do" name="csvUploadForm" enctype="multipart/form-data" method="post">

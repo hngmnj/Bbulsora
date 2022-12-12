@@ -12,7 +12,7 @@
 <script type="text/javascript">
 var open;
 
-function upConfirm() {
+function upConfirm(seq) {
 	return confirm("입고상태를 수정하시겠습니까?");
 }
 
@@ -26,11 +26,11 @@ function showLocSetWindow(storeSeq) {
 </script>
 
 
-<title>입고상세</title>
+<title>입고 상세</title>
 </head>
 <body>
-	<h3 style="text-align: center;">주문코드</h3>
-	<h3 style="text-align: center;">${list == null ? '' : list[0].orderCd}</h3>
+	<h3 style="text-align: center; ">주문코드</h3>
+	<h2 style="text-align: center;">${list == null ? '' : list[0].orderCd}</h2>
 	<table>
 		<tr>
 			<th>입고순번</th>

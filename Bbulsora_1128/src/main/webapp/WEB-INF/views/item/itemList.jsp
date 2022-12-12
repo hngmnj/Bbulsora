@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Item List</title>
+<title>취급 품목 내역</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/info_table.css" type="text/css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">

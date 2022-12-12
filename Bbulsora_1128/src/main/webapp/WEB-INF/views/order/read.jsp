@@ -48,7 +48,7 @@
 </head>
 <body>
    <h3 style="text-align: center;">주문코드</h3>
-   <h3 style="text-align: center;">${list == null ? '' : list[0].orderCd}</h3>
+   <h2 style="text-align: center;">${list == null ? '' : list[0].orderCd}</h2>
 	<table>
 		<tr>
 			<th>품목명</th>
