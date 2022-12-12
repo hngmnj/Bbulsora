@@ -97,7 +97,8 @@ function showReqInfoByCode(code, comp) {
 }    
     
 $(document).ready(function(){
-   $('#btn_srchDelivery').on('click',function(){
+   $('#btn_srchDelivery').on('click',function(code){
+	  var code;
       $.ajax({
          type : "get",
          url : "${contextPath}/rest/searchDelivery.do",
@@ -109,13 +110,13 @@ $(document).ready(function(){
             let stateObj = null;
             let result = "";
             if(dlvryObj.length != 0) {
-            	stateObj = dlvryObj[i].stateList;
             	result = "<input type='hidden' id='compCd"+dlvryObj[i].dlvryCd+"' value="+dlvryObj[i].compCd+">"
             	+"<input type='hidden' id='prevStateCd"+dlvryObj[i].dlvryCd+"' value="+dlvryObj[i].stateCd+">"
             }
             if("${compCd}" == 'ADMIN') {
                result = "<table><tr><th>출고코드</th><th>납기요청일</th><th>요청업체명</th><th>상태일괄변경</th></tr>";
                for(let i=0; i<dlvryObj.length; i++){
+            	  stateObj = dlvryObj[i].stateList;
                   result += "<tr><td><a href='#' target='_top' onclick='showReqInfoByCode(\""+dlvryObj[i].dlvryCd+"\",\""+dlvryObj[i].compCd+"\")'>"+dlvryObj[i].dlvryCd
                   +"</a></td><td>"+dlvryObj[i].reqDate+"</td><td>"+dlvryObj[i].compName+"</td>"
                   +"<td><select id='stateCd'"+dlvryObj[i].dlvryCd+"><option value="+dlvryObj[i].stateCd+">"+dlvryObj[i].stateContent+"</option>";

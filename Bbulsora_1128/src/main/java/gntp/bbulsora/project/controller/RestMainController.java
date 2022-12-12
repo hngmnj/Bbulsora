@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -190,6 +191,7 @@ public class RestMainController {
 	@RequestMapping(value="/searchDelivery.do", method=RequestMethod.GET)
 	public List<DeliveryVO> searchDelivery(HttpServletRequest req) throws Exception {
 		Map<String, Object> data = new HashMap<String, Object>();
+		MemberVO user = (MemberVO) req.getSession().getAttribute("user");
 		String browser = req.getHeader("User-Agent");
 		String client = req.getParameter("client");
 		if(client!=null) {
@@ -202,7 +204,7 @@ public class RestMainController {
 		}
 		data.put("fromDate", req.getParameter("fromDate"));
 		data.put("toDate", req.getParameter("toDate"));
-		System.out.println(data);
+		data.put("compCd", user.getCompCd());
 		return deliveryDAO.selectSearchDelivery(data);
 	}
 	

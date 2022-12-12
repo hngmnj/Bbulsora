@@ -18,7 +18,7 @@
 
     <select id="selectStatesForUpdateDelivery" resultMap="stateResult">
        <![CDATA[
-         select * from state where state_cd > #{dlvryState} and state_cd <= 'D006';   
+         select * from state where state_cd > #{dlvryState} and state_cd <= 'D006';
        ]]>
     </select>
 
