@@ -16,7 +16,7 @@ function showItemInfo(itemCd) {
    let leftMargin = event.screenX - event.clientX;
     let url = "${contextPath}/item/read.do?itemCd="+itemCd;
     let name = "품목 상세정보";
-    let option = "width = 500, height = 500, top = "+topMargin+", left = "+leftMargin+", location = no";
+    let option = "width = 350, height = 450, location = no";
     window.open(url, name, option);
 }
 </script>

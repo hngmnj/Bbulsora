@@ -15,8 +15,7 @@
       let leftMargin = event.screenX - event.clientX;
       let url = "${contextPath}/item/readTop.do?itemCd=" + itemCd;
       let name = "품목 상세정보";
-      let option = "width = 500, height = 500, top = " + topMargin
-            + ", left = " + leftMargin + ", location = no";
+      let option = "width = 320, height = 400, location = no";
       window.open(url, name, option);
    }
    function delConfirm() {
