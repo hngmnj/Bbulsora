@@ -27,8 +27,8 @@ public class DeliveryDAO {
 		return list;
 	}
 
-	public List<DeliveryVO> selectDeliveryAll() {
-		List<DeliveryVO> list = sqlSession.selectList("mapper.delivery.selectDeliveryAll");
+	public List<DeliveryVO> selectDeliveryAll(String compCd) {
+		List<DeliveryVO> list = sqlSession.selectList("mapper.delivery.selectDeliveryAll", compCd);
 		for(int i=0; i<list.size(); i++) {
 			String dlvryState = list.get(i).getStateCd();
 			List<StateVO> stateList = sqlSession.selectList("mapper.state.selectStatesForUpdateDelivery", dlvryState);

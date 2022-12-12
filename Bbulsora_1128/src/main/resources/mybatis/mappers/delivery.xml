@@ -38,7 +38,7 @@
 		]]>
 	</insert>
 
-	<select id="selectDeliveryAll" resultMap="delResult">
+	<select id="selectDeliveryAll" resultMap="delResult" parameterType="String">
 		<![CDATA[
 			select d.dlvry_cd, d.dlvry_qtt, d.req_date, c.comp_cd, c.comp_name,
 			d.state_cd, s.state_content, i.item_cd, i.item_name, count(d.dlvry_cd) as cnt
@@ -49,8 +49,11 @@
     			on d.item_cd = i.item_cd
     			left join state s
     			on d.state_cd = s.state_cd
-    			group by d.dlvry_cd;
 		]]>
+		<if test="compCd != 'ADMIN'">
+			where d.comp_cd = #{compCd}
+		</if>
+		group by d.dlvry_cd
 	</select>
 
 	<select id="selectSearchDelivery" resultMap="delResult" parameterType="Map">
@@ -81,6 +84,9 @@
 		</choose>
 			<if test=" client != null and client !=''">
    	   			<![CDATA[c.comp_name = #{client} and]]>
+			</if>
+			<if test="compCd != 'ADMIN'">
+				d.comp_cd = #{compCd} and		
 			</if>		
     			d.dlvry_cd is NOT NULL
     			group by d.dlvry_cd;

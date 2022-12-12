@@ -52,7 +52,8 @@ public class DeliveryController {
 	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception  {
 		ModelAndView mav = new ModelAndView();
 		String viewName = this.getViewName(request);
-		List<DeliveryVO> list = deliveryDAO.selectDeliveryAll();
+		MemberVO user = (MemberVO) request.getSession().getAttribute("user");
+		List<DeliveryVO> list = deliveryDAO.selectDeliveryAll(user.getCompCd());
 		mav.addObject("dlvryList", list);
 		mav.setViewName(viewName);
 		return mav;
