@@ -27,9 +27,22 @@
 <title>주문조회</title>
 </head>
 <body>
-<h1 align = "center">[주문 내역]</h1>
+
+<c:if test="${fn:substring(user.compCd,0,3) eq 'CLI'}">
+<h1 align = "center">[주문요청 내역]</h1>
 </br>
 </br>
+</c:if>
+<c:if test="${fn:substring(user.compCd,0,3) eq 'SUP'}">
+<h1 align = "center">[발주요청 내역]</h1>
+</br>
+</br>
+</c:if>
+<c:if test="${user.compCd eq 'ADMIN'}">
+<h1 align = "center">[주문 관리]</h1>
+</br>
+</br>
+</c:if>
 	<div id="order_sub_manu" style="text-align: center">
 		<form action="${contextPath}/order/list.do" method="get">
 			요청일<input type="date" name="fromDate" value="${fromDate}">&nbsp;~&nbsp;<input

@@ -214,6 +214,7 @@ $(document).ready(function(){
 </br>
 </br>
 </c:if>
+
 <div id="stock_sub_menu" style="text-align: center">
 품목명<select id="item"><option value="">선택안함</option><c:forEach var="item" items="${itemList}"><option value="${item.itemName}">${item.itemName}</option></c:forEach></select>
 <c:if test="${fn:substring(user.compCd,0,3) ne 'CLI'}">고객사명<select id="client"><option value="">선택안함</option><c:forEach var="client" items="${clientList}"><option value="${client.compName}">${client.compName}</option></c:forEach></select></c:if>

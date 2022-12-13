@@ -149,9 +149,17 @@ $(document).ready(function(){
 <title>출고조회</title>
 </head>
 <body>
+
+<c:if test="${user.compCd eq 'ADMIN'}">
+<h1 align = "center">[출고 관리]</h1>
+</br>
+</br>
+</c:if>
+<c:if test="${fn:substring(user.compCd,0,3) eq 'CLI'}">
 <h1 align = "center">[출고 현황]</h1>
 </br>
 </br>
+</c:if>
    <div id="delivery_sub_manu" style="text-align: center">
          요청일<input type="date" id="fromDate">&nbsp;~&nbsp;
          <input type="date" id="toDate">&nbsp;

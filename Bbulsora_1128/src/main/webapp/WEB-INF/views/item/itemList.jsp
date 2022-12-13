@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -22,7 +24,16 @@ function showItemInfo(itemCd) {
 </script>
 </head>
 <body>
-<div style="text-align:center"><h1>취급 품목 정보</h1></div>
+<c:if test="${user.compCd eq 'ADMIN'}">
+<h1 align = "center">[취급 품목 정보]</h1>
+</br>
+</br>
+</c:if>
+<c:if test="${fn:substring(user.compCd,0,3) eq 'SUP'}">
+<h1 align = "center">[보유 품목 정보]</h1>
+</br>
+</br>
+</c:if>
 <div style="overflow:auto; height: 400px">
 <table>
 	<tr><th>품목코드</th><th>품목명</th><th>대분류</th><th>중분류</th><th>소분류</th><th>단위</th><th>기업코드</th>
