@@ -119,7 +119,7 @@ $(document).ready(function(){
             	  stateObj = dlvryObj[i].stateList;
                   result += "<tr><td><a href='#' target='_top' onclick='showReqInfoByCode(\""+dlvryObj[i].dlvryCd+"\",\""+dlvryObj[i].compCd+"\")'>"+dlvryObj[i].dlvryCd
                   +"</a></td><td>"+dlvryObj[i].reqDate+"</td><td>"+dlvryObj[i].compName+"</td>"
-                  +"<td><select id='stateCd'"+dlvryObj[i].dlvryCd+"><option value="+dlvryObj[i].stateCd+">"+dlvryObj[i].stateContent+"</option>";
+                  +"<td><select id='stateCd"+dlvryObj[i].dlvryCd+"'><option value="+dlvryObj[i].stateCd+">"+dlvryObj[i].stateContent+"</option>";
                   for(let j=0; j<stateObj.length; j++) {
                      result += "<option value="+stateObj[j].stateCd+">"+stateObj[j].stateContent+"</option>"
                   }
