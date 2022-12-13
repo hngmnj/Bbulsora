@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/info_table.css" type="text/css">
 </head>
 <body>
-<div style="text-align:center"><h1>이용 기업 정보</h1></div>
+<div style="text-align:center"><h1>[이용 기업 정보]</h1></div>
 <div style="overflow:auto; height: 400px">
 <table>
 	<tr>

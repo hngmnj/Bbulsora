@@ -29,12 +29,17 @@
 <body>
 
 <c:if test="${fn:substring(user.compCd,0,3) eq 'CLI'}">
-<h1 align = "center">[주문 관리]</h1>
+<h1 align = "center">[주문요청 내역]</h1>
 </br>
 </br>
 </c:if>
 <c:if test="${fn:substring(user.compCd,0,3) eq 'SUP'}">
 <h1 align = "center">[발주요청 내역]</h1>
+</br>
+</br>
+</c:if>
+<c:if test="${user.compCd eq 'ADMIN'}">
+<h1 align = "center">[주문 관리]</h1>
 </br>
 </br>
 </c:if>
