@@ -31,9 +31,7 @@ function showLocSetWindow(storeSeq) {
 
 $(document).ready(function(){
 	
-	//입고순번 클릭하면 해당 입고 정보 조회
-	
-	
+
 	//검색 버튼 클릭 시 실행
 	$('#btn_srchStore').on('click',function(){
 		console.log("start");

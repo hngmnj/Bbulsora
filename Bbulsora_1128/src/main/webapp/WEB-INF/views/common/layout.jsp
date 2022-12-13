@@ -37,6 +37,7 @@ body {
   clear: both;
   padding: 5px;
   border: 0px solid #bcbcbc;
+  margin-top: 200px;
 }
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -61,7 +62,7 @@ window.onpageshow = function(event) {
      <div id="header" class="main_color">
         <tiles:insertAttribute name="header"/>
      </div>
-     <div style="height: 600px; width: 100%; overflow: auto;" id="content" >
+     <div style="height: 600px; width: 100%; " id="content" >
          <tiles:insertAttribute name="body"/>
      </div>
      <div id="footer" class="dim1">

@@ -158,7 +158,7 @@ $(document).ready(function(){
          고객사명<input type="text" id="client"> 
          <input type="button" id="btn_srchDelivery" value="검색">
    </div>
-   <div id="search_result" style="overflow:auto; height: 250px">
+   <div id="search_result" style="overflow:auto; height: 400px">
       <table>
          <tr>
             <th>출고코드</th>
