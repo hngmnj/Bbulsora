@@ -47,9 +47,16 @@ table.calendar td{
 </style>
 </head>
 <body>
+<c:if test="${fn:substring(user.compCd,0,3) eq 'CLI'}">
 <h1 align = "center">[공급사 생산계획정보]</h1>
 </br>
 </br>
+</c:if>
+<c:if test="${fn:substring(user.compCd,0,3) eq 'SUP'}">
+<h1 align = "center">[생산계획정보 추가]</h1>
+</br>
+</br>
+</c:if>
 <div align="center">
 	<c:if test="${fn:substring(user.compCd,0,3) eq 'SUP'}">
 		<form id="csvUploadForm" action="csvCreate.do" name="csvUploadForm" enctype="multipart/form-data" method="post">
